@@ -124,10 +124,9 @@ const Sidebar = ({
       {!isLoading ? (
         <div className="mt-4">
           {projects.map((project) => (
-            <ContextMenu>
+            <ContextMenu key={project.id}>
               <ContextMenuTrigger>
                 <div
-                  key={project.id}
                   className={`p-2 rounded cursor-pointer ${
                     selectedProject?.id === project.id ? "bg-gray-700" : ""
                   } group`}
