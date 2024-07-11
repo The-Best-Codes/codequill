@@ -45,7 +45,9 @@ const Sidebar = ({
 
   useEffect(() => {
     axios.get("/api/projects").then((response) => {
-      setProjects(response.data);
+      let projectsData = response.data;
+      projectsData.reverse(); // Newest projects first
+      setProjects(projectsData);
       setIsLoading(false);
     });
   }, [refreshProjects]);
@@ -123,60 +125,61 @@ const Sidebar = ({
       </Button>
       {!isLoading ? (
         <div className="mt-4">
-          {projects.map((project) => (
-            <ContextMenu key={project.id}>
-              <ContextMenuTrigger>
-                <div
-                  className={`p-2 rounded cursor-pointer ${
-                    selectedProject?.id === project.id ? "bg-gray-700" : ""
-                  } group`}
-                  onClick={() => setSelectedProject(project)}
-                >
-                  <div className="flex justify-between max-h-24 overflow-auto">
-                    <span>{project.name}</span>
-                    <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
-                      <Button
-                        variant={"ghost"}
-                        size={"icon"}
-                        className="z-10 w-6 h-6"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleEdit(project);
-                        }}
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant={"ghost"}
-                        size={"icon"}
-                        className="z-10 w-6 h-6"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDelete(project.id);
-                        }}
-                      >
-                        <Trash className="w-4 h-4" />
-                      </Button>
+          {projects.length > 0 &&
+            projects.map((project) => (
+              <ContextMenu key={project.id}>
+                <ContextMenuTrigger>
+                  <div
+                    className={`p-2 rounded cursor-pointer ${
+                      selectedProject?.id === project.id ? "bg-gray-700" : ""
+                    } group`}
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <div className="flex justify-between max-h-24 overflow-auto">
+                      <span>{project.name}</span>
+                      <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
+                        <Button
+                          variant={"ghost"}
+                          size={"icon"}
+                          className="z-10 w-6 h-6"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEdit(project);
+                          }}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant={"ghost"}
+                          size={"icon"}
+                          className="z-10 w-6 h-6"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(project.id);
+                          }}
+                        >
+                          <Trash className="w-4 h-4" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </ContextMenuTrigger>
-              <ContextMenuContent>
-                <ContextMenuItem onClick={() => setSelectedProject(project)}>
-                  Edit
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => handleDelete(project.id)}>
-                  Delete
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => handleFocus(project.id)}>
-                  Focus Project
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => handleShare(project)}>
-                  Share
-                </ContextMenuItem>
-              </ContextMenuContent>
-            </ContextMenu>
-          ))}
+                </ContextMenuTrigger>
+                <ContextMenuContent>
+                  <ContextMenuItem onClick={() => setSelectedProject(project)}>
+                    Edit
+                  </ContextMenuItem>
+                  <ContextMenuItem onClick={() => handleDelete(project.id)}>
+                    Delete
+                  </ContextMenuItem>
+                  <ContextMenuItem onClick={() => handleFocus(project.id)}>
+                    Focus Project
+                  </ContextMenuItem>
+                  <ContextMenuItem onClick={() => handleShare(project)}>
+                    Share
+                  </ContextMenuItem>
+                </ContextMenuContent>
+              </ContextMenu>
+            ))}
         </div>
       ) : (
         <div className="flex justify-center items-center h-full">
