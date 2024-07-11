@@ -1,5 +1,15 @@
 import { useState, useEffect } from "react";
-import { Plus, Edit, Trash, Copy, Check, Info, Loader2 } from "lucide-react";
+import {
+  Plus,
+  Edit,
+  Trash,
+  Copy,
+  Check,
+  Info,
+  Loader2,
+  SortAsc,
+  SortDesc,
+} from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +22,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -40,15 +59,19 @@ const Sidebar = ({
   const [shareLink, setShareLink] = useState("");
   const [shareSuccess, setShareSuccess] = useState("default");
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
+  const [sortAsc, setSortAsc] = useState(true);
+  const [sortType, setSortType] = useState("date_modified");
 
   useEffect(() => {
-    axios.get("/api/projects").then((response) => {
+    axios.get(`/api/projects?sort=${sortType}`).then((response) => {
       let projectsData = response.data;
-      projectsData.reverse(); // Newest projects first
+      if (sortAsc) {
+        projectsData = projectsData.reverse();
+      }
       setProjects(projectsData);
       setIsLoading(false);
     });
-  }, [refreshProjects]);
+  }, [refreshProjects, sortType, sortAsc]);
 
   const handleDelete = (id: number) => {
     setIsDeleteDialogOpen(true);
@@ -90,6 +113,26 @@ const Sidebar = ({
       >
         <Plus className="mr-2" /> New Project
       </Button>
+      <div className="mt-4 flex flex-row justify-between space-x-2">
+        <Select
+          onValueChange={(value) => setSortType(value)}
+          value={sortType}
+          defaultValue="date_modified"
+        >
+          <SelectTrigger className="text-black">
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="name">Name</SelectItem>
+            <SelectItem value="date_created">Date Created</SelectItem>
+            <SelectItem value="date_modified">Date Modified</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Button variant={"secondary"} onClick={() => setSortAsc(!sortAsc)}>
+          {sortAsc ? <SortAsc /> : <SortDesc />}
+        </Button>
+      </div>
       {!isLoading ? (
         <div className="mt-4">
           {projects.length > 0 &&

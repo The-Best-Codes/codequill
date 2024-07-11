@@ -21,11 +21,12 @@ export default async function handler(
 
     // Get the project from the database
     const project = await db.get("SELECT * FROM projects WHERE id = ?", [id]);
-    const dateCreated = project?.metadata?.created;
+    const mtData = JSON.parse(project?.metadata || "{}");
+    const dateCreated = mtData.created;
     //const dateModified = project?.metadata?.updated;
     const metadata = {
-      created: dateCreated || new Date().toLocaleString(),
-      updated: new Date().toLocaleString(),
+      created: dateCreated || new Date().getTime(),
+      updated: new Date().getTime(),
     };
 
     await db.run(

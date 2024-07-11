@@ -45,9 +45,14 @@ export default async function handler(
       language = "auto";
     }
 
+    const metadata = {
+      created: new Date().getTime(),
+      updated: new Date().getTime(),
+    };
+
     const result = await db.run(
-      "INSERT INTO projects (name, code, language) VALUES (?, ?, ?)",
-      [name, code, language]
+      "INSERT INTO projects (name, code, language, metadata) VALUES (?, ?, ?, ?)",
+      [name, code, language, JSON.stringify(metadata)]
     );
     res.writeHead(302, { Location: `/?shareId=${result.lastID}` });
     res.end();
