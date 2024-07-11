@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Edit, Trash } from "lucide-react";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 interface Project {
   id: number;
@@ -44,12 +45,13 @@ const Sidebar = ({
 
   return (
     <div className="w-64 bg-gray-800 text-white h-full p-4">
-      <button
-        className="w-full flex items-center justify-center bg-green-500 p-2 rounded"
+      <Button
+        className="w-full"
+        variant={"secondary"}
         onClick={() => setSelectedProject(null)}
       >
         <Plus className="mr-2" /> New Project
-      </button>
+      </Button>
       <div className="mt-4">
         {projects.map((project) => (
           <div
@@ -62,12 +64,20 @@ const Sidebar = ({
             <div className="flex justify-between items-center">
               <span>{project.name}</span>
               <div className="flex space-x-2">
-                <button onClick={() => handleEdit(project)}>
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  onClick={() => handleEdit(project)}
+                >
                   <Edit />
-                </button>
-                <button onClick={() => handleDelete(project.id)}>
+                </Button>
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  onClick={() => handleDelete(project.id)}
+                >
                   <Trash />
-                </button>
+                </Button>
               </div>
             </div>
           </div>

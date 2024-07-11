@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Check, Info } from "lucide-react";
 
 const languageOptions = ["javascript", "typescript", "python", "html", "css"];
 
@@ -9,6 +21,7 @@ const CodeEditor = ({ selectedProject, refreshProjects }: any) => {
   const [language, setLanguage] = useState("javascript");
   const [name, setName] = useState("");
   const [showPreview, setShowPreview] = useState(true);
+  const [saveSuccess, setSaveSuccess] = useState("");
 
   useEffect(() => {
     if (selectedProject) {
@@ -23,72 +36,81 @@ const CodeEditor = ({ selectedProject, refreshProjects }: any) => {
   }, [selectedProject]);
 
   const handleSave = () => {
-    if (selectedProject) {
-      axios
-        .put(`/api/projects/${selectedProject.id}`, { name, code, language })
-        .then(() => {
+    try {
+      if (selectedProject) {
+        setSaveSuccess("Saving...");
+        axios
+          .put(`/api/projects/${selectedProject.id}`, { name, code, language })
+          .then(() => {
+            refreshProjects();
+          });
+        setSaveSuccess("Saved");
+      } else {
+        axios.post("/api/projects", { name, code, language }).then(() => {
           refreshProjects();
         });
-    } else {
-      axios.post("/api/projects", { name, code, language }).then(() => {
-        refreshProjects();
-      });
+      }
+    } catch (error) {
+      setSaveSuccess("Error");
     }
   };
 
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex justify-between items-center p-4 bg-gray-200">
-        <input
-          type="text"
-          placeholder="Project Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="p-2 border rounded w-1/3"
-        />
-        <select
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-          className="p-2 border rounded"
-        >
-          {languageOptions.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={handleSave}
-          className="bg-blue-500 text-white p-2 rounded"
-        >
-          Save
-        </button>
-        {language === "javascript" || language === "html" ? (
-          <button
-            onClick={() => setShowPreview(!showPreview)}
-            className="bg-gray-500 text-white p-2 rounded ml-4"
+        <div className="flex items-center flex-row gap-4 w-1/2">
+          <Input
+            type="text"
+            placeholder="Project Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="p-2 border rounded w-1/4"
+          />
+          <Select
+            value={language}
+            onValueChange={(value) => setLanguage(value)}
           >
-            {showPreview ? "Hide Preview" : "Show Preview"}
-          </button>
-        ) : null}
-      </div>
-      <div className="flex-1 flex">
-        <Editor
-          height={
-            showPreview && (language === "javascript" || language === "html")
-              ? "50%"
-              : "100%"
+            <SelectTrigger className="w-1/4">
+              <SelectValue placeholder="Language" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Language</SelectLabel>
+                {languageOptions.map((lang) => (
+                  <SelectItem key={lang} value={lang}>
+                    {lang}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center justify-end flex-row gap-4 w-1/2">
+          <Button onClick={handleSave}>{saveSuccess || "Save"}</Button>
+          {
+            <Button
+              onClick={() => setShowPreview(!showPreview)}
+              disabled={language !== "html"}
+            >
+              {language === "html"
+                ? showPreview
+                  ? "Hide Preview"
+                  : "Show Preview"
+                : "Show Preview"}
+            </Button>
           }
+        </div>
+      </div>
+      <div className="flex-1 flex flex-col">
+        <Editor
+          height={showPreview && language === "html" ? "50%" : "100%"}
           defaultLanguage="javascript"
           value={code}
           onChange={(value) => setCode(value || "")}
           theme="vs-dark"
         />
-        {showPreview && (language === "javascript" || language === "html") && (
-          <iframe
-            srcDoc={language === "html" ? code : `<script>${code}</script>`}
-            className="w-full h-1/2 border-t"
-          />
+        {showPreview && language === "html" && (
+          <iframe srcDoc={code} className="w-full h-1/2 border-t" />
         )}
       </div>
     </div>
