@@ -35,13 +35,11 @@ const Sidebar = ({
 }: any) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [shareSuccess, setShareSuccess] = useState("default");
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
-  const [newName, setNewName] = useState("");
 
   useEffect(() => {
     axios.get("/api/projects").then((response) => {
@@ -67,12 +65,6 @@ const Sidebar = ({
     }
   };
 
-  const handleEdit = (project: Project) => {
-    setCurrentProject(project);
-    setNewName(project.name);
-    setIsEditDialogOpen(true);
-  };
-
   const handleFocus = (projectId: any) => {
     const url = new URL(window.location.href);
     url.searchParams.set("shareId", projectId.toString());
@@ -89,33 +81,8 @@ const Sidebar = ({
     }
   };
 
-  const confirmEdit = () => {
-    if (!currentProject) return;
-    // Fetch the project code from the server
-    axios
-      .get(`/api/projects/${currentProject.id}`)
-      .then((response) => {
-        const project = response.data;
-        if (currentProject && newName) {
-          axios
-            .put(`/api/projects/${currentProject.id}`, {
-              ...currentProject,
-              name: newName,
-              code: project.code,
-            })
-            .then(() => {
-              refreshProjects();
-              setIsEditDialogOpen(false);
-            });
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching project code:", error);
-      });
-  };
-
   return (
-    <div className="w-64 bg-gray-800 text-white h-full p-4">
+    <div className="w-64 bg-gray-800 text-white h-full p-4 max-h-full overflow-auto">
       <Button
         className="w-full"
         variant={"secondary"}
@@ -138,17 +105,6 @@ const Sidebar = ({
                     <div className="flex justify-between max-h-24 overflow-auto">
                       <span>{project.name}</span>
                       <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
-                        <Button
-                          variant={"ghost"}
-                          size={"icon"}
-                          className="z-10 w-6 h-6"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEdit(project);
-                          }}
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
                         <Button
                           variant={"ghost"}
                           size={"icon"}
@@ -182,36 +138,12 @@ const Sidebar = ({
             ))}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-full">
-          <Loader2 className="w-6 h-6 animate-spin" />
+        <div className="flex flex-col space-y-2 mt-4">
+          {[...Array(10)].map((_, index) => (
+            <Skeleton key={index} className="w-full h-10" />
+          ))}
         </div>
       )}
-
-      {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Project</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>
-            <Input
-              type="text"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </DialogDescription>
-          <DialogFooter>
-            <Button
-              variant="secondary"
-              onClick={() => setIsEditDialogOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button onClick={confirmEdit}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Delete Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>

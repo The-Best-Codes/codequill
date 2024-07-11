@@ -17,10 +17,20 @@ export default async function handler(
     const project = await db.get("SELECT * FROM projects WHERE id = ?", [id]);
     res.json(project);
   } else if (req.method === "PUT") {
-    const { name, code, language } = req.body;
+    const { name, code, language, metadataSet } = req.body;
+
+    // Get the project from the database
+    const project = await db.get("SELECT * FROM projects WHERE id = ?", [id]);
+    const dateCreated = project?.metadata?.created;
+    //const dateModified = project?.metadata?.updated;
+    const metadata = {
+      created: dateCreated || new Date().toLocaleString(),
+      updated: new Date().toLocaleString(),
+    };
+
     await db.run(
-      "UPDATE projects SET name = ?, code = ?, language = ? WHERE id = ?",
-      [name, code, language, id]
+      "UPDATE projects SET name = ?, code = ?, language = ?, metadata = ? WHERE id = ?",
+      [name, code, language, JSON.stringify(metadata), id]
     );
     res.status(200).end();
   } else if (req.method === "DELETE") {
