@@ -133,7 +133,7 @@ const Sidebar = ({
                   } group`}
                   onClick={() => setSelectedProject(project)}
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between max-h-24 overflow-auto">
                     <span>{project.name}</span>
                     <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
                       <Button

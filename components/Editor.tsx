@@ -15,6 +15,7 @@ import {
 import { Check, Info, Loader2 } from "lucide-react";
 
 const languageOptions = [
+  "auto",
   "html",
   "javascript",
   "typescript",
