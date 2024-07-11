@@ -12,46 +12,85 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check, Info } from "lucide-react";
+import { Check, Info, Loader2 } from "lucide-react";
 
-const languageOptions = ["javascript", "typescript", "python", "html", "css"];
+const languageOptions = [
+  "html",
+  "javascript",
+  "typescript",
+  "python",
+  "java",
+  "c",
+  "php",
+  "css",
+];
 
-const CodeEditor = ({ selectedProject, refreshProjects }: any) => {
+const CodeEditor = ({
+  selectedProject,
+  setSelectedProject,
+  refreshProjects,
+}: any) => {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Untitled");
   const [showPreview, setShowPreview] = useState(true);
   const [saveSuccess, setSaveSuccess] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (selectedProject) {
-      setCode(selectedProject.code);
-      setLanguage(selectedProject.language);
-      setName(selectedProject.name);
+      setIsLoading(true);
+      axios
+        .get(`/api/projects/${selectedProject.id}`)
+        .then((response) => {
+          const project = response.data;
+          setCode(project.code);
+          setLanguage(project.language);
+          setName(project?.name || "Untitled");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       setCode("");
       setLanguage("javascript");
-      setName("");
+      setName("Untitled");
     }
   }, [selectedProject]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveSuccess("Saving...");
     try {
       if (selectedProject) {
-        setSaveSuccess("Saving...");
-        axios
-          .put(`/api/projects/${selectedProject.id}`, { name, code, language })
-          .then(() => {
-            refreshProjects();
-          });
-        setSaveSuccess("Saved");
-      } else {
-        axios.post("/api/projects", { name, code, language }).then(() => {
-          refreshProjects();
+        await axios.put(`/api/projects/${selectedProject.id}`, {
+          name,
+          code,
+          language,
         });
+      } else {
+        const response = await axios.post("/api/projects", {
+          name,
+          code,
+          language,
+        });
+        const project = await response.data;
+        if (!project) return;
+        setSelectedProject({ ...project, code, language, name });
       }
+      refreshProjects();
+      setSaveSuccess("Saved");
+      setTimeout(() => {
+        setSaveSuccess("");
+        setIsSaving(false);
+      }, 1000);
     } catch (error) {
       setSaveSuccess("Error");
+      setTimeout(() => {
+        setSaveSuccess("");
+        setIsSaving(false);
+      }, 1000);
     }
   };
 
@@ -63,12 +102,15 @@ const CodeEditor = ({ selectedProject, refreshProjects }: any) => {
             type="text"
             placeholder="Project Name"
             value={name}
+            minLength={2}
             onChange={(e) => setName(e.target.value)}
             className="p-2 border rounded w-1/4"
+            disabled={isLoading}
           />
           <Select
             value={language}
             onValueChange={(value) => setLanguage(value)}
+            disabled={isLoading}
           >
             <SelectTrigger className="w-1/4">
               <SelectValue placeholder="Language" />
@@ -86,11 +128,24 @@ const CodeEditor = ({ selectedProject, refreshProjects }: any) => {
           </Select>
         </div>
         <div className="flex items-center justify-end flex-row gap-4 w-1/2">
-          <Button onClick={handleSave}>{saveSuccess || "Save"}</Button>
+          <Button onClick={handleSave} disabled={isSaving || isLoading}>
+            {saveSuccess === "Saving..." && "Saving..."}
+            {saveSuccess === "Saved" && (
+              <>
+                <Check className="inline-block mr-2" /> Saved
+              </>
+            )}
+            {saveSuccess === "Error" && (
+              <>
+                <Info className="inline-block mr-2" /> Error
+              </>
+            )}
+            {!saveSuccess && "Save"}
+          </Button>
           {
             <Button
               onClick={() => setShowPreview(!showPreview)}
-              disabled={language !== "html"}
+              disabled={language !== "html" || isLoading}
             >
               {language === "html"
                 ? showPreview
@@ -102,15 +157,23 @@ const CodeEditor = ({ selectedProject, refreshProjects }: any) => {
         </div>
       </div>
       <div className="flex-1 flex flex-col">
-        <Editor
-          height={showPreview && language === "html" ? "50%" : "100%"}
-          defaultLanguage="javascript"
-          value={code}
-          onChange={(value) => setCode(value || "")}
-          theme="vs-dark"
-        />
-        {showPreview && language === "html" && (
-          <iframe srcDoc={code} className="w-full h-1/2 border-t" />
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <Loader2 className="w-6 h-6 animate-spin" />
+          </div>
+        ) : (
+          <>
+            <Editor
+              height={showPreview && language === "html" ? "50%" : "100%"}
+              language={language}
+              value={code}
+              onChange={(value) => setCode(value || "")}
+              theme="vs-dark"
+            />
+            {showPreview && language === "html" && (
+              <iframe srcDoc={code} className="w-full h-1/2 border-t" />
+            )}
+          </>
         )}
       </div>
     </div>

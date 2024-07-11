@@ -12,7 +12,11 @@ export default async function handler(
   });
 
   if (req.method === "GET") {
-    const projects = await db.all("SELECT * FROM projects");
+    let projects = await db.all("SELECT * FROM projects");
+    // Remove the code field from all projects
+    projects = projects.map((project) => {
+      return { ...project, code: "" };
+    });
     res.json(projects);
   } else if (req.method === "POST") {
     const { name, code, language } = req.body;
