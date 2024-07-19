@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/select";
 import { Check, Info, Loader2 } from "lucide-react";
 
+const DEFAULT_LANGUAGE = "html";
+
 const languageOptions = [
   "auto",
   "html",
@@ -26,18 +28,34 @@ const languageOptions = [
   "css",
 ];
 
+const getStoredDefaultLanguage = () => {
+  return localStorage.getItem("defaultLanguage") || "javascript";
+};
+
+const setStoredDefaultLanguage = (language: string) => {
+  localStorage.setItem("defaultLanguage", language);
+};
+
 const CodeEditor = ({
   selectedProject,
   setSelectedProject,
   refreshProjects,
 }: any) => {
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("javascript");
+  const [defaultLanguage, setDefaultLanguage] = useState(
+    getStoredDefaultLanguage()
+  );
+  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const [name, setName] = useState("Untitled");
   const [showPreview, setShowPreview] = useState(true);
   const [saveSuccess, setSaveSuccess] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const updateDefaultLanguage = (newLanguage: string) => {
+    setDefaultLanguage(newLanguage);
+    setStoredDefaultLanguage(newLanguage);
+  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -55,10 +73,10 @@ const CodeEditor = ({
         });
     } else {
       setCode("");
-      setLanguage("javascript");
+      setLanguage(defaultLanguage);
       setName("Untitled");
     }
-  }, [selectedProject]);
+  }, [selectedProject, defaultLanguage]);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -155,6 +173,25 @@ const CodeEditor = ({
                 : "Show Preview"}
             </Button>
           }
+          <Select
+            value={defaultLanguage}
+            onValueChange={updateDefaultLanguage}
+            disabled={isLoading}
+          >
+            <SelectTrigger className="w-1/4">
+              <SelectValue placeholder="Default Language" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Default Language</SelectLabel>
+                {languageOptions.map((lang) => (
+                  <SelectItem key={lang} value={lang}>
+                    {lang}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <div className="flex-1 flex flex-col">
