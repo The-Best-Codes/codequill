@@ -165,7 +165,7 @@ const Sidebar = ({
                   <div
                     className={`p-2 rounded cursor-pointer ${
                       selectedProject?.id === project.id
-                        ? "bg-gray-300 text-black dark:bg-gray-700 text-white"
+                        ? "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"
                         : ""
                     } group`}
                     onClick={() => setSelectedProject(project)}
