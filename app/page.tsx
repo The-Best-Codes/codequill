@@ -10,8 +10,8 @@ const HomePage = () => {
 
   // Check if there is a ?shareId parameter in the URL
   useEffect(() => {
-    if (window !== undefined) {
-      const urlParams = new URLSearchParams(window.location.search);
+    if (typeof window !== "undefined" && window?.location?.search) {
+      const urlParams = new URLSearchParams(window?.location?.search);
       const shareId = urlParams.get("shareId");
 
       if (shareId) {
