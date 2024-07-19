@@ -1,5 +1,11 @@
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
+const fs = require('fs');
+const path = require('path');
+
+if (!fs.existsSync('./database.sqlite')) {
+  fs.writeFileSync('./database.sqlite', '');
+}
 
 (async () => {
   const db = await open({
