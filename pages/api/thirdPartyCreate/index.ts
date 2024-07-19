@@ -13,7 +13,7 @@ export default async function handler(
   });
   if (req.method === "POST") {
     let { name, code } = req.body;
-    let { language } = req.body;
+    let { language, overrideURI } = req.body;
 
     if (!name) {
       name = `Project ${new Date().toLocaleString()}`;
@@ -23,7 +23,46 @@ export default async function handler(
       res.status(400).end();
     }
 
-    code = decodeURIComponent(code);
+    try {
+      code = decodeURIComponent(code);
+    } catch (error) {
+      if (overrideURI !== "true") {
+        res.status(200).write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Error</title>
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+            .error-container { background-color: #f2f2f2; margin: auto; padding: 20px; border-radius: 10px; width: 50%; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); }
+            h1 { color: #333; }
+            .button { background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; }
+            .button:hover { background-color: #45a049; }
+            p, i { color: #555; }
+          </style>
+        </head>
+        <body>
+          <div class="error-container">
+            <h1>Invalid URI</h1>
+            <form action="${req.url}" method="post">
+              <input type="hidden" name="name" value="${name}">
+              <input type="hidden" name="code" value="${encodeURIComponent(
+                code
+              )}">
+              <input type="hidden" name="language" value="${language}">
+              <input type="hidden" name="overrideURI" value="true">
+              <button type="submit" class="button">Save anyway</button>
+            </form>
+            <p>Error: <b>${error}</b></p>
+            <i>Saving the code anyway may result in random characters throughout your code.</i>
+          </div>
+        </body>
+      </html>
+    `);
+        res.end();
+        return;
+      }
+    }
 
     const allowedLanguages = [
       "html",
@@ -54,9 +93,11 @@ export default async function handler(
       "INSERT INTO projects (name, code, language, metadata) VALUES (?, ?, ?, ?)",
       [name, code, language, JSON.stringify(metadata)]
     );
+
     res.writeHead(302, { Location: `/?shareId=${result.lastID}` });
     res.end();
   } else {
-    res.status(405).end();
+    res.status(405).write("Method not allowed");
+    res.end();
   }
 }
