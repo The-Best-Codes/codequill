@@ -29,10 +29,12 @@ const languageOptions = [
 ];
 
 const getStoredDefaultLanguage = () => {
+  if (!window) return "javascript";
   return localStorage.getItem("defaultLanguage") || "javascript";
 };
 
 const setStoredDefaultLanguage = (language: string) => {
+  if (!window) return;
   localStorage.setItem("defaultLanguage", language);
 };
 
