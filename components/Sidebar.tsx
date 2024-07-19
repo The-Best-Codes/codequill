@@ -9,6 +9,7 @@ import {
   Loader2,
   SortAsc,
   SortDesc,
+  Search,
 } from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -61,6 +62,8 @@ const Sidebar = ({
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [sortAsc, setSortAsc] = useState(true);
   const [sortType, setSortType] = useState("date_modified");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     axios.get(`/api/projects?sort=${sortType}`).then((response) => {
@@ -69,9 +72,17 @@ const Sidebar = ({
         projectsData = projectsData.reverse();
       }
       setProjects(projectsData);
+      setFilteredProjects(projectsData);
       setIsLoading(false);
     });
   }, [refreshProjects, sortType, sortAsc]);
+
+  const handleSearch = () => {
+    const filtered = projects.filter((project) =>
+      project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProjects(filtered);
+  };
 
   const handleDelete = (id: number) => {
     setIsDeleteDialogOpen(true);
@@ -133,10 +144,22 @@ const Sidebar = ({
           {sortAsc ? <SortAsc /> : <SortDesc />}
         </Button>
       </div>
+      <div className="mt-4 flex flex-row justify-between space-x-2">
+        <Input
+          type="text"
+          placeholder="Search projects..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="text-black"
+        />
+        <Button variant={"secondary"} onClick={handleSearch}>
+          <Search className="w-4 h-4" />
+        </Button>
+      </div>
       {!isLoading ? (
         <div className="mt-4">
-          {projects.length > 0 &&
-            projects.map((project) => (
+          {filteredProjects.length > 0 &&
+            filteredProjects.map((project) => (
               <ContextMenu key={project.id}>
                 <ContextMenuTrigger>
                   <div
