@@ -10,21 +10,22 @@ const HomePage = () => {
 
   // Check if there is a ?shareId parameter in the URL
   useEffect(() => {
-    if (!window) return;
-    const urlParams = new URLSearchParams(window.location.search);
-    const shareId = urlParams.get("shareId");
+    if (window !== undefined) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const shareId = urlParams.get("shareId");
 
-    if (shareId) {
-      axios
-        .get(`/api/projects/${shareId}`)
-        .then((response) => {
-          if (response.data) {
-            setSelectedProject(response.data);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      if (shareId) {
+        axios
+          .get(`/api/projects/${shareId}`)
+          .then((response) => {
+            if (response.data) {
+              setSelectedProject(response.data);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     }
   }, []);
 
