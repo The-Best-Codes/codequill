@@ -116,7 +116,7 @@ const Sidebar = ({
   };
 
   return (
-    <div className="w-64 bg-gray-800 text-white h-full p-4 max-h-full overflow-auto">
+    <div className="w-64 bg-gray-200 text-black dark:bg-gray-800 dark:text-white h-full p-4 max-h-full overflow-auto">
       <Button
         className="w-full"
         variant={"secondary"}

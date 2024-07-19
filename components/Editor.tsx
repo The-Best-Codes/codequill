@@ -115,7 +115,7 @@ const CodeEditor = ({
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex justify-between items-center p-4 bg-gray-200">
+      <div className="flex justify-between items-center p-4 bg-gray-200 text-black dark:bg-gray-800 dark:text-white">
         <div className="flex items-center flex-row gap-4 w-1/2">
           <Input
             type="text"
@@ -123,7 +123,7 @@ const CodeEditor = ({
             value={name}
             minLength={2}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 border rounded w-1/4"
+            className="p-2 border rounded w-1/4 text-black"
             disabled={isLoading}
           />
           <Select
@@ -131,7 +131,7 @@ const CodeEditor = ({
             onValueChange={(value) => setLanguage(value)}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-1/4">
+            <SelectTrigger className="w-1/4 text-black">
               <SelectValue placeholder="Language" />
             </SelectTrigger>
             <SelectContent>
@@ -178,7 +178,7 @@ const CodeEditor = ({
             onValueChange={updateDefaultLanguage}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-1/4">
+            <SelectTrigger className="w-1/4 text-black">
               <SelectValue placeholder="Default Language" />
             </SelectTrigger>
             <SelectContent>
