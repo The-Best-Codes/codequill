@@ -4,6 +4,8 @@
 
 [![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill)
 
+<img src=".assets/codequill_main_logo.png" alt="logo" for="cover" />
+
 CodeQuill is a web-based code editor designed to offer a free, easy, and efficient way to organize, store, edit, and share code snippets directly from your device. Whether you're working on personal projects or simply storing snippets for future reference, CodeQuill provides a seamless experience for managing your code.
 
 ## Features
