@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import CodeEditor from "../components/Editor";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 
 const HomePage = () => {
@@ -34,12 +37,34 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <Sidebar
-        selectedProject={selectedProject}
-        setSelectedProject={setSelectedProject}
-        refreshProjects={refreshProjectsList}
-      />
+    <div className="flex h-screen dark:bg-slate-800">
+      {/* Show Sheet and Menu button on small screens */}
+      <div className="sm:hidden">
+        <Sheet>
+          <SheetTrigger asChild className="w-12">
+            <Button variant="ghost" className="dark:text-white" size={"icon"}>
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 gap-0 m-0 w-fit">
+            <Sidebar
+              selectedProject={selectedProject}
+              setSelectedProject={setSelectedProject}
+              refreshProjects={refreshProjectsList}
+            />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Show Sidebar directly on larger screens */}
+      <div className="hidden sm:block">
+        <Sidebar
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          refreshProjects={refreshProjectsList}
+        />
+      </div>
+
       <div className="flex-1">
         <CodeEditor
           selectedProject={selectedProject}
