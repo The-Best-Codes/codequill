@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
+import { CodeiumEditor } from "@codeium/react-code-editor";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
