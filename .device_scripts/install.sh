@@ -39,10 +39,32 @@ print_step "Installing dependencies..."
 sudo apt install -y git nodejs npm
 check_status
 
+# Check if codequill folder exists
+if [ -d "codequill" ]; then
+    print_step "CodeQuill folder already exists. Backing up database..."
+    if [ -f "codequill/database.sqlite" ]; then
+        cp codequill/database.sqlite ./database.sqlite.backup
+        check_status
+    else
+        print_color "33" "⚠️ No database file found to backup."
+    fi
+
+    print_step "Removing existing CodeQuill folder..."
+    rm -rf codequill
+    check_status
+fi
+
 # Clone the repository
 print_step "Cloning the CodeQuill repository..."
 git clone https://github.com/The-Best-Codes/codequill.git
 check_status
+
+# Restore database if backup exists
+if [ -f "./database.sqlite.backup" ]; then
+    print_step "Restoring database..."
+    mv ./database.sqlite.backup codequill/database.sqlite
+    check_status
+fi
 
 # Change directory
 print_step "Changing to the CodeQuill directory..."
