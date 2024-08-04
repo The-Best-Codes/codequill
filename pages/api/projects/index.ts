@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
+import initDb from "@/utils/initDb";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await initDb();
   const db = await open({
     filename: "./database.sqlite",
     driver: sqlite3.Database,

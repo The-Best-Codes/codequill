@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
 import detectLanguage from "@/utils/detectLang";
+import initDb from "@/utils/initDb";
 
 // Helper function to escape HTML entities
 function escapeHtml(str: string) {
@@ -17,6 +18,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await initDb();
   const db = await open({
     filename: "./database.sqlite",
     driver: sqlite3.Database,
