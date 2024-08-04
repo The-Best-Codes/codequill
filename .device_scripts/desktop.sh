@@ -27,6 +27,13 @@ Exec=$CODEQUILL_DIR/start.sh
 Icon=$ICON_PATH
 Terminal=false
 Categories=Development;IDE;
+
+Actions=Manager;
+
+[Desktop Action Manager]
+Name=CodeQuill Manager
+Exec=x-terminal-emulator -e $CODEQUILL_DIR/codequill.sh
+Terminal=true
 EOL
 
 # Make the desktop file executable
