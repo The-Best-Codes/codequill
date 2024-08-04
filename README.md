@@ -10,7 +10,17 @@
 
 Installing CodeQuill on Linux (Ubuntu is preferred) is straightforward.
 
-Here are the steps to install your app:
+### Using the installer
+
+Download the install file here:<br>
+[https://github.com/The-Best-Codes/codequill/blob/main/codequill_app.sh](https://github.com/The-Best-Codes/codequill/blob/main/codequill_app.sh)<br>
+_Click the download button in the top right of the editor._
+
+If the download doesn't happen automatically, open the URL and save the page manually (right click and select "Save page as" or Press `CTRL + S`).
+
+Rigth click on the file, then select properties, and turn on "Allow executing as a program". Right click on the file again and select "Run as a progam".
+
+### Manual installation
 
 1. Open a terminal on your device.
 
