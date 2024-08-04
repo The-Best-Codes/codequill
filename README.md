@@ -2,9 +2,43 @@
 
 [![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill)
 
-[![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill)
+<!-- [![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill) -->
 
 <img src=".assets/codequill_main_logo.png" alt="logo" for="cover" />
+
+## How to install CodeQuill on Linux
+
+Installing CodeQuill on Linux (Ubuntu is preferred) is straightforward.
+
+Here are the steps to install your app:
+
+1. Open a terminal on your device.
+
+2. Navigate to your home directory:
+   ```
+   cd ~
+   ```
+
+3. Download the installation script using curl:
+   ```
+   curl -O https://raw.githubusercontent.com/The-Best-Codes/codequill/main/.device_scripts/codequill.sh
+   ```
+
+4. Make the downloaded script executable:
+   ```
+   chmod +x codequill.sh
+   ```
+
+5. Run the installation script:
+   ```
+   ./codequill.sh
+   ```
+
+6. Wait for the installation process to complete. The script will install CodeQuill and any necessary dependencies.
+
+7. Once the installation is finished, you should be able to use CodeQuill on your device.
+
+---
 
 CodeQuill is a web-based code editor designed to offer a free, easy, and efficient way to organize, store, edit, and share code snippets directly from your device. Whether you're working on personal projects or simply storing snippets for future reference, CodeQuill provides a seamless experience for managing your code.
 
