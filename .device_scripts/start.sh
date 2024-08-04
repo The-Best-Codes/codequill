@@ -12,32 +12,22 @@ print_step() {
     print_color "36" "\n📌 $1"
 }
 
-# Function to log
-log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a codequill.log
-}
-
 # Function to cleanup and exit
 cleanup_and_exit() {
-    log "🛑 Stopping CodeQuill..."
     print_color "33" "\n\n🛑 Stopping CodeQuill..."
 
     if [ -n "$NEXT_PID" ]; then
         if kill -0 $NEXT_PID 2>/dev/null; then
             kill $NEXT_PID
             wait $NEXT_PID 2>/dev/null
-            log "✅ Stopped Next.js server (PID: $NEXT_PID)"
             print_color "32" "✅ Next.js server stopped"
         else
-            log "⚠️ Next.js server (PID: $NEXT_PID) was not running"
             print_color "33" "⚠️ Next.js server was not running"
         fi
     else
-        log "⚠️ Next.js server PID not set"
         print_color "33" "⚠️ Next.js server PID not set"
     fi
 
-    log "👋 CodeQuill has stopped"
     print_color "35" "
 ==========================
 👋 CodeQuill has stopped 👋
@@ -50,7 +40,6 @@ cleanup_and_exit() {
 trap cleanup_and_exit SIGINT SIGTERM
 
 # Start message
-log "🚀 Starting CodeQuill"
 print_color "35" "
 ==========================
 🚀 Starting CodeQuill 🚀
@@ -60,11 +49,9 @@ print_color "35" "
 # Change to the CodeQuill directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR/codequill" || {
-    log "❌ Failed to change to CodeQuill directory"
     print_color "31" "❌ Failed to change to CodeQuill directory"
     exit 1
 }
-log "Changed to directory: $(pwd)"
 print_step "Changed to directory: $(pwd)"
 
 # Check if .next directory exists
@@ -73,11 +60,9 @@ if [ ! -d ".next" ]; then
     npm run build
     if [ $? -ne 0 ]; then
         print_color "31" "❌ Build failed. Please check for errors and try again."
-        log "Build failed"
         exit 1
     fi
     print_color "32" "✅ Build completed successfully."
-    log "Build completed successfully"
 else
     print_step ".next directory found. Skipping build."
 fi
@@ -101,10 +86,19 @@ fi
 print_step "Starting Next.js server on port $PORT..."
 npm run start -- -p $PORT &
 NEXT_PID=$!
-log "Started Next.js server with PID: $NEXT_PID"
 
-# Wait a bit for the server to start
-sleep 5
+# Function to check if the server is ready
+check_server() {
+    curl -s http://localhost:$PORT >/dev/null
+    return $?
+}
+
+# Wait for the server to be ready
+print_step "Waiting for Next.js server to be ready..."
+while ! check_server; do
+    sleep 1
+done
+print_color "32" "✅ Next.js server is ready!"
 
 # Start Electron
 print_step "Starting Electron..."

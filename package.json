@@ -1,6 +1,9 @@
 {
   "name": "codequill",
-  "version": "0.1.0",
+  "author": "The-Best-Codes",
+  "license": "MIT",
+  "description": "Organize, Edit, and Share your Code Snippets",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
