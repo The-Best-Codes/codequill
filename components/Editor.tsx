@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -54,6 +54,9 @@ const CodeEditor = ({
   const [saveSuccess, setSaveSuccess] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
+  const [editorWidth, setEditorWidth] = useState("100%");
+  const containerRef = useRef(null);
 
   const updateDefaultLanguage = (newLanguage: string) => {
     setDefaultLanguage(newLanguage);
@@ -80,6 +83,30 @@ const CodeEditor = ({
       setName("Untitled");
     }
   }, [selectedProject, defaultLanguage]);
+
+  useEffect(() => {
+    // Set dark mode based on system preference
+    if (typeof window === "undefined") return;
+    const prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setDarkMode(prefersDarkMode);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        setEditorWidth(`${(containerRef.current as any).offsetWidth}px`);
+      }
+    };
+
+    handleResize(); // Call once to set initial size
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -126,7 +153,7 @@ const CodeEditor = ({
             value={name}
             minLength={2}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 border rounded w-1/4 text-black"
+            className="p-2 border rounded w-24 sm:w-32 md:w-48 lg:w-64 xl:w-72 text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
             disabled={isLoading}
           />
           <Select
@@ -134,14 +161,20 @@ const CodeEditor = ({
             onValueChange={(value) => setLanguage(value)}
             disabled={isLoading}
           >
-            <SelectTrigger className="w-1/4 text-black">
+            <SelectTrigger className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
               <SelectValue placeholder="Language" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
               <SelectGroup>
-                <SelectLabel>Language</SelectLabel>
+                <SelectLabel className="dark:text-white dark:bg-gray-800">
+                  Language
+                </SelectLabel>
                 {languageOptions.map((lang) => (
-                  <SelectItem key={lang} value={lang}>
+                  <SelectItem
+                    className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+                    key={lang}
+                    value={lang}
+                  >
                     {lang}
                   </SelectItem>
                 ))}
@@ -176,7 +209,7 @@ const CodeEditor = ({
                 : "Show Preview"}
             </Button>
           }
-          <Select
+          {/* <Select
             value={defaultLanguage}
             onValueChange={updateDefaultLanguage}
             disabled={isLoading}
@@ -194,10 +227,10 @@ const CodeEditor = ({
                 ))}
               </SelectGroup>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
       </div>
-      <div className="flex-1 flex flex-col">
+      <div className="w-full h-full flex flex-col">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <Loader2 className="w-6 h-6 animate-spin" />
@@ -206,13 +239,14 @@ const CodeEditor = ({
           <>
             <Editor
               height={showPreview && language === "html" ? "50%" : "100%"}
+              width="100%"
               language={language}
               value={code}
               onChange={(value) => setCode(value || "")}
-              theme="vs-dark"
+              theme={(darkMode ? "vs-dark" : "vs-light") as any}
             />
             {showPreview && language === "html" && (
-              <iframe srcDoc={code} className="w-full h-1/2 border-t" />
+              <iframe srcDoc={code} className="w-full h-1/2" />
             )}
           </>
         )}

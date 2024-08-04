@@ -116,9 +116,9 @@ const Sidebar = ({
   };
 
   return (
-    <div className="w-64 bg-gray-200 text-black dark:bg-gray-800 dark:text-white h-full p-4 max-h-full overflow-auto">
+    <div className="w-full bg-gray-200 text-black dark:bg-slate-800 dark:text-white h-full p-4 max-h-screen overflow-auto">
       <Button
-        className="w-full"
+        className="w-full dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700"
         variant={"secondary"}
         onClick={() => setSelectedProject(null)}
       >
@@ -130,17 +130,32 @@ const Sidebar = ({
           value={sortType}
           defaultValue="date_modified"
         >
-          <SelectTrigger className="text-black">
+          <SelectTrigger className="text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
             <SelectValue placeholder="Sort By" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="name">Name</SelectItem>
-            <SelectItem value="date_created">Date Created</SelectItem>
-            <SelectItem value="date_modified">Date Modified</SelectItem>
+          <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
+            <SelectItem
+              className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              value="name"
+            >
+              Name
+            </SelectItem>
+            <SelectItem
+              className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              value="date_created"
+            >
+              Date Created
+            </SelectItem>
+            <SelectItem
+              className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+              value="date_modified"
+            >
+              Date Modified
+            </SelectItem>
           </SelectContent>
         </Select>
 
-        <Button variant={"secondary"} onClick={() => setSortAsc(!sortAsc)}>
+        <Button className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700" variant={"secondary"} onClick={() => setSortAsc(!sortAsc)}>
           {sortAsc ? <SortAsc /> : <SortDesc />}
         </Button>
       </div>
@@ -150,9 +165,9 @@ const Sidebar = ({
           placeholder="Search projects..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="text-black"
+          className="text-black dark:text-white dark:bg-gray-800 dark:border-gray-700"
         />
-        <Button variant={"secondary"} onClick={handleSearch}>
+        <Button className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700" variant={"secondary"} onClick={handleSearch}>
           <Search className="w-4 h-4" />
         </Button>
       </div>

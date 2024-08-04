@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Install anything we need in this file
-echo "Updating package list (you may need to authenticate)..."
-sudo apt update
-echo "Installing dependencies..."
-sudo apt install -y git nodejs npm curl
-
 # Array of required scripts
 REQUIRED_SCRIPTS=("install.sh" "uninstall.sh" "start.sh" "desktop.sh" "remove_desktop.sh")
 

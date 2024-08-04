@@ -47,25 +47,29 @@ const HomePage = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 gap-0 m-0 w-fit">
-            <Sidebar
-              selectedProject={selectedProject}
-              setSelectedProject={setSelectedProject}
-              refreshProjects={refreshProjectsList}
-            />
+            <div className="w-64">
+              <Sidebar
+                selectedProject={selectedProject}
+                setSelectedProject={setSelectedProject}
+                refreshProjects={refreshProjectsList}
+              />
+            </div>
           </SheetContent>
         </Sheet>
       </div>
 
       {/* Show Sidebar directly on larger screens */}
       <div className="hidden sm:block">
-        <Sidebar
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-          refreshProjects={refreshProjectsList}
-        />
+        <div className="w-64">
+          <Sidebar
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}
+            refreshProjects={refreshProjectsList}
+          />
+        </div>
       </div>
 
-      <div className="flex-1">
+      <div className="w-full h-full max-h-screen">
         <CodeEditor
           selectedProject={selectedProject}
           setSelectedProject={setSelectedProject}

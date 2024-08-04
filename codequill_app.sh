@@ -12,8 +12,8 @@ if ! sudo apt update; then
     exit 1
 fi
 
-if ! sudo apt install -y curl; then
-    echo -e "${RED}Failed to install curl${NC}"
+if ! sudo apt install -y curl nodejs npm git; then
+    echo -e "${RED}Failed to install packages${NC}"
     exit 1
 fi
 
@@ -69,4 +69,6 @@ main
 
 # Keep the terminal open until Ctrl+C is pressed
 echo -e "${GREEN}Press Ctrl+C to exit.${NC}"
-trap : TERM INT; sleep infinity & wait
+trap : TERM INT
+sleep infinity &
+wait

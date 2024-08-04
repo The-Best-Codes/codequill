@@ -105,4 +105,4 @@ print_step "Starting Electron..."
 ELECTRON_START_URL=http://localhost:$PORT npm run electron -- --no-sandbox
 
 # Electron has exited, so we can clean up
-cleanup_and_exit
+# cleanup_and_exit
