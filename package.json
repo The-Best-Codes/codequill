@@ -6,7 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "electron": "electron .",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "electron-build": "next build && electron-builder"
+  },
+  "main": "electron/main.js",
+  "build": {
+    "appId": "com.example.codequill",
+    "files": [
+      "electron/**/*",
+      ".next/**/*",
+      "node_modules/**/*"
+    ]
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
@@ -34,6 +46,8 @@
     "@types/node": "^20.14.14",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
     "postcss": "^8.4.40",
