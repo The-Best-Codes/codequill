@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "electron": "electron .",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "electron": "electron . --no-sandbox",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron . --no-sandbox",
     "electron-build": "next build && electron-builder"
   },
   "main": "electron/main.js",
