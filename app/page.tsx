@@ -81,8 +81,8 @@ const HomePage = () => {
       </div>
 
       {/* Show Sidebar directly on larger screens */}
-      <div className="hidden sm:block">
-        <div className="w-64">
+      <div className="hidden sm:block h-full">
+        <div className="w-64 h-full">
           <Sidebar
             selectedProject={selectedProject}
             setSelectedProject={setSelectedProject}
