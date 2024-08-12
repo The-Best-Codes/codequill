@@ -114,13 +114,13 @@ else
     done
     print_color "32" "✅ Next.js server is ready!"
 
+    # Close splash screen after start
+    close_splash
+
     # Start Electron
     print_step "Starting Electron..."
     ELECTRON_START_URL=http://$LOCAL_IP:$PORT npm run electron -- --no-sandbox
 fi
-
-# Close splash screen after start
-close_splash
 
 print_color "35" "
 ==========================
