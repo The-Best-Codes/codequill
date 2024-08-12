@@ -11,6 +11,28 @@ const HomePage = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [refreshProjects, setRefreshProjects] = useState(false);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (typeof window !== "undefined") {
+          if (window.location.hostname.includes("localhost")) {
+            const response = await axios.get(`/api/meta/getDeviceIp`);
+
+            if (response.data.address !== "127.0.0.1") {
+              const currentPort = window.location.port;
+              const newUrl = `http://${response.data.address}:${currentPort}`;
+              window.location.href = newUrl;
+            }
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   // Check if there is a ?shareId parameter in the URL
   useEffect(() => {
     if (typeof window !== "undefined" && window?.location?.search) {
