@@ -40,6 +40,10 @@ main() {
     cd ~ || exit
     check_success "Changed to home directory"
 
+    mkdir -p codequill
+    cd codequill || exit
+    check_success "Changed to codequill directory"
+
     # Download the installation script
     if ! curl -O https://raw.githubusercontent.com/The-Best-Codes/codequill/main/.device_scripts/codequill.sh; then
         print_color "${RED}" "Failed to download installation script"
