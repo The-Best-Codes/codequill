@@ -73,7 +73,7 @@ fi
 
 # Change directory
 print_step "Changing to the CodeQuill directory..."
-cd codequill
+cd codequill/codequill
 check_status
 
 # Install Node.js dependencies

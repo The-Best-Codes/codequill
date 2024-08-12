@@ -9,13 +9,11 @@ BASE_URL="https://raw.githubusercontent.com/The-Best-Codes/codequill/main/.devic
 # Function to check and download missing scripts
 check_and_download_scripts() {
     for script in "${REQUIRED_SCRIPTS[@]}"; do
-        if [ ! -f "$script" ]; then
-            echo "Downloading $script..."
-            curl -O "$BASE_URL/$script"
-            if [ $? -ne 0 ]; then
-                echo "Failed to download $script. Please check your internet connection and try again."
-                exit 1
-            fi
+        echo "Downloading $script..."
+        curl -O "$BASE_URL/$script"
+        if [ $? -ne 0 ]; then
+            echo "Failed to download $script. Please check your internet connection and try again."
+            exit 1
         fi
     done
 }
