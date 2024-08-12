@@ -37,19 +37,30 @@ get_local_ip() {
 # Function to check if CodeQuill is running on another device (parallelized)
 check_remote_codequill() {
     local network_prefix=$(echo $1 | cut -d. -f1-3)
-    local ip_list=($(seq 1 254 | xargs -I {} echo "${network_prefix}.{}"))
-    local -a pids=()
+    local last_ip_file="$HOME/.codequill_last_ip"
 
-    for ip in "${ip_list[@]}"; do
-        if [ "$ip" != "$1" ]; then
-            (nc -z -w 1 $ip $PORT && echo $ip) &
-            pids+=($!)
+    # Check last known IP first if available
+    if [ -f "$last_ip_file" ]; then
+        local last_ip=$(cat "$last_ip_file")
+        if nc -z -w 1 $last_ip $PORT 2>/dev/null; then
+            echo $last_ip
+            return
         fi
-    done
+    fi
 
-    for pid in "${pids[@]}"; do
-        wait $pid
-    done | head -n 1
+    # Parallel scan using GNU Parallel if available
+    if command -v parallel &>/dev/null; then
+        parallel -j0 --halt now,success=1 "nc -z -w 1 $network_prefix.{} $PORT && echo $network_prefix.{}" ::: {1..254} 2>/dev/null | head -n1
+    else
+        for i in {1..254}; do
+            local ip="$network_prefix.$i"
+            if [ "$ip" != "$1" ] && nc -z -w 1 $ip $PORT 2>/dev/null; then
+                echo $ip
+                echo $ip >"$last_ip_file"
+                return
+            fi
+        done
+    fi
 }
 
 LOCAL_IP=$(get_local_ip)
