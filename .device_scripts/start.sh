@@ -19,6 +19,16 @@ print_color "35" "
 ==========================
 "
 
+# Show splash screen (using yad, zenity, or a similar tool)
+splash() {
+    yad --text="Starting CodeQuill..." --center --no-buttons --timeout=60 --width=300 --height=100 --title="Loading" --text-align=center &
+    SPLASH_PID=$!
+}
+
+close_splash() {
+    kill $SPLASH_PID
+}
+
 # Change to the CodeQuill directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR/codequill" || {
@@ -63,6 +73,9 @@ check_remote_codequill() {
     fi
 }
 
+# Start splash screen
+splash
+
 LOCAL_IP=$(get_local_ip)
 REMOTE_IP=$(check_remote_codequill $LOCAL_IP)
 
@@ -75,6 +88,7 @@ else
         print_step "The .next directory is missing. Running 'next build'..."
         npm run build
         if [ $? -ne 0 ]; then
+            close_splash
             print_color "31" "❌ Build failed. Please check for errors and try again."
             exit 1
         fi
@@ -104,6 +118,9 @@ else
     print_step "Starting Electron..."
     ELECTRON_START_URL=http://$LOCAL_IP:$PORT npm run electron -- --no-sandbox
 fi
+
+# Close splash screen after start
+close_splash
 
 print_color "35" "
 ==========================

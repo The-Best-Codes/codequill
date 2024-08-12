@@ -12,7 +12,7 @@ if ! sudo apt update; then
     exit 1
 fi
 
-if ! sudo apt install -y curl nodejs npm git; then
+if ! sudo apt install -y curl nodejs npm git yad; then
     echo -e "${RED}Failed to install packages${NC}"
     exit 1
 fi
