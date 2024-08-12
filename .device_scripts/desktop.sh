@@ -22,7 +22,7 @@ cat > "$DESKTOP_FILE" << EOL
 Version=1.0
 Type=Application
 Name=CodeQuill
-Comment=AI-powered code editor
+Comment=Organize, Edit, and Share your Code Snippets
 Exec=$CODEQUILL_DIR/start.sh
 Icon=$ICON_PATH
 Terminal=false
