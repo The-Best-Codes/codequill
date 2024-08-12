@@ -39,6 +39,11 @@ print_step "Installing dependencies..."
 sudo apt install -y git nodejs npm
 check_status
 
+# Create codequill folder if it doesn't exist
+print_step "Creating codequill folder..."
+mkdir -p codequill
+check_status
+
 # Check if codequill folder exists
 if [ -d "codequill" ]; then
     print_step "CodeQuill folder already exists. Backing up database..."
