@@ -19,9 +19,22 @@ print_color "35" "
 ==========================
 "
 
-# Show splash screen (using yad, zenity, or a similar tool)
+# Show splash screen (using yad)
 splash() {
-    yad --text="Starting CodeQuill..." --center --no-buttons --timeout=60 --width=300 --height=100 --title="Loading" --text-align=center &
+    # Display a splash screen with an enhanced message
+    yad --text="<span font='14' weight='bold'>🚀 Starting CodeQuill...</span>" \
+        --center \
+        --no-buttons \
+        --timeout=60 \
+        --width=400 \
+        --height=200 \
+        --title="Loading" \
+        --text-align=center \
+        --image="dialog-information" \
+        --image-on-top \
+        --window-icon="dialog-information" &
+
+    # Capture the PID of the splash screen process
     SPLASH_PID=$!
 }
 
@@ -81,6 +94,10 @@ REMOTE_IP=$(check_remote_codequill $LOCAL_IP)
 
 if [ -n "$REMOTE_IP" ]; then
     print_step "CodeQuill is already running on $REMOTE_IP:$PORT"
+
+    # Close splash screen
+    close_splash
+
     ELECTRON_START_URL=http://$REMOTE_IP:$PORT npm run electron -- --no-sandbox
 else
     # Check if .next directory exists
