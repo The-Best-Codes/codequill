@@ -103,6 +103,7 @@ else
     # Check if .next directory exists and contains a valid build
     if [ ! -d ".next" ] || [ ! -d ".next/static" ]; then
         print_step "The .next directory is missing or incomplete. Running 'next build'..."
+        npm install
         npm run build
         if [ $? -ne 0 ]; then
             close_splash
