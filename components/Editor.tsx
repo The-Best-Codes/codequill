@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Check, Info, Loader2 } from "lucide-react";
-import { useTranslation } from "@/app/i18n";
+import { useTranslation } from "next-i18next";
 
 const DEFAULT_LANGUAGE = "html";
 
@@ -51,7 +51,7 @@ const CodeEditor = ({
     getStoredDefaultLanguage()
   );
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-  const [name, setName] = useState("Untitled");
+  const [name, setName] = useState(`${t("untitled") || "Untitled"}`);
   const [showPreview, setShowPreview] = useState(true);
   const [saveSuccess, setSaveSuccess] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -74,7 +74,7 @@ const CodeEditor = ({
           const project = response.data;
           setCode(project.code);
           setLanguage(project.language);
-          setName(project?.name || "Untitled");
+          setName(project?.name || `${t("untitled")}`);
         })
         .finally(() => {
           setIsLoading(false);
@@ -82,9 +82,9 @@ const CodeEditor = ({
     } else {
       setCode("");
       setLanguage(defaultLanguage);
-      setName("Untitled");
+      setName(`${t("untitled")}`);
     }
-  }, [selectedProject, defaultLanguage]);
+  }, [selectedProject, defaultLanguage, t]);
 
   useEffect(() => {
     // Set dark mode based on system preference

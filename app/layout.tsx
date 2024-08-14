@@ -1,25 +1,34 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Inter } from "next/font/google";
-import { appWithTranslation } from "./i18n";
-import type { AppProps } from "next/app";
 import "./globals.css";
+import { I18nextProvider } from "react-i18next";
+import i18n from "@/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "CodeQuill",
-  description: "Create, share, and store your codes",
-};
-
-const RootLayout = ({ children }: any) => {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
-      <body className={inter.className}>{children}</body>
-    </html>
+    <I18nextProvider i18n={i18n}>
+      <html lang="en">
+        <head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta name="title" content="CodeQuill" />
+          <meta
+            name="description"
+            content="Create, share, and store your codes"
+          />
+          <title>CodeQuill</title>
+        </head>
+        <body className={inter.className}>{children}</body>
+      </html>
+    </I18nextProvider>
   );
-};
-
-export default appWithTranslation(RootLayout);
+}

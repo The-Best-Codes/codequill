@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { useTranslation } from "@/app/i18n";
+import { useTranslation } from "next-i18next";
 
 const HomePage = () => {
   const { t } = useTranslation("common");

@@ -3,7 +3,7 @@
   "author": "The-Best-Codes",
   "license": "MIT",
   "description": "Organize, Edit, and Share your Code Snippets",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -33,6 +33,7 @@
     "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "fs": "^0.0.1-security",
     "highlight.js": "^11.10.0",
     "i18next": "^23.12.3",
     "lucide-react": "^0.407.0",

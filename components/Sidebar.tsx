@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/context-menu";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTranslation } from "@/app/i18n";
+import { useTranslation } from "next-i18next";
 
 interface Project {
   id: number;
