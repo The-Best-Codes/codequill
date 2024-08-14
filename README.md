@@ -1,6 +1,7 @@
 # CodeQuill
 
-[![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill)
+[![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill) 
+[![Crowdin](https://badges.crowdin.net/codequill/localized.svg)](https://crowdin.com/project/codequill)
 
 <!-- [![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill) -->
 
