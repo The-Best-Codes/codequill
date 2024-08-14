@@ -1,13 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import CodeEditor from "../components/Editor";
+import Sidebar from "@/components/Sidebar";
+import CodeEditor from "@/components/Editor";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { useTranslation } from "@/app/i18n";
 
 const HomePage = () => {
+  const { t } = useTranslation("common");
   const [selectedProject, setSelectedProject] = useState(null);
   const [refreshProjects, setRefreshProjects] = useState(false);
 

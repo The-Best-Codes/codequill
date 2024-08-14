@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Check, Info, Loader2 } from "lucide-react";
+import { useTranslation } from "@/app/i18n";
 
 const DEFAULT_LANGUAGE = "html";
 
@@ -44,6 +45,7 @@ const CodeEditor = ({
   setSelectedProject,
   refreshProjects,
 }: any) => {
+  const { t } = useTranslation("common");
   const [code, setCode] = useState("");
   const [defaultLanguage, setDefaultLanguage] = useState(
     getStoredDefaultLanguage()
@@ -149,7 +151,7 @@ const CodeEditor = ({
         <div className="flex items-center flex-row gap-4 w-1/2">
           <Input
             type="text"
-            placeholder="Project Name"
+            placeholder={t("project-name")}
             value={name}
             minLength={2}
             onChange={(e) => setName(e.target.value)}
@@ -167,7 +169,7 @@ const CodeEditor = ({
             <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
               <SelectGroup>
                 <SelectLabel className="dark:text-white dark:bg-gray-800">
-                  Language
+                  {t("language")}
                 </SelectLabel>
                 {languageOptions.map((lang) => (
                   <SelectItem
@@ -184,18 +186,18 @@ const CodeEditor = ({
         </div>
         <div className="flex items-center justify-end flex-row gap-4 w-1/2">
           <Button onClick={handleSave} disabled={isSaving || isLoading}>
-            {saveSuccess === "Saving..." && "Saving..."}
+            {saveSuccess === "Saving..." && `${t("saving-ellipsis")}`}
             {saveSuccess === "Saved" && (
               <>
-                <Check className="inline-block mr-2" /> Saved
+                <Check className="inline-block mr-2" /> {t("saved")}
               </>
             )}
             {saveSuccess === "Error" && (
               <>
-                <Info className="inline-block mr-2" /> Error
+                <Info className="inline-block mr-2" /> {t("error")}
               </>
             )}
-            {!saveSuccess && "Save"}
+            {!saveSuccess && t("save")}
           </Button>
           {
             <Button
@@ -204,9 +206,9 @@ const CodeEditor = ({
             >
               {language === "html"
                 ? showPreview
-                  ? "Hide Preview"
-                  : "Show Preview"
-                : "Show Preview"}
+                  ? `${t("hide-preview")}`
+                  : `${t("show-preview")}`
+                : `${t("show-preview")}`}
             </Button>
           }
           {/* <Select

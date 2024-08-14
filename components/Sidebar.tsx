@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/context-menu";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "@/app/i18n";
 
 interface Project {
   id: number;
@@ -53,6 +54,7 @@ const Sidebar = ({
   setSelectedProject,
   refreshProjects,
 }: any) => {
+  const { t } = useTranslation("common");
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -122,7 +124,7 @@ const Sidebar = ({
         variant={"secondary"}
         onClick={() => setSelectedProject(null)}
       >
-        <Plus className="mr-2" /> New Project
+        <Plus className="mr-2" /> {t("new-project")}
       </Button>
       <div className="mt-4 flex flex-row justify-between space-x-2">
         <Select
@@ -131,43 +133,51 @@ const Sidebar = ({
           defaultValue="date_modified"
         >
           <SelectTrigger className="text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
-            <SelectValue placeholder="Sort By" />
+            <SelectValue placeholder={t("sort-by")} />
           </SelectTrigger>
           <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
             <SelectItem
               className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
               value="name"
             >
-              Name
+              {t("name")}
             </SelectItem>
             <SelectItem
               className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
               value="date_created"
             >
-              Date Created
+              {t("date-created")}
             </SelectItem>
             <SelectItem
               className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
               value="date_modified"
             >
-              Date Modified
+              {t("date-modified")}
             </SelectItem>
           </SelectContent>
         </Select>
 
-        <Button className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700" variant={"secondary"} onClick={() => setSortAsc(!sortAsc)}>
+        <Button
+          className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700"
+          variant={"secondary"}
+          onClick={() => setSortAsc(!sortAsc)}
+        >
           {sortAsc ? <SortAsc /> : <SortDesc />}
         </Button>
       </div>
       <div className="mt-4 flex flex-row justify-between space-x-2">
         <Input
           type="text"
-          placeholder="Search projects..."
+          placeholder={t("search-projects")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="text-black dark:text-white dark:bg-gray-800 dark:border-gray-700"
         />
-        <Button className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700" variant={"secondary"} onClick={handleSearch}>
+        <Button
+          className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700"
+          variant={"secondary"}
+          onClick={handleSearch}
+        >
           <Search className="w-4 h-4" />
         </Button>
       </div>
@@ -205,16 +215,16 @@ const Sidebar = ({
                 </ContextMenuTrigger>
                 <ContextMenuContent>
                   <ContextMenuItem onClick={() => setSelectedProject(project)}>
-                    Edit
+                    {t("edit")}
                   </ContextMenuItem>
                   <ContextMenuItem onClick={() => handleDelete(project.id)}>
-                    Delete
+                    {t("delete")}
                   </ContextMenuItem>
                   <ContextMenuItem onClick={() => handleFocus(project.id)}>
-                    Focus Project
+                    {t("focus-project")}
                   </ContextMenuItem>
                   <ContextMenuItem onClick={() => handleShare(project)}>
-                    Share
+                    {t("share")}
                   </ContextMenuItem>
                 </ContextMenuContent>
               </ContextMenu>
@@ -232,19 +242,19 @@ const Sidebar = ({
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Project</DialogTitle>
+            <DialogTitle>{t("delete-project")}</DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            Are you sure you want to delete this project?
+            {t("delete-project-description")}
           </DialogDescription>
           <DialogFooter>
             <Button
               variant="secondary"
               onClick={() => setIsDeleteDialogOpen(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
-            <Button onClick={confirmDelete}>Delete</Button>
+            <Button onClick={confirmDelete}>{t("delete")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -253,7 +263,7 @@ const Sidebar = ({
       <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share Project</DialogTitle>
+            <DialogTitle>{t("share-project")}</DialogTitle>
           </DialogHeader>
           <DialogDescription>
             <div className="flex flex-row items-center gap-2">
@@ -296,7 +306,7 @@ const Sidebar = ({
               variant="secondary"
               onClick={() => setIsShareDialogOpen(false)}
             >
-              Close
+              {t("close")}
             </Button>
           </DialogFooter>
         </DialogContent>
