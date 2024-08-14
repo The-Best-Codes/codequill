@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  codequill:
+    build: .
+    container_name: codequill_app
+    ports:
+      - "1291:1291"
+    environment:
+      - NODE_ENV=production
+    command: ./device_scripts/start.sh
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+
+  db:
+    image: sqlite
+    container_name: codequill_db
+    volumes:
+      - ./codequill/database.sqlite:/var/lib/sqlite/database.sqlite
