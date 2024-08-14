@@ -100,9 +100,9 @@ if [ -n "$REMOTE_IP" ]; then
 
     ELECTRON_START_URL=http://$REMOTE_IP:$PORT npm run electron -- --no-sandbox
 else
-    # Check if .next directory exists
-    if [ ! -d ".next" ]; then
-        print_step "The .next directory is missing. Running 'next build'..."
+    # Check if .next directory exists and contains a valid build
+    if [ ! -d ".next" ] || [ ! -d ".next/static" ]; then
+        print_step "The .next directory is missing or incomplete. Running 'next build'..."
         npm run build
         if [ $? -ne 0 ]; then
             close_splash
@@ -111,7 +111,7 @@ else
         fi
         print_color "32" "✅ Build completed successfully."
     else
-        print_step ".next directory found. Skipping build."
+        print_step ".next directory with valid build found. Skipping build."
     fi
 
     # Start the Next.js server in the background
