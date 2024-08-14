@@ -73,6 +73,7 @@ fi
 
 # Change directory
 print_step "Changing to the CodeQuill directory..."
+mkdir -p codequill/codequill
 cd codequill/codequill
 check_status
 
