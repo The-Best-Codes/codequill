@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <I18nextProvider i18n={i18n}>
-      <html lang="en">
+      <html lang={i18n.language || "en"}>
         <head>
           <meta
             name="viewport"

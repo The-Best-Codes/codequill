@@ -9,9 +9,29 @@ import axios from "axios";
 import { useTranslation } from "next-i18next";
 
 const HomePage = () => {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const [selectedProject, setSelectedProject] = useState(null);
   const [refreshProjects, setRefreshProjects] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let lang;
+
+      if (typeof localStorage !== "undefined") {
+        lang = localStorage.getItem("user_language");
+      }
+
+      if (!lang) {
+        lang = navigator.language;
+      }
+
+      if (!lang) {
+        lang = "en";
+      }
+
+      i18n.changeLanguage(lang);
+    }
+  }, [i18n]);
 
   useEffect(() => {
     async function fetchData() {

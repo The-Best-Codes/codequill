@@ -211,25 +211,6 @@ const CodeEditor = ({
                 : `${t("show-preview")}`}
             </Button>
           }
-          {/* <Select
-            value={defaultLanguage}
-            onValueChange={updateDefaultLanguage}
-            disabled={isLoading}
-          >
-            <SelectTrigger className="w-1/4 text-black">
-              <SelectValue placeholder="Default Language" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Default Language</SelectLabel>
-                {languageOptions.map((lang) => (
-                  <SelectItem key={lang} value={lang}>
-                    {lang}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select> */}
         </div>
       </div>
       <div className="w-full h-full flex flex-col">
