@@ -4,13 +4,13 @@
   "name": "الاسم",
   "date-created": "تاريخ الإنشاء",
   "date-modified": "تاريخ التعديل",
-  "search-projects": "البحث عن المشروعات",
+  "search-projects": "البحث عن المشاريع",
   "edit": "تحرير",
   "delete": "حذف",
   "focus-project": "مشروع التركيز",
   "share": "مشاركة",
   "delete-project": "حذف المشروع",
-  "delete-project-description": "تأكيد أنك تريد حذف هذا المشروع؟",
+  "delete-project-description": "هل أنت متأكد من أنك تريد حذف هذا المشروع؟",
   "cancel": "إلغاء",
   "share-project": "مشاركة المشروع",
   "close": "أغلق",
@@ -22,5 +22,5 @@
   "save": "حفظ",
   "hide-preview": "إخفاء المعاينة",
   "show-preview": "إظهار المعاينة",
-  "untitled": "دون عنوان"
+  "untitled": "بدون عنوان"
 }
