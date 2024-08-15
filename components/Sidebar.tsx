@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import {
   Plus,
   Edit,
@@ -10,6 +10,10 @@ import {
   SortAsc,
   SortDesc,
   Search,
+  Settings,
+  List,
+  Sun,
+  Moon,
 } from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -66,6 +70,7 @@ const Sidebar = ({
   const [sortType, setSortType] = useState("date_modified");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     axios.get(`/api/projects?sort=${sortType}`).then((response) => {
@@ -78,6 +83,31 @@ const Sidebar = ({
       setIsLoading(false);
     });
   }, [refreshProjects, sortType, sortAsc]);
+
+  useEffect(() => {
+    // Set dark mode based on system preference
+    if (typeof window === "undefined") return;
+    let prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    if (typeof localStorage !== "undefined") {
+      prefersDarkMode = localStorage.getItem("darkMode") === "true";
+    }
+    setDarkMode(prefersDarkMode);
+  }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.toggle("dark", darkMode);
+    }
+  }, [darkMode]);
+
+  const updateDarkMode = () => {
+    setDarkMode(!darkMode);
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("darkMode", !darkMode ? "true" : "false");
+    }
+  };
 
   const handleSearch = () => {
     const filtered = projects.filter((project) =>
@@ -117,16 +147,16 @@ const Sidebar = ({
     }
   };
 
-  return (
-    <div className="w-full bg-gray-200 text-black dark:bg-slate-800 dark:text-white h-full p-4 max-h-screen overflow-auto">
+  const sidebarContent = (
+    <div className="w-full bg-gray-200 text-black dark:bg-slate-800 dark:text-white h-full p-4 flex flex-col">
       <Button
-        className="w-full dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700"
+        className="w-full dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700 mb-4"
         variant={"secondary"}
         onClick={() => setSelectedProject(null)}
       >
         <Plus className="mr-2" /> {t("new-project")}
       </Button>
-      <div className="mt-4 flex flex-row justify-between space-x-2">
+      <div className="flex flex-row justify-between space-x-2 mb-4">
         <Select
           onValueChange={(value) => setSortType(value)}
           value={sortType}
@@ -165,7 +195,7 @@ const Sidebar = ({
           {sortAsc ? <SortAsc /> : <SortDesc />}
         </Button>
       </div>
-      <div className="mt-4 flex flex-row justify-between space-x-2">
+      <div className="flex flex-row justify-between space-x-2 mb-4">
         <Input
           type="text"
           placeholder={t("search-projects")}
@@ -181,62 +211,88 @@ const Sidebar = ({
           <Search className="w-4 h-4" />
         </Button>
       </div>
-      {!isLoading ? (
-        <div className="mt-4">
-          {filteredProjects.length > 0 &&
-            filteredProjects.map((project) => (
-              <ContextMenu key={project.id}>
-                <ContextMenuTrigger>
-                  <div
-                    className={`p-2 rounded cursor-pointer ${
-                      selectedProject?.id === project.id
-                        ? "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"
-                        : ""
-                    } group`}
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    <div className="flex justify-between max-h-24 overflow-auto">
-                      <span>{project.name}</span>
-                      <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
-                        <Button
-                          variant={"ghost"}
-                          size={"icon"}
-                          className="z-10 w-6 h-6"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(project.id);
-                          }}
-                        >
-                          <Trash className="w-4 h-4" />
-                        </Button>
+      <div className="flex-grow overflow-auto h-full max-w-full">
+        {!isLoading ? (
+          <div>
+            {filteredProjects.length > 0 &&
+              filteredProjects.map((project) => (
+                <ContextMenu key={project.id}>
+                  <ContextMenuTrigger>
+                    <div
+                      className={`p-2 rounded cursor-pointer max-w-full ${
+                        selectedProject?.id === project.id
+                          ? "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"
+                          : ""
+                      } group`}
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      <div className="flex justify-between max-h-24 max-w-full items-center overflow-auto">
+                        <span>{project.name}</span>
+                        <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
+                          <Button
+                            variant={"ghost"}
+                            size={"icon"}
+                            className="z-10 w-6 h-6"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(project.id);
+                            }}
+                          >
+                            <Trash className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </ContextMenuTrigger>
-                <ContextMenuContent>
-                  <ContextMenuItem onClick={() => setSelectedProject(project)}>
-                    {t("edit")}
-                  </ContextMenuItem>
-                  <ContextMenuItem onClick={() => handleDelete(project.id)}>
-                    {t("delete")}
-                  </ContextMenuItem>
-                  <ContextMenuItem onClick={() => handleFocus(project.id)}>
-                    {t("focus-project")}
-                  </ContextMenuItem>
-                  <ContextMenuItem onClick={() => handleShare(project)}>
-                    {t("share")}
-                  </ContextMenuItem>
-                </ContextMenuContent>
-              </ContextMenu>
+                  </ContextMenuTrigger>
+                  <ContextMenuContent>
+                    <ContextMenuItem
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      {t("edit")}
+                    </ContextMenuItem>
+                    <ContextMenuItem onClick={() => handleDelete(project.id)}>
+                      <Trash className="w-4 h-4 mr-2" />
+                      {t("delete")}
+                    </ContextMenuItem>
+                    <ContextMenuItem onClick={() => handleFocus(project.id)}>
+                      <Info className="w-4 h-4 mr-2" />
+                      {t("focus-project")}
+                    </ContextMenuItem>
+                    <ContextMenuItem onClick={() => handleShare(project)}>
+                      <Copy className="w-4 h-4 mr-2" />
+                      {t("share")}
+                    </ContextMenuItem>
+                  </ContextMenuContent>
+                </ContextMenu>
+              ))}
+          </div>
+        ) : (
+          <div className="flex flex-col space-y-2">
+            {[...Array(10)].map((_, index) => (
+              <Skeleton key={index} className="w-full h-10" />
             ))}
-        </div>
-      ) : (
-        <div className="flex flex-col space-y-2 mt-4">
-          {[...Array(10)].map((_, index) => (
-            <Skeleton key={index} className="w-full h-10" />
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
+      <div className="mt-4 flex justify-center space-x-4">
+        <Button variant="ghost" size="icon">
+          <Settings className="w-5 h-5" />
+        </Button>
+        <Button variant="ghost" size="icon" onClick={updateDarkMode}>
+          {darkMode ? (
+            <Sun className="w-5 h-5" />
+          ) : (
+            <Moon className="w-5 h-5" />
+          )}
+        </Button>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {sidebarContent}
 
       {/* Delete Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
@@ -311,7 +367,7 @@ const Sidebar = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 };
 

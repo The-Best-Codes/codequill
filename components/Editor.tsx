@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check, Info, Loader2 } from "lucide-react";
+import { Check, Info, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { useTranslation } from "next-i18next";
 
 const DEFAULT_LANGUAGE = "html";
@@ -89,9 +89,12 @@ const CodeEditor = ({
   useEffect(() => {
     // Set dark mode based on system preference
     if (typeof window === "undefined") return;
-    const prefersDarkMode = window.matchMedia(
+    let prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
+    if (typeof localStorage !== "undefined") {
+      prefersDarkMode = localStorage.getItem("darkMode") === "true";
+    }
     setDarkMode(prefersDarkMode);
   }, []);
 
@@ -197,18 +200,32 @@ const CodeEditor = ({
                 <Info className="inline-block mr-2" /> {t("error")}
               </>
             )}
-            {!saveSuccess && t("save")}
+            {!saveSuccess && (
+              <>
+                <Save className="inline-block mr-2" /> {t("save")}
+              </>
+            )}
           </Button>
           {
             <Button
               onClick={() => setShowPreview(!showPreview)}
               disabled={language !== "html" || isLoading}
             >
-              {language === "html"
-                ? showPreview
-                  ? `${t("hide-preview")}`
-                  : `${t("show-preview")}`
-                : `${t("show-preview")}`}
+              {language === "html" ? (
+                showPreview ? (
+                  <>
+                    <EyeOff className="inline-block mr-2" /> {t("hide-preview")}
+                  </>
+                ) : (
+                  <>
+                    <Eye className="inline-block mr-2" /> {t("show-preview")}
+                  </>
+                )
+              ) : (
+                <>
+                  <Eye className="inline-block mr-2" /> {t("show-preview")}
+                </>
+              )}
             </Button>
           }
         </div>
