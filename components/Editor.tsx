@@ -12,8 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check, Info, Loader2, Save, Eye, EyeOff } from "lucide-react";
+import { Check, Info, Loader2, Save, Eye, EyeOff, Wand2 } from "lucide-react";
 import { useTranslation } from "next-i18next";
+import { generateAIName } from "@/utils/aiName";
 
 const DEFAULT_LANGUAGE = "html";
 
@@ -58,6 +59,8 @@ const CodeEditor = ({
   const [isLoading, setIsLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [editorWidth, setEditorWidth] = useState("100%");
+  const [isGeneratingName, setIsGeneratingName] = useState(false);
+  const nameGeneratorRef = useRef(new AbortController());
   const containerRef = useRef(null);
 
   const updateDefaultLanguage = (newLanguage: string) => {
@@ -113,6 +116,12 @@ const CodeEditor = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (nameGeneratorRef.current) {
+      nameGeneratorRef.current.abort();
+    }
+  }, [code]);
+
   const handleSave = async () => {
     setIsSaving(true);
     setSaveSuccess("Saving...");
@@ -148,19 +157,57 @@ const CodeEditor = ({
     }
   };
 
+  const ai_nameProject = async () => {
+    if (nameGeneratorRef.current) {
+      nameGeneratorRef.current.abort();
+    }
+    nameGeneratorRef.current = new AbortController();
+    setIsGeneratingName(true);
+
+    try {
+      const name = await generateAIName(code, nameGeneratorRef.current.signal);
+      setName(name);
+    } catch (error: any) {
+      if (error.name === "AbortError") {
+        console.log("Request was aborted");
+      } else {
+        console.error("Failed to generate AI name:", error);
+      }
+    } finally {
+      setIsGeneratingName(false);
+    }
+
+    return () => {
+      nameGeneratorRef.current.abort(); // Cancel the request if needed
+    };
+  };
+
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex justify-between items-center p-4 bg-gray-200 text-black dark:bg-gray-800 dark:text-white">
         <div className="flex items-center flex-row gap-4 w-1/2">
-          <Input
-            type="text"
-            placeholder={t("project-name")}
-            value={name}
-            minLength={2}
-            onChange={(e) => setName(e.target.value)}
-            className="p-2 border rounded w-24 sm:w-32 md:w-48 lg:w-64 xl:w-72 text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
-            disabled={isLoading}
-          />
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder={t("project-name")}
+              value={name}
+              minLength={2}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 pr-10 border rounded w-full text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              disabled={isLoading}
+            />
+            <Button
+              onClick={ai_nameProject}
+              disabled={isSaving || isLoading}
+              className="absolute w-6 h-6 p-1 right-2 top-1/2 transform -translate-y-1/2"
+            >
+              {isGeneratingName ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Wand2 className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
           <Select
             value={language}
             onValueChange={(value) => setLanguage(value)}
