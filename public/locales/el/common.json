@@ -23,9 +23,9 @@
   "hide-preview": "Απόκρυψη Προ επισκόπησης",
   "show-preview": "Εμφάνιση Προ επισκόπησης",
   "untitled": "Άτιτλο",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Ρυθμίσεις",
+  "on": "Ενεργοποιημένο",
+  "off": "Απενεργοποιημένο",
+  "dark-theme": "Σκούρο Θέμα",
+  "light-theme": "Φωτεινό Θέμα"
 }
