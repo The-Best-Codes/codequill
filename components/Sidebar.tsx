@@ -14,6 +14,7 @@ import {
   List,
   Sun,
   Moon,
+  Languages,
 } from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -44,7 +45,10 @@ import {
 } from "@/components/ui/context-menu";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { useTranslation } from "next-i18next";
+import { arch } from "os";
 
 interface Project {
   id: number;
@@ -58,11 +62,14 @@ const Sidebar = ({
   setSelectedProject,
   refreshProjects,
 }: any) => {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
+  const [language, setLanguage] = useState<any>("en");
+  const [languageOptions, setLanguageOptions] = useState<any>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [shareSuccess, setShareSuccess] = useState("default");
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
@@ -71,6 +78,50 @@ const Sidebar = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [darkMode, setDarkMode] = useState(true);
+
+  const langAbbreviations: any = {
+    en: "English",
+    es: "Español",
+    fr: "Français",
+    af: "Afrikaans",
+    ar: "العربية",
+    ca: "Catalán",
+    cs: "Česky",
+    da: "Dansk",
+    de: "Deutsch",
+    el: "Ελληνικά",
+    fi: "Suomi",
+    he: "עברית",
+    hu: "Magyar",
+    it: "Italiano",
+    ja: "日本語",
+    ko: "한국어",
+    nl: "Nederlands",
+    no: "Norsk",
+    pl: "Polski",
+    pt: "Português",
+    ro: "Română",
+    ru: "Русский",
+    sr: "Српски",
+    sv: "Svenska",
+    tr: "Türkçe",
+    uk: "Українська",
+    vi: "Tiếng Việt",
+    zh: "中文",
+  };
+
+  useEffect(() => {
+    // Set the language options from i18n
+    if (typeof window !== "undefined") {
+      const availableLanguages = Object.keys(i18n.options?.resources || {});
+      setLanguageOptions(availableLanguages);
+    }
+    // Set the current language
+    if (typeof window !== "undefined") {
+      const currentLanguage = i18n.language;
+      setLanguage(currentLanguage);
+    }
+  }, [i18n]);
 
   useEffect(() => {
     axios.get(`/api/projects?sort=${sortType}`).then((response) => {
@@ -147,8 +198,20 @@ const Sidebar = ({
     }
   };
 
+  const openSettings = () => {
+    setIsSettingsDialogOpen(true);
+  };
+
+  const handleLanguageChange = (value: string) => {
+    i18n.changeLanguage(value);
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("user_language", value);
+    }
+    setLanguage(value);
+  };
+
   const sidebarContent = (
-    <div className="w-full bg-gray-200 text-black dark:bg-slate-800 dark:text-white h-full p-4 flex flex-col">
+    <div className="w-full bg-gray-200 text-black dark:bg-slate-800 dark:text-white h-full p-4 flex flex-col max-h-screen overflow-auto">
       <Button
         className="w-full dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700 mb-4"
         variant={"secondary"}
@@ -276,7 +339,7 @@ const Sidebar = ({
         )}
       </div>
       <div className="mt-4 flex justify-center space-x-4">
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" onClick={openSettings}>
           <Settings className="w-5 h-5" />
         </Button>
         <Button variant="ghost" size="icon" onClick={updateDarkMode}>
@@ -311,6 +374,60 @@ const Sidebar = ({
               {t("cancel")}
             </Button>
             <Button onClick={confirmDelete}>{t("delete")}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Settings Dialog */}
+      <Dialog
+        open={isSettingsDialogOpen}
+        onOpenChange={setIsSettingsDialogOpen}
+      >
+        <DialogContent>
+          <DialogHeader>{t("settings")}</DialogHeader>
+          <DialogDescription>
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-2">
+                <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center">
+                  <Moon className="w-4 h-4 mr-2" /> {t("dark-theme")}
+                </Label>
+                <div className="flex items-center space-x-2">
+                  <Switch checked={darkMode} onCheckedChange={updateDarkMode} />
+                  <span>{darkMode ? t("on") : t("off")}</span>
+                </div>
+              </div>
+            </div>
+            <div className="h-4" />
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-2">
+                <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center">
+                  <Languages className="w-4 h-4 mr-2" /> {t("language")}
+                </Label>
+                <Select
+                  value={language}
+                  onValueChange={(value) => handleLanguageChange(value)}
+                >
+                  <SelectTrigger className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
+                    <SelectValue placeholder="Language" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
+                    {languageOptions.map((lang: string) => (
+                      <SelectItem key={lang} value={lang}>
+                        {langAbbreviations[lang] || lang}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </DialogDescription>
+          <DialogFooter>
+            <Button
+              variant="secondary"
+              onClick={() => setIsSettingsDialogOpen(false)}
+            >
+              {t("close")}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

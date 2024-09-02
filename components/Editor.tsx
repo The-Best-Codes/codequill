@@ -96,6 +96,10 @@ const CodeEditor = ({
       "(prefers-color-scheme: dark)"
     ).matches;
     if (typeof localStorage !== "undefined") {
+      if (localStorage.getItem("darkMode") === null) {
+        prefersDarkMode = false;
+        return;
+      }
       prefersDarkMode = localStorage.getItem("darkMode") === "true";
     }
     setDarkMode(prefersDarkMode);
@@ -165,7 +169,7 @@ const CodeEditor = ({
     setIsGeneratingName(true);
 
     try {
-      const name = await generateAIName(code, nameGeneratorRef.current.signal);
+      const name = await generateAIName(code);
       setName(name);
     } catch (error: any) {
       if (error.name === "AbortError") {
@@ -235,21 +239,39 @@ const CodeEditor = ({
           </Select>
         </div>
         <div className="flex items-center justify-end flex-row gap-4 w-1/2">
-          <Button onClick={handleSave} disabled={isSaving || isLoading}>
-            {saveSuccess === "Saving..." && `${t("saving-ellipsis")}`}
+          <Button
+            onClick={handleSave}
+            className="w-10 p-2 sm:w-fit sm:p-4"
+            disabled={isSaving || isLoading}
+          >
+            {saveSuccess === "Saving..." && (
+              <>
+                <Loader2 className="inline-block animate-spin" />{" "}
+                <span className="hidden ml-2 sm:inline-block">
+                  {t("saving-ellipsis")}
+                </span>
+              </>
+            )}
             {saveSuccess === "Saved" && (
               <>
-                <Check className="inline-block mr-2" /> {t("saved")}
+                <Check className="inline-block" />{" "}
+                <span className="hidden ml-2 sm:inline-block">
+                  {t("saved")}
+                </span>
               </>
             )}
             {saveSuccess === "Error" && (
               <>
-                <Info className="inline-block mr-2" /> {t("error")}
+                <Info className="inline-block" />{" "}
+                <span className="hidden ml-2 sm:inline-block">
+                  {t("error")}
+                </span>
               </>
             )}
             {!saveSuccess && (
               <>
-                <Save className="inline-block mr-2" /> {t("save")}
+                <Save className="inline-block" />{" "}
+                <span className="hidden ml-2 sm:inline-block">{t("save")}</span>
               </>
             )}
           </Button>
@@ -257,20 +279,30 @@ const CodeEditor = ({
             <Button
               onClick={() => setShowPreview(!showPreview)}
               disabled={language !== "html" || isLoading}
+              className="w-10 p-2 sm:w-fit sm:p-4"
             >
               {language === "html" ? (
                 showPreview ? (
                   <>
-                    <EyeOff className="inline-block mr-2" /> {t("hide-preview")}
+                    <EyeOff className="inline-block" />{" "}
+                    <span className="hidden ml-2 sm:inline-block">
+                      {t("hide-preview")}
+                    </span>
                   </>
                 ) : (
                   <>
-                    <Eye className="inline-block mr-2" /> {t("show-preview")}
+                    <Eye className="inline-block" />{" "}
+                    <span className="hidden ml-2 sm:inline-block">
+                      {t("show-preview")}
+                    </span>
                   </>
                 )
               ) : (
                 <>
-                  <Eye className="inline-block mr-2" /> {t("show-preview")}
+                  <Eye className="inline-block" />{" "}
+                  <span className="hidden ml-2 sm:inline-block">
+                    {t("show-preview")}
+                  </span>
                 </>
               )}
             </Button>
@@ -286,11 +318,13 @@ const CodeEditor = ({
           <>
             <Editor
               height={showPreview && language === "html" ? "50%" : "100%"}
+              className="dark:invert"
               width="100%"
               language={language}
               value={code}
               onChange={(value) => setCode(value || "")}
-              theme={(darkMode ? "vs-dark" : "vs-light") as any}
+              //theme={(darkMode ? "vs-dark" : "vs-light") as any}
+              theme="vs-light"
             />
             {showPreview && language === "html" && (
               <iframe srcDoc={code} className="w-full h-1/2" />
