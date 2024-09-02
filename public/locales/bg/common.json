@@ -23,9 +23,9 @@
   "hide-preview": "Скрий предварителен преглед",
   "show-preview": "Покажи предварителен преглед",
   "untitled": "Без заглавие",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Настройки",
+  "on": "Включено",
+  "off": "Изключено",
+  "dark-theme": "Тъмен Тема",
+  "light-theme": "Светла Тема"
 }
