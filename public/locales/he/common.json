@@ -22,5 +22,10 @@
   "save": "שמור",
   "hide-preview": "הסתר תצוגה מקדימה",
   "show-preview": "הצג תצוגה מקדימה",
-  "untitled": "בלי שם"
+  "untitled": "בלי שם",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
