@@ -22,5 +22,10 @@
   "save": "Speichern",
   "hide-preview": "Vorschau ausblenden",
   "show-preview": "Vorschau anzeigen",
-  "untitled": "Ohne Titel"
+  "untitled": "Ohne Titel",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
