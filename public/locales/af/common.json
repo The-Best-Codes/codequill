@@ -22,5 +22,10 @@
   "save": "Bewaar",
   "hide-preview": "Versteek Voorbeeld",
   "show-preview": "Wys Voorbeeld",
-  "untitled": "Sonder Titel"
+  "untitled": "Sonder Titel",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
