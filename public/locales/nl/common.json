@@ -22,5 +22,10 @@
   "save": "Opslaan",
   "hide-preview": "Voorbeeld verbergen",
   "show-preview": "Toon voorbeeld",
-  "untitled": "Naamloos"
+  "untitled": "Naamloos",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }

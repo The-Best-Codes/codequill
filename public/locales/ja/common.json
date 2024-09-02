@@ -22,5 +22,10 @@
   "save": "保存",
   "hide-preview": "プレビューを隠す",
   "show-preview": "プレビューを表示",
-  "untitled": "無題のタイトル"
+  "untitled": "無題のタイトル",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }

@@ -22,5 +22,10 @@
   "save": "Salvesta",
   "hide-preview": "Peida eelvaade",
   "show-preview": "Kuva eelvaade",
-  "untitled": "Pealkirjata"
+  "untitled": "Pealkirjata",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }

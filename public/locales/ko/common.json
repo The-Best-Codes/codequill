@@ -22,5 +22,10 @@
   "save": "저장",
   "hide-preview": "미리보기 숨기기",
   "show-preview": "미리보기 표시",
-  "untitled": "제목 없음"
+  "untitled": "제목 없음",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }

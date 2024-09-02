@@ -22,5 +22,10 @@
   "save": "Αποθήκευση",
   "hide-preview": "Απόκρυψη Προ επισκόπησης",
   "show-preview": "Εμφάνιση Προ επισκόπησης",
-  "untitled": "Άτιτλο"
+  "untitled": "Άτιτλο",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }

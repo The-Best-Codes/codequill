@@ -22,5 +22,10 @@
   "save": "Ruaj",
   "hide-preview": "Fshi Parakalimin",
   "show-preview": "Trego Parakalimin",
-  "untitled": "Pa Titull"
+  "untitled": "Pa Titull",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }

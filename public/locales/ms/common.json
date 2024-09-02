@@ -22,5 +22,10 @@
   "save": "Simpan",
   "hide-preview": "Sembunyi Pratonton",
   "show-preview": "Tunjukkan Pratonton",
-  "untitled": "Tanpa Tajuk"
+  "untitled": "Tanpa Tajuk",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
