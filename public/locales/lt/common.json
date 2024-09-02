@@ -22,5 +22,10 @@
   "save": "Išsaugoti",
   "hide-preview": "Slėpti peržiūrą",
   "show-preview": "Rodyti peržiūrą",
-  "untitled": "Be pavadinimo"
+  "untitled": "Be pavadinimo",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
