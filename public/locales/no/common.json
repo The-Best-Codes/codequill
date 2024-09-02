@@ -22,5 +22,10 @@
   "save": "Lagre",
   "hide-preview": "Skjul forhåndsvisning",
   "show-preview": "Vis forhåndsvisning",
-  "untitled": "Navnløs"
+  "untitled": "Navnløs",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
