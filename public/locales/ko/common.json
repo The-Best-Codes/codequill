@@ -23,9 +23,9 @@
   "hide-preview": "미리보기 숨기기",
   "show-preview": "미리보기 표시",
   "untitled": "제목 없음",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "설정",
+  "on": "켜기",
+  "off": "끄기",
+  "dark-theme": "다크 테마",
+  "light-theme": "라이트 테마"
 }
