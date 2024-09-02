@@ -23,9 +23,9 @@
   "hide-preview": "Nascondi Anteprima",
   "show-preview": "Mostra Anteprima",
   "untitled": "Senza Titolo",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Impostazioni",
+  "on": "Acceso",
+  "off": "Spento",
+  "dark-theme": "Tema Scuro",
+  "light-theme": "Tema Chiaro"
 }

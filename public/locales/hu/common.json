@@ -23,9 +23,9 @@
   "hide-preview": "Előnézet elrejtése",
   "show-preview": "Előnézet megjelenítése",
   "untitled": "Névtelen",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Beállítások",
+  "on": "Be",
+  "off": "Ki",
+  "dark-theme": "Sötét téma",
+  "light-theme": "Világos téma"
 }

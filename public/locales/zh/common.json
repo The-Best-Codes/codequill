@@ -23,9 +23,9 @@
   "hide-preview": "隱藏預覽",
   "show-preview": "顯示預覽",
   "untitled": "無標題",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "設定",
+  "on": "開",
+  "off": "關",
+  "dark-theme": "暗黑主題",
+  "light-theme": "亮主題"
 }

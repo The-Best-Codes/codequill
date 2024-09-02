@@ -23,9 +23,9 @@
   "hide-preview": "הסתר תצוגה מקדימה",
   "show-preview": "הצג תצוגה מקדימה",
   "untitled": "בלי שם",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "הגדרות",
+  "on": "פועל",
+  "off": "כבוי",
+  "dark-theme": "ערק כהה",
+  "light-theme": "ערק בהיר"
 }

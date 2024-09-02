@@ -23,9 +23,9 @@
   "hide-preview": "Skrýt náhled",
   "show-preview": "Zobrazit náhled",
   "untitled": "Bez názvu",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Nastavení",
+  "on": "Zapnuto",
+  "off": "Vypnuto",
+  "dark-theme": "Temné téma",
+  "light-theme": "Světlé téma"
 }

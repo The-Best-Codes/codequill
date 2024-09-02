@@ -23,9 +23,9 @@
   "hide-preview": "Skjul Forhåndsvisning",
   "show-preview": "Vis Forhåndsvisning",
   "untitled": "Unavngivet",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Indstillinger",
+  "on": "På",
+  "off": "Fra",
+  "dark-theme": "Mørkt tema",
+  "light-theme": "Lyst tema"
 }

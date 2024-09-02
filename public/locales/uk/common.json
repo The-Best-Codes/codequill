@@ -23,9 +23,9 @@
   "hide-preview": "Приховати попередній перегляд",
   "show-preview": "Показати прею",
   "untitled": "Без назви",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Налаштування",
+  "on": "Увімкнено",
+  "off": "Вимкнено",
+  "dark-theme": "Темна тема",
+  "light-theme": "Світла тема"
 }

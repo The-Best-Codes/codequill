@@ -23,9 +23,9 @@
   "hide-preview": "Ocultar vista previa",
   "show-preview": "Mostrar vista previa",
   "untitled": "Sin título",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Configuraciones",
+  "on": "Encendido",
+  "off": "Apagado",
+  "dark-theme": "Tema oscuro",
+  "light-theme": "Tema claro"
 }

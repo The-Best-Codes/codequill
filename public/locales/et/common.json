@@ -23,9 +23,9 @@
   "hide-preview": "Peida eelvaade",
   "show-preview": "Kuva eelvaade",
   "untitled": "Pealkirjata",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Sätted",
+  "on": "Sisse",
+  "off": "Väljas",
+  "dark-theme": "Tume teema",
+  "light-theme": "Hele teema"
 }

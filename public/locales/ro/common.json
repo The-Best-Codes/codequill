@@ -23,9 +23,9 @@
   "hide-preview": "Ascunde previzualizare",
   "show-preview": "Arată previzualizarea",
   "untitled": "Fără titlu",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Setări",
+  "on": "Activat",
+  "off": "Dezactivat",
+  "dark-theme": "Tema întunecată",
+  "light-theme": "Tema luminoasă"
 }

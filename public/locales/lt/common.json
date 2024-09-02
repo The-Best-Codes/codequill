@@ -23,9 +23,9 @@
   "hide-preview": "Slėpti peržiūrą",
   "show-preview": "Rodyti peržiūrą",
   "untitled": "Be pavadinimo",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Nustatymai",
+  "on": "Įjungta",
+  "off": "Išjungta",
+  "dark-theme": "Tamsusis tema",
+  "light-theme": "Šviesus tema"
 }

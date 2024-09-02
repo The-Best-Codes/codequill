@@ -23,9 +23,9 @@
   "hide-preview": "プレビューを隠す",
   "show-preview": "プレビューを表示",
   "untitled": "無題のタイトル",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "設定",
+  "on": "オン",
+  "off": "オフ",
+  "dark-theme": "ダークテーマ",
+  "light-theme": "ライトテーマ"
 }

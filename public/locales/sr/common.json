@@ -23,9 +23,9 @@
   "hide-preview": "Сакриј Преглед",
   "show-preview": "Прикажи Преглед",
   "untitled": "Некатегорисано",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Подешавања",
+  "on": "Уключено",
+  "off": "Искључено",
+  "dark-theme": "Тамна Тема",
+  "light-theme": "Светла Тема"
 }
