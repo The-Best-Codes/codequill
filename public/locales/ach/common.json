@@ -22,5 +22,10 @@
   "save": "Bino",
   "hide-preview": "Nye Kweri",
   "show-preview": "Ywero Kweri",
-  "untitled": "Tinya"
+  "untitled": "Tinya",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
