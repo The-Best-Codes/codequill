@@ -23,9 +23,9 @@
   "hide-preview": "Önizlemeyi Gizle",
   "show-preview": "Önizlemeyi Göster",
   "untitled": "Başlıksız",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Ayarlar",
+  "on": "Açık",
+  "off": "Kapalı",
+  "dark-theme": "Koyu Tema",
+  "light-theme": "Açık Tema"
 }
