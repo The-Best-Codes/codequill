@@ -22,5 +22,10 @@
   "save": "Uložit",
   "hide-preview": "Skrýt náhled",
   "show-preview": "Zobrazit náhled",
-  "untitled": "Bez názvu"
+  "untitled": "Bez názvu",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
