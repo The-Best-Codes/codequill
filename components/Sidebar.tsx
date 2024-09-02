@@ -15,6 +15,8 @@ import {
   Sun,
   Moon,
   Languages,
+  Code2,
+  RotateCw,
 } from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -57,6 +59,117 @@ interface Project {
   language: string;
 }
 
+const codeLanguageOptions = [
+  "auto",
+  "html",
+  "javascript",
+  "typescript",
+  "python",
+  "java",
+  "c",
+  "cpp",
+  "csharp",
+  "php",
+  "css",
+  "scss",
+  "less",
+  "markdown",
+  "json",
+  "yaml",
+  "xml",
+  "bash",
+  "sql",
+  "go",
+  "rust",
+  "dart",
+  "kotlin",
+  "swift",
+  "ruby",
+  "objective-c",
+  "perl",
+  "powershell",
+  "r",
+  "scala",
+  "shellscript",
+  "vb",
+  "lua",
+  "fsharp",
+  "groovy",
+  "ini",
+  "java",
+  "latex",
+  "matlab",
+  "pascal",
+  "plaintext",
+  "pug",
+  "restructuredtext",
+  "vhdl",
+  "vue",
+  "coffeescript",
+  "dockerfile",
+  "graphql",
+  "handlebars",
+  "mips",
+  "razor",
+  "redis",
+  "solidity",
+];
+
+const codeLangIndex: { [key: string]: string } = {
+  auto: "Auto",
+  html: "HTML",
+  javascript: "JavaScript",
+  python: "Python",
+  java: "Java",
+  c: "C",
+  cpp: "C++",
+  csharp: "C#",
+  php: "PHP",
+  css: "CSS",
+  scss: "SCSS",
+  less: "LESS",
+  markdown: "Markdown",
+  json: "JSON",
+  yaml: "YAML",
+  xml: "XML",
+  bash: "Bash",
+  sql: "SQL",
+  go: "Go",
+  rust: "Rust",
+  dart: "Dart",
+  kotlin: "Kotlin",
+  swift: "Swift",
+  ruby: "Ruby",
+  "objective-c": "Objective-C",
+  perl: "Perl",
+  powershell: "PowerShell",
+  r: "R",
+  scala: "Scala",
+  shellscript: "ShellScript",
+  vb: "VB",
+  lua: "Lua",
+  fsharp: "F#",
+  groovy: "Groovy",
+  ini: "INI",
+  latex: "LaTeX",
+  matlab: "MATLAB",
+  pascal: "Pascal",
+  plaintext: "Plain Text",
+  pug: "Pug",
+  restructuredtext: "reStructuredText",
+  vhdl: "VHDL",
+  vue: "Vue",
+  coffeescript: "CoffeeScript",
+  dockerfile: "Dockerfile",
+  graphql: "GraphQL",
+  handlebars: "Handlebars",
+  mips: "MIPS",
+  razor: "Razor",
+  redis: "Redis",
+  solidity: "Solidity",
+  typescript: "TypeScript",
+};
+
 const Sidebar = ({
   selectedProject,
   setSelectedProject,
@@ -78,6 +191,7 @@ const Sidebar = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [darkMode, setDarkMode] = useState(true);
+  const [defaultCodeLanguage, setDefaultCodeLanguage] = useState("html");
 
   const langAbbreviations: any = {
     en: "English",
@@ -109,6 +223,10 @@ const Sidebar = ({
     vi: "Tiếng Việt",
     zh: "中文",
   };
+
+  useEffect(() => {
+    setDefaultCodeLanguage(getStoredDefaultCodeLanguage() || "javascript");
+  }, []);
 
   useEffect(() => {
     // Set the language options from i18n
@@ -208,6 +326,25 @@ const Sidebar = ({
       localStorage.setItem("user_language", value);
     }
     setLanguage(value);
+  };
+
+  const getStoredDefaultCodeLanguage = () => {
+    if (
+      typeof window === "undefined" ||
+      !localStorage.getItem("defaultLanguage")
+    )
+      return "javascript";
+    return localStorage.getItem("defaultLanguage") || "javascript";
+  };
+
+  const setStoredDefaultCodeLanguage = (language: string) => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem("defaultLanguage", language);
+  };
+
+  const handleDefaultCodeLanguageChange = (value: string) => {
+    setStoredDefaultCodeLanguage(value);
+    setDefaultCodeLanguage(value);
   };
 
   const sidebarContent = (
@@ -424,13 +561,41 @@ const Sidebar = ({
                 </Select>
               </div>
             </div>
+            <div className="h-4" />
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-2">
+                <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center -mb-2">
+                  <Code2 className="w-4 h-4 mr-2" /> Default Editor{" "}
+                  {t("language")}
+                </Label>
+                <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                  <RotateCw className="w-3 h-3 mr-1" /> Requires reload
+                </span>
+                <Select
+                  value={defaultCodeLanguage}
+                  onValueChange={(value) =>
+                    handleDefaultCodeLanguageChange(value)
+                  }
+                >
+                  <SelectTrigger className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
+                    <SelectValue placeholder="Language" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
+                    {codeLanguageOptions.map((lang: string) => (
+                      <SelectItem key={lang} value={lang}>
+                        {codeLangIndex[lang] || lang}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </DialogDescription>
           <DialogFooter>
             <Button
-              variant="secondary"
               onClick={() => setIsSettingsDialogOpen(false)}
             >
-              {t("close")}
+              {t("save")}
             </Button>
           </DialogFooter>
         </DialogContent>
