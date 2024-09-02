@@ -23,9 +23,9 @@
   "hide-preview": "Piilota Esikatselu",
   "show-preview": "Näytä Esikatselu",
   "untitled": "Nimetön",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Asetukset",
+  "on": "Päällä",
+  "off": "Pois päältä",
+  "dark-theme": "Tumma teema",
+  "light-theme": "Vaalea teema"
 }
