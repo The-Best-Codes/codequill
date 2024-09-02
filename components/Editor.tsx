@@ -12,9 +12,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check, Info, Loader2, Save, Eye, EyeOff, Wand2 } from "lucide-react";
+import {
+  Check,
+  Info,
+  Loader2,
+  Save,
+  Eye,
+  EyeOff,
+  Wand2,
+  Languages,
+} from "lucide-react";
 import { useTranslation } from "next-i18next";
 import { generateAIName } from "@/utils/aiName";
+import { translateCodeAI } from "@/utils/aiTranslate";
 
 const DEFAULT_LANGUAGE = "html";
 
@@ -186,6 +196,17 @@ const CodeEditor = ({
     };
   };
 
+  const translateProject = async () => {
+    if (code) {
+      try {
+        const translatedCode = await translateCodeAI(code, "Spanish");
+        setCode(translatedCode);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex justify-between items-center p-4 bg-gray-200 text-black dark:bg-gray-800 dark:text-white">
@@ -237,6 +258,14 @@ const CodeEditor = ({
               </SelectGroup>
             </SelectContent>
           </Select>
+
+          {/*           <Button
+            onClick={translateProject}
+            size={"icon"}
+            disabled={isSaving || isLoading}
+          >
+            <Languages />
+          </Button> */}
         </div>
         <div className="flex items-center justify-end flex-row gap-4 w-1/2">
           <Button
