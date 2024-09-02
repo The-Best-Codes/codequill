@@ -22,5 +22,10 @@
   "save": "Запази",
   "hide-preview": "Скрий предварителен преглед",
   "show-preview": "Покажи предварителен преглед",
-  "untitled": "Без заглавие"
+  "untitled": "Без заглавие",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
