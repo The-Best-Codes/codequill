@@ -23,9 +23,9 @@
   "hide-preview": "Ẩn bản xem trước",
   "show-preview": "Hiển thị bản xem trước",
   "untitled": "Không có tiêu đề",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Cài đặt",
+  "on": "Bật",
+  "off": "Tắt",
+  "dark-theme": "Chủ đề Tối",
+  "light-theme": "Chủ đề Sáng"
 }
