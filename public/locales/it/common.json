@@ -22,5 +22,10 @@
   "save": "Salva",
   "hide-preview": "Nascondi Anteprima",
   "show-preview": "Mostra Anteprima",
-  "untitled": "Senza Titolo"
+  "untitled": "Senza Titolo",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
