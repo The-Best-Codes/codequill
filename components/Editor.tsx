@@ -314,7 +314,7 @@ const CodeEditor = ({
 
   const openAboutAINameGenerator = () => {
     if (typeof window !== "undefined") {
-      window.open("https://openai.com/blog/ai-name-generator", "_blank");
+      window.open("https://github.com/The-Best-Codes/codequill?tab=readme-ov-file#ai-project-name-generator", "_blank");
     }
   };
 

@@ -5,7 +5,9 @@
 
 <!-- [![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill) -->
 
-<img src=".assets/codequill_main_logo.png" alt="logo" for="cover" />
+<img src=".assets/codequill_main_logo.png" width="250" alt="logo" for="cover" />
+
+<img src=".assets/screenshot1.png" width="500" alt="screenshot">
 
 ## How to install CodeQuill on Linux
 
