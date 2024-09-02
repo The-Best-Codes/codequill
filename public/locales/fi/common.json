@@ -22,5 +22,10 @@
   "save": "Tallenna",
   "hide-preview": "Piilota Esikatselu",
   "show-preview": "Näytä Esikatselu",
-  "untitled": "Nimetön"
+  "untitled": "Nimetön",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
