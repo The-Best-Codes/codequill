@@ -289,11 +289,11 @@ const Sidebar = ({
                       } group`}
                       onClick={() => setSelectedProject(project)}
                     >
-                      <div className="flex justify-between max-h-24 max-w-full items-center overflow-auto">
-                        <span>{project.name}</span>
-                        <div className="flex space-x-2 opacity-0 group-hover:opacity-100">
+                      <div className="flex justify-between max-h-24 max-w-full items-center overflow-auto relative">
+                        <span className="max-w-full overflow-auto">{project.name}</span>
+                        <div className="flex space-x-2 opacity-0 group-hover:opacity-100 absolute right-0">
                           <Button
-                            variant={"ghost"}
+                            variant={"destructive"}
                             size={"icon"}
                             className="z-10 w-6 h-6"
                             onClick={(e) => {
