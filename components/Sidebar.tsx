@@ -285,12 +285,14 @@ const Sidebar = ({
                       className={`p-2 rounded cursor-pointer max-w-full ${
                         selectedProject?.id === project.id
                           ? "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"
-                          : ""
-                      } group`}
+                          : "hover:bg-gray-100 dark:hover:bg-gray-600"
+                      } group my-1`}
                       onClick={() => setSelectedProject(project)}
                     >
-                      <div className="flex justify-between max-h-24 max-w-full items-center overflow-auto relative">
-                        <span className="max-w-full overflow-auto">{project.name}</span>
+                      <div className="flex justify-between max-h-24 max-w-full items-center overflow-auto whitespace-nowrap relative">
+                        <span className="overflow-auto group-hover:mr-8">
+                          {project.name}
+                        </span>
                         <div className="flex space-x-2 opacity-0 group-hover:opacity-100 absolute right-0">
                           <Button
                             variant={"destructive"}
@@ -373,7 +375,9 @@ const Sidebar = ({
             >
               {t("cancel")}
             </Button>
-            <Button onClick={confirmDelete}>{t("delete")}</Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              {t("delete")}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
