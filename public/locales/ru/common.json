@@ -23,9 +23,9 @@
   "hide-preview": "Скрыть предпросмотр",
   "show-preview": "Показать предпросмотр",
   "untitled": "Без названия",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Настройки",
+  "on": "Включено",
+  "off": "Отключено",
+  "dark-theme": "Тёмная тема",
+  "light-theme": "Светлая тема"
 }
