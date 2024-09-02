@@ -23,9 +23,9 @@
   "hide-preview": "Ukryj podgląd",
   "show-preview": "Pokaż podgląd",
   "untitled": "Bez tytułu",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Ustawienia",
+  "on": "Włączone",
+  "off": "Wyłączone",
+  "dark-theme": "Ciemny motyw",
+  "light-theme": "Jasny motyw"
 }
