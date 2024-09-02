@@ -22,5 +22,10 @@
   "save": "Mentés",
   "hide-preview": "Előnézet elrejtése",
   "show-preview": "Előnézet megjelenítése",
-  "untitled": "Névtelen"
+  "untitled": "Névtelen",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
