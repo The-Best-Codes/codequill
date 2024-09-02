@@ -312,6 +312,12 @@ const CodeEditor = ({
     }
   };
 
+  const openAboutAINameGenerator = () => {
+    if (typeof window !== "undefined") {
+      window.open("https://openai.com/blog/ai-name-generator", "_blank");
+    }
+  };
+
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex justify-between items-center p-4 bg-gray-200 text-black dark:bg-gray-800 dark:text-white">
@@ -326,17 +332,31 @@ const CodeEditor = ({
               className="p-2 pr-10 border rounded w-full text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
               disabled={isLoading}
             />
-            <Button
-              onClick={ai_nameProject}
-              disabled={isSaving || isLoading}
-              className="absolute w-6 h-6 p-1 right-2 top-1/2 transform -translate-y-1/2"
-            >
-              {isGeneratingName ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Wand2 className="w-4 h-4" />
-              )}
-            </Button>
+            <ContextMenu>
+              <ContextMenuTrigger asChild>
+                <Button
+                  onClick={ai_nameProject}
+                  disabled={isSaving || isLoading}
+                  className={`absolute w-6 h-6 p-1 right-2 top-1/2 transform -translate-y-1/2 ${
+                    isGeneratingName ? "cursor-wait" : ""
+                  }`}
+                >
+                  {isGeneratingName ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Wand2 className="w-4 h-4" />
+                  )}
+                </Button>
+              </ContextMenuTrigger>
+              <ContextMenuContent className="dark:bg-gray-800 dark:border-gray-700">
+                <ContextMenuItem
+                  className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+                  onClick={openAboutAINameGenerator}
+                >
+                  <Info className="w-4 h-4 mr-2" /> About
+                </ContextMenuItem>
+              </ContextMenuContent>
+            </ContextMenu>
           </div>
           <Select
             value={language}

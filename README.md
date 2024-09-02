@@ -1,6 +1,6 @@
 # CodeQuill
 
-[![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill) 
+[![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill)
 [![Crowdin](https://badges.crowdin.net/codequill/localized.svg)](https://crowdin.com/project/codequill)
 
 <!-- [![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill) -->
@@ -26,21 +26,25 @@ Rigth click on the file, then select properties, and turn on "Allow executing as
 1. Open a terminal on your device.
 
 2. Navigate to your home directory:
+
    ```
    cd ~
    ```
 
 3. Download the installation script using curl:
+
    ```
    curl -O https://raw.githubusercontent.com/The-Best-Codes/codequill/main/.device_scripts/codequill.sh
    ```
 
 4. Make the downloaded script executable:
+
    ```
    chmod +x codequill.sh
    ```
 
 5. Run the installation script:
+
    ```
    ./codequill.sh
    ```
@@ -59,6 +63,13 @@ CodeQuill is a web-based code editor designed to offer a free, easy, and efficie
 - **Code Storage:** Save your snippets in the a local database for easy access anywhere on your network.
 - **Share**: Share your code snippets with other devices on your network to easily transfer codes.
 - **Comfortable Interface:** The editor is designed to be as intuitive and familiar as possible. The experience should remind you of working in VS Code.
+- **AI Support:** CodeQuill uses AI models to help you name your projects, translate them (coming soon), generate code (coming soon), and much more.
+
+### AI Project Name Generator
+
+![AI Project Name Generator](.assets/ai_name_generator.png)
+
+To generate a name for your project, simply click the wand icon in the project name input. By default, the llama-70b model is used to name your project. You can customize this and other behaviors such as the base URL, API key, and more in by creating a `.env` file in the project root.
 
 ## Getting Started
 
