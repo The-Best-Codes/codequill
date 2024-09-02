@@ -7,7 +7,7 @@
 
 <img src=".assets/codequill_main_logo.png" width="250" alt="logo" for="cover" />
 
-<img src=".assets/screenshot1.png" width="500" alt="screenshot">
+<img src=".assets/screenshot1.png" alt="screenshot">
 
 ## How to install CodeQuill on Linux
 
