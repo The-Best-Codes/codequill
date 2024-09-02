@@ -22,5 +22,10 @@
   "save": "Сохранить",
   "hide-preview": "Скрыть предпросмотр",
   "show-preview": "Показать предпросмотр",
-  "untitled": "Без названия"
+  "untitled": "Без названия",
+  "settings": "Settings",
+  "on": "On",
+  "off": "Off",
+  "dark-theme": "Dark Theme",
+  "light-theme": "Light Theme"
 }
