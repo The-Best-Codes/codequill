@@ -23,9 +23,9 @@
   "hide-preview": "Amagar prèvia",
   "show-preview": "Mostrar prèvia",
   "untitled": "Sense títol",
-  "settings": "Settings",
-  "on": "On",
-  "off": "Off",
-  "dark-theme": "Dark Theme",
-  "light-theme": "Light Theme"
+  "settings": "Configuració",
+  "on": "Activat",
+  "off": "Inactivat",
+  "dark-theme": "Tema Fosc",
+  "light-theme": "Tema Clar"
 }
