@@ -3,7 +3,7 @@
   "author": "The-Best-Codes",
   "license": "MIT",
   "description": "Organize, Edit, and Share your Code Snippets",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
