@@ -399,6 +399,7 @@ const Sidebar = ({
           type="text"
           placeholder={t("search-projects")}
           value={searchTerm}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="text-black dark:text-white dark:bg-gray-800 dark:border-gray-700"
         />
@@ -410,7 +411,10 @@ const Sidebar = ({
           <Search className="w-4 h-4" />
         </Button>
       </div>
-      <ScrollAreaWithShadows className="flex-grow rounded-lg h-full max-w-full" shadowSize={100}>
+      <ScrollAreaWithShadows
+        className="flex-grow rounded-lg h-full max-w-full"
+        shadowSize={100}
+      >
         {!isLoading ? (
           <div>
             {filteredProjects.length > 0 &&
