@@ -133,10 +133,6 @@ else
     }
 fi
 
-# Clean up
-kill $(cat "$PID_FILE") 2>/dev/null
-rm -f "$PID_FILE"
-
 print_color "35" "
 ==========================
 👋 CodeQuill has stopped 👋
