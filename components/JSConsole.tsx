@@ -263,16 +263,17 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
       <div className="flex space-x-2 my-4 ml-4">
         <Button
           onClick={isRunning ? stopExecution : runCode}
-          className="text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700 w-fit group"
-          variant="secondary"
+          className={
+            isRunning
+              ? ""
+              : "text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700 w-fit"
+          }
+          variant={isRunning ? "destructive" : "secondary"}
         >
           {isRunning ? (
             <>
-              <div className="hidden flex-row items-center group-hover:flex">
+              <div className="flex flex-row items-center">
                 <Square className="mr-2 h-4 w-4" /> Stop
-              </div>
-              <div className="flex flex-row items-center group-hover:hidden">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Running
               </div>
             </>
           ) : (
