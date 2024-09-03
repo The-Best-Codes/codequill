@@ -29,6 +29,7 @@ import {
   Languages,
 } from "lucide-react";
 import { useTranslation } from "next-i18next";
+import JavaScriptConsole from "@/components/JSConsole";
 import { generateAIName } from "@/utils/aiName";
 import { translateCodeAI } from "@/utils/aiTranslate";
 
@@ -71,7 +72,6 @@ const languageOptions = [
   "fsharp",
   "groovy",
   "ini",
-  "java",
   "latex",
   "matlab",
   "pascal",
@@ -435,10 +435,12 @@ const CodeEditor = ({
           {
             <Button
               onClick={() => setShowPreview(!showPreview)}
-              disabled={language !== "html" || isLoading}
+              disabled={
+                (language !== "html" && language !== "javascript") || isLoading
+              }
               className="w-10 p-2 sm:w-fit sm:p-4"
             >
-              {language === "html" ? (
+              {language === "html" || language === "javascript" ? (
                 showPreview ? (
                   <>
                     <EyeOff className="inline-block" />{" "}
@@ -474,7 +476,12 @@ const CodeEditor = ({
         ) : (
           <>
             <Editor
-              height={showPreview && language === "html" ? "50%" : "100%"}
+              height={
+                showPreview &&
+                (language === "html" || language === "javascript")
+                  ? "50%"
+                  : "100%"
+              }
               className="dark:invert"
               width="100%"
               language={language}
@@ -488,6 +495,9 @@ const CodeEditor = ({
                 srcDoc={code}
                 className="w-full h-1/2 border-t dark:border-gray-700"
               />
+            )}
+            {showPreview && language === "javascript" && (
+              <JavaScriptConsole code={code} />
             )}
           </>
         )}

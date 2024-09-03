@@ -96,7 +96,6 @@ const codeLanguageOptions = [
   "fsharp",
   "groovy",
   "ini",
-  "java",
   "latex",
   "matlab",
   "pascal",
