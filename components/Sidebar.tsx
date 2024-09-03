@@ -50,7 +50,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTranslation } from "next-i18next";
-import { arch } from "os";
+import ScrollAreaWithShadows from "@/components/bc_ui/scroll-area";
 
 interface Project {
   id: number;
@@ -411,7 +411,7 @@ const Sidebar = ({
           <Search className="w-4 h-4" />
         </Button>
       </div>
-      <div className="flex-grow overflow-auto h-full max-w-full">
+      <ScrollAreaWithShadows className="flex-grow rounded-lg h-full max-w-full" shadowSize={100}>
         {!isLoading ? (
           <div>
             {filteredProjects.length > 0 &&
@@ -426,15 +426,18 @@ const Sidebar = ({
                       } group my-1`}
                       onClick={() => setSelectedProject(project)}
                     >
-                      <div className="flex justify-between max-h-24 max-w-full items-center overflow-auto whitespace-nowrap relative">
-                        <span className="overflow-auto group-hover:mr-8">
+                      <div
+                        title={project.name}
+                        className="flex justify-between max-h-24 max-w-full items-center relative"
+                      >
+                        <span className="max-w-48 group-hover:max-w-40 truncate">
                           {project.name}
                         </span>
                         <div className="flex space-x-2 opacity-0 group-hover:opacity-100 absolute right-0">
                           <Button
                             variant={"destructive"}
                             size={"icon"}
-                            className="z-10 w-6 h-6"
+                            className="z-10 w-6 h-6 shadow-xl"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleDelete(project.id);
@@ -476,7 +479,7 @@ const Sidebar = ({
             ))}
           </div>
         )}
-      </div>
+      </ScrollAreaWithShadows>
       <div className="mt-4 flex justify-center space-x-4">
         <Button variant="ghost" size="icon" onClick={openSettings}>
           <Settings className="w-5 h-5" />
@@ -592,9 +595,7 @@ const Sidebar = ({
             </div>
           </DialogDescription>
           <DialogFooter>
-            <Button
-              onClick={() => setIsSettingsDialogOpen(false)}
-            >
+            <Button onClick={() => setIsSettingsDialogOpen(false)}>
               {t("save")}
             </Button>
           </DialogFooter>
