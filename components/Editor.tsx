@@ -314,7 +314,10 @@ const CodeEditor = ({
 
   const openAboutAINameGenerator = () => {
     if (typeof window !== "undefined") {
-      window.open("https://github.com/The-Best-Codes/codequill?tab=readme-ov-file#ai-project-name-generator", "_blank");
+      window.open(
+        "https://github.com/The-Best-Codes/codequill?tab=readme-ov-file#ai-project-name-generator",
+        "_blank"
+      );
     }
   };
 
@@ -481,7 +484,10 @@ const CodeEditor = ({
               theme="vs-light"
             />
             {showPreview && language === "html" && (
-              <iframe srcDoc={code} className="w-full h-1/2" />
+              <iframe
+                srcDoc={code}
+                className="w-full h-1/2 border-t dark:border-gray-700"
+              />
             )}
           </>
         )}
