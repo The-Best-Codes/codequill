@@ -223,7 +223,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
     <div className="w-full h-1/2 max-h-[45vh] font-mono flex flex-col">
       <div
         ref={scrollAreaRef}
-        className="h-3/4 overflow-auto bg-gray-100 dark:bg-gray-800 p-4"
+        className="h-3/4 overflow-auto bg-gray-100 dark:bg-gray-900 p-4"
       >
         <div>
           {logs.map((log, index) =>
