@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy, Info, Check, Loader2, Play, Square, Trash2 } from "lucide-react";
+import ScrollAreaWithShadows from "@/components/bc_ui/scroll-area";
 
 interface ConsoleProps {
   code: string;
@@ -22,15 +23,12 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [copyStatuses, setCopyStatuses] = useState<CopyStatus[]>([]);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement | null | any>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTo({
-        top: scrollAreaRef.current.scrollHeight,
-        behavior: "smooth",
-      });
+      scrollAreaRef.current?.scrollToBottom();
     }
   }, [logs]);
 
@@ -221,8 +219,9 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
 
   return (
     <div className="w-full h-1/2 max-h-[45vh] font-mono flex flex-col">
-      <div
+      <ScrollAreaWithShadows
         ref={scrollAreaRef}
+        shadowSize={50}
         className="h-3/4 overflow-auto bg-gray-100 dark:bg-gray-900 p-4"
       >
         <div>
@@ -259,7 +258,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
             )
           )}
         </div>
-      </div>
+      </ScrollAreaWithShadows>
       <div className="flex space-x-2 my-4 ml-4">
         <Button
           onClick={isRunning ? stopExecution : runCode}
