@@ -3,15 +3,7 @@ import Editor from "@monaco-editor/react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/bc_ui/combobox";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -32,118 +24,9 @@ import { useTranslation } from "next-i18next";
 import JavaScriptConsole from "@/components/JSConsole";
 import { generateAIName } from "@/utils/aiName";
 import { translateCodeAI } from "@/utils/aiTranslate";
+import codeLangOptions from "@/utils/codeLangs";
 
 const DEFAULT_LANGUAGE = "html";
-
-const languageOptions = [
-  "auto",
-  "html",
-  "javascript",
-  "typescript",
-  "python",
-  "java",
-  "c",
-  "cpp",
-  "csharp",
-  "php",
-  "css",
-  "scss",
-  "less",
-  "markdown",
-  "json",
-  "yaml",
-  "xml",
-  "bash",
-  "sql",
-  "go",
-  "rust",
-  "dart",
-  "kotlin",
-  "swift",
-  "ruby",
-  "objective-c",
-  "perl",
-  "powershell",
-  "r",
-  "scala",
-  "shellscript",
-  "vb",
-  "lua",
-  "fsharp",
-  "groovy",
-  "ini",
-  "latex",
-  "matlab",
-  "pascal",
-  "plaintext",
-  "pug",
-  "restructuredtext",
-  "vhdl",
-  "vue",
-  "coffeescript",
-  "dockerfile",
-  "graphql",
-  "handlebars",
-  "mips",
-  "razor",
-  "redis",
-  "solidity",
-];
-
-const langIndex: { [key: string]: string } = {
-  auto: "Auto",
-  html: "HTML",
-  javascript: "JavaScript",
-  python: "Python",
-  java: "Java",
-  c: "C",
-  cpp: "C++",
-  csharp: "C#",
-  php: "PHP",
-  css: "CSS",
-  scss: "SCSS",
-  less: "LESS",
-  markdown: "Markdown",
-  json: "JSON",
-  yaml: "YAML",
-  xml: "XML",
-  bash: "Bash",
-  sql: "SQL",
-  go: "Go",
-  rust: "Rust",
-  dart: "Dart",
-  kotlin: "Kotlin",
-  swift: "Swift",
-  ruby: "Ruby",
-  "objective-c": "Objective-C",
-  perl: "Perl",
-  powershell: "PowerShell",
-  r: "R",
-  scala: "Scala",
-  shellscript: "ShellScript",
-  vb: "VB",
-  lua: "Lua",
-  fsharp: "F#",
-  groovy: "Groovy",
-  ini: "INI",
-  latex: "LaTeX",
-  matlab: "MATLAB",
-  pascal: "Pascal",
-  plaintext: "Plain Text",
-  pug: "Pug",
-  restructuredtext: "reStructuredText",
-  vhdl: "VHDL",
-  vue: "Vue",
-  coffeescript: "CoffeeScript",
-  dockerfile: "Dockerfile",
-  graphql: "GraphQL",
-  handlebars: "Handlebars",
-  mips: "MIPS",
-  razor: "Razor",
-  redis: "Redis",
-  solidity: "Solidity",
-  typescript: "TypeScript",
-};
 
 const getStoredDefaultLanguage = () => {
   if (typeof window === "undefined" || !localStorage.getItem("defaultLanguage"))
@@ -166,7 +49,7 @@ const CodeEditor = ({
   const [defaultLanguage, setDefaultLanguage] = useState(
     getStoredDefaultLanguage()
   );
-  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
+  const [codeLanguage, setCodeLanguage] = useState(DEFAULT_LANGUAGE);
   const [name, setName] = useState(`${t("untitled") || "Untitled"}`);
   const [showPreview, setShowPreview] = useState(true);
   const [saveSuccess, setSaveSuccess] = useState("");
@@ -191,7 +74,7 @@ const CodeEditor = ({
         .then((response) => {
           const project = response.data;
           setCode(project.code);
-          setLanguage(project.language);
+          setCodeLanguage(project.language);
           setName(project?.name || `${t("untitled")}`);
         })
         .finally(() => {
@@ -199,7 +82,7 @@ const CodeEditor = ({
         });
     } else {
       setCode("");
-      setLanguage(defaultLanguage);
+      setCodeLanguage(defaultLanguage);
       setName(`${t("untitled")}`);
     }
   }, [selectedProject, defaultLanguage, t]);
@@ -249,17 +132,17 @@ const CodeEditor = ({
         await axios.put(`/api/projects/${selectedProject.id}`, {
           name,
           code,
-          language,
+          language: codeLanguage,
         });
       } else {
         const response = await axios.post("/api/projects", {
           name,
           code,
-          language,
+          language: codeLanguage,
         });
         const project = await response.data;
         if (!project) return;
-        setSelectedProject({ ...project, code, language, name });
+        setSelectedProject({ ...project, code, language: codeLanguage, name });
       }
       refreshProjects();
       setSaveSuccess("Saved");
@@ -361,33 +244,17 @@ const CodeEditor = ({
               </ContextMenuContent>
             </ContextMenu>
           </div>
-          <Select
-            value={language}
-            onValueChange={(value) => setLanguage(value)}
+          <Combobox
+            value={codeLanguage}
+            onValueChange={(value) => setCodeLanguage(value)}
             disabled={isLoading}
-          >
-            <SelectTrigger className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
-              <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
-              <SelectGroup>
-                <SelectLabel className="dark:text-white dark:bg-gray-800">
-                  {t("language")}
-                </SelectLabel>
-                {languageOptions.map((lang) => (
-                  <SelectItem
-                    className="dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
-                    key={lang}
-                    value={lang}
-                  >
-                    {langIndex[lang] || lang}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+            placeholder="Language"
+            options={codeLangOptions}
+            className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800"
+            label="Language"
+          />
 
-          {/*           <Button
+          {/* <Button
             onClick={translateProject}
             size={"icon"}
             disabled={isSaving || isLoading}
@@ -436,11 +303,11 @@ const CodeEditor = ({
             <Button
               onClick={() => setShowPreview(!showPreview)}
               disabled={
-                (language !== "html" && language !== "javascript") || isLoading
+                (codeLanguage !== "html" && codeLanguage !== "javascript") || isLoading
               }
               className="w-10 p-2 sm:w-fit sm:p-4"
             >
-              {language === "html" || language === "javascript" ? (
+              {codeLanguage === "html" || codeLanguage === "javascript" ? (
                 showPreview ? (
                   <>
                     <EyeOff className="inline-block" />{" "}
@@ -478,25 +345,25 @@ const CodeEditor = ({
             <Editor
               height={
                 showPreview &&
-                (language === "html" || language === "javascript")
+                (codeLanguage === "html" || codeLanguage === "javascript")
                   ? "50%"
                   : "100%"
               }
               className="dark:invert"
               width="100%"
-              language={language}
+              language={codeLanguage}
               value={code}
               onChange={(value) => setCode(value || "")}
               //theme={(darkMode ? "vs-dark" : "vs-light") as any}
               theme="vs-light"
             />
-            {showPreview && language === "html" && (
+            {showPreview && codeLanguage === "html" && (
               <iframe
                 srcDoc={code}
                 className="w-full h-1/2 border-t dark:border-gray-700"
               />
             )}
-            {showPreview && language === "javascript" && (
+            {showPreview && codeLanguage === "javascript" && (
               <JavaScriptConsole code={code} />
             )}
           </>

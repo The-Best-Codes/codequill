@@ -39,6 +39,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Combobox } from "@/components/bc_ui/combobox";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -51,6 +52,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTranslation } from "next-i18next";
 import ScrollAreaWithShadows from "@/components/bc_ui/scroll-area";
+import codeLangOptions from "@/utils/codeLangs";
 
 interface Project {
   id: number;
@@ -59,124 +61,16 @@ interface Project {
   language: string;
 }
 
-const codeLanguageOptions = [
-  "auto",
-  "html",
-  "javascript",
-  "typescript",
-  "python",
-  "java",
-  "c",
-  "cpp",
-  "csharp",
-  "php",
-  "css",
-  "scss",
-  "less",
-  "markdown",
-  "json",
-  "yaml",
-  "xml",
-  "bash",
-  "sql",
-  "go",
-  "rust",
-  "dart",
-  "kotlin",
-  "swift",
-  "ruby",
-  "objective-c",
-  "perl",
-  "powershell",
-  "r",
-  "scala",
-  "shellscript",
-  "vb",
-  "lua",
-  "fsharp",
-  "groovy",
-  "ini",
-  "latex",
-  "matlab",
-  "pascal",
-  "plaintext",
-  "pug",
-  "restructuredtext",
-  "vhdl",
-  "vue",
-  "coffeescript",
-  "dockerfile",
-  "graphql",
-  "handlebars",
-  "mips",
-  "razor",
-  "redis",
-  "solidity",
-];
-
-const codeLangIndex: { [key: string]: string } = {
-  auto: "Auto",
-  html: "HTML",
-  javascript: "JavaScript",
-  python: "Python",
-  java: "Java",
-  c: "C",
-  cpp: "C++",
-  csharp: "C#",
-  php: "PHP",
-  css: "CSS",
-  scss: "SCSS",
-  less: "LESS",
-  markdown: "Markdown",
-  json: "JSON",
-  yaml: "YAML",
-  xml: "XML",
-  bash: "Bash",
-  sql: "SQL",
-  go: "Go",
-  rust: "Rust",
-  dart: "Dart",
-  kotlin: "Kotlin",
-  swift: "Swift",
-  ruby: "Ruby",
-  "objective-c": "Objective-C",
-  perl: "Perl",
-  powershell: "PowerShell",
-  r: "R",
-  scala: "Scala",
-  shellscript: "ShellScript",
-  vb: "VB",
-  lua: "Lua",
-  fsharp: "F#",
-  groovy: "Groovy",
-  ini: "INI",
-  latex: "LaTeX",
-  matlab: "MATLAB",
-  pascal: "Pascal",
-  plaintext: "Plain Text",
-  pug: "Pug",
-  restructuredtext: "reStructuredText",
-  vhdl: "VHDL",
-  vue: "Vue",
-  coffeescript: "CoffeeScript",
-  dockerfile: "Dockerfile",
-  graphql: "GraphQL",
-  handlebars: "Handlebars",
-  mips: "MIPS",
-  razor: "Razor",
-  redis: "Redis",
-  solidity: "Solidity",
-  typescript: "TypeScript",
-};
-
 const Sidebar = ({
   selectedProject,
   setSelectedProject,
   refreshProjects,
 }: any) => {
   const { t, i18n } = useTranslation("common");
-  const [language, setLanguage] = useState<any>("en");
-  const [languageOptions, setLanguageOptions] = useState<any>([]);
+  const [humanLanguage, setHumanLanguage] = useState<any>("en");
+  const [humanLanguageOptions, setHumanLanguageOptions] = useState<any>([]);
+  const [formattedHumanLanguageOptions, setFormattedHumanLanguageOptions] =
+    useState<any>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -192,51 +86,56 @@ const Sidebar = ({
   const [darkMode, setDarkMode] = useState(true);
   const [defaultCodeLanguage, setDefaultCodeLanguage] = useState("html");
 
-  const langAbbreviations: any = {
-    en: "English",
-    es: "Español",
-    fr: "Français",
-    af: "Afrikaans",
-    ar: "العربية",
-    ca: "Catalán",
-    cs: "Česky",
-    da: "Dansk",
-    de: "Deutsch",
-    el: "Ελληνικά",
-    fi: "Suomi",
-    he: "עברית",
-    hu: "Magyar",
-    it: "Italiano",
-    ja: "日本語",
-    ko: "한국어",
-    nl: "Nederlands",
-    no: "Norsk",
-    pl: "Polski",
-    pt: "Português",
-    ro: "Română",
-    ru: "Русский",
-    sr: "Српски",
-    sv: "Svenska",
-    tr: "Türkçe",
-    uk: "Українська",
-    vi: "Tiếng Việt",
-    zh: "中文",
-  };
-
   useEffect(() => {
     setDefaultCodeLanguage(getStoredDefaultCodeLanguage() || "javascript");
   }, []);
 
   useEffect(() => {
+    const langAbbreviations: any = {
+      en: "English",
+      es: "Español",
+      fr: "Français",
+      af: "Afrikaans",
+      ar: "العربية",
+      ca: "Catalán",
+      cs: "Česky",
+      da: "Dansk",
+      de: "Deutsch",
+      el: "Ελληνικά",
+      fi: "Suomi",
+      he: "עברית",
+      hu: "Magyar",
+      it: "Italiano",
+      ja: "日本語",
+      ko: "한국어",
+      nl: "Nederlands",
+      no: "Norsk",
+      pl: "Polski",
+      pt: "Português",
+      ro: "Română",
+      ru: "Русский",
+      sr: "Српски",
+      sv: "Svenska",
+      tr: "Türkçe",
+      uk: "Українська",
+      vi: "Tiếng Việt",
+      zh: "中文",
+    };
+
     // Set the language options from i18n
     if (typeof window !== "undefined") {
       const availableLanguages = Object.keys(i18n.options?.resources || {});
-      setLanguageOptions(availableLanguages);
-    }
-    // Set the current language
-    if (typeof window !== "undefined") {
+      setHumanLanguageOptions(availableLanguages);
+      // Set the current language
       const currentLanguage = i18n.language;
-      setLanguage(currentLanguage);
+      setHumanLanguage(currentLanguage);
+
+      // Set the formatted human languages options
+      const formattedHLO = availableLanguages.map((language) => {
+        return { value: language, label: langAbbreviations[language] };
+      });
+
+      setFormattedHumanLanguageOptions(formattedHLO);
     }
   }, [i18n]);
 
@@ -319,12 +218,12 @@ const Sidebar = ({
     setIsSettingsDialogOpen(true);
   };
 
-  const handleLanguageChange = (value: string) => {
+  const handleHumanLanguageChange = (value: string) => {
     i18n.changeLanguage(value);
     if (typeof localStorage !== "undefined") {
       localStorage.setItem("user_language", value);
     }
-    setLanguage(value);
+    setHumanLanguage(value);
   };
 
   const getStoredDefaultCodeLanguage = () => {
@@ -550,21 +449,15 @@ const Sidebar = ({
                 <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center">
                   <Languages className="w-4 h-4 mr-2" /> {t("language")}
                 </Label>
-                <Select
-                  value={language}
-                  onValueChange={(value) => handleLanguageChange(value)}
-                >
-                  <SelectTrigger className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
-                    <SelectValue placeholder="Language" />
-                  </SelectTrigger>
-                  <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
-                    {languageOptions.map((lang: string) => (
-                      <SelectItem key={lang} value={lang}>
-                        {langAbbreviations[lang] || lang}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Combobox
+                  value={humanLanguage}
+                  onValueChange={(value) => handleHumanLanguageChange(value)}
+                  disabled={isLoading}
+                  placeholder="Language"
+                  options={formattedHumanLanguageOptions}
+                  className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800"
+                  label="Language"
+                />
               </div>
             </div>
             <div className="h-4" />
@@ -577,23 +470,17 @@ const Sidebar = ({
                 <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                   <RotateCw className="w-3 h-3 mr-1" /> Requires reload
                 </span>
-                <Select
+                <Combobox
                   value={defaultCodeLanguage}
                   onValueChange={(value) =>
                     handleDefaultCodeLanguageChange(value)
                   }
-                >
-                  <SelectTrigger className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800">
-                    <SelectValue placeholder="Language" />
-                  </SelectTrigger>
-                  <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
-                    {codeLanguageOptions.map((lang: string) => (
-                      <SelectItem key={lang} value={lang}>
-                        {codeLangIndex[lang] || lang}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  disabled={isLoading}
+                  placeholder="Language"
+                  options={codeLangOptions}
+                  className="w-fit text-black dark:text-white dark:border-gray-700 dark:bg-gray-800"
+                  label="Language"
+                />
               </div>
             </div>
           </DialogDescription>
