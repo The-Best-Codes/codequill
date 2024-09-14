@@ -1,0 +1,54 @@
+name: Weekly npm update
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Run every Sunday at midnight UTC
+  workflow_dispatch: # Enable manual triggering of the workflow
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Update dependencies
+        run: |
+          npm update
+        continue-on-error: true
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "chore: update npm dependencies"
+          git push
+
+      - name: Create issue if update fails
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'npm update failed',
+              body: 'The weekly npm update job failed. Please check the action logs for more details.'
+            })
