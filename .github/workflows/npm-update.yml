@@ -23,7 +23,7 @@ jobs:
 
       - name: Update dependencies
         run: |
-          npm update
+          npx npm-check-updates -u && npm install && npm update
         continue-on-error: true
 
       - name: Check for changes
