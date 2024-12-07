@@ -67,29 +67,29 @@ while true; do
     show_header
     show_menu
     read choice
-
+    
     case $choice in
         1)
             ./install.sh
-            ;;
+        ;;
         2)
             update_scripts
             make_executable
             ./install.sh
-            ;;
+        ;;
         3)
             ./uninstall.sh
-            ;;
+        ;;
         4)
             ./start.sh
-            ;;
+        ;;
         5)
             echo "Exiting..."
             exit 0
-            ;;
+        ;;
         *)
             echo "Invalid option. Please try again."
             sleep 2
-            ;;
+        ;;
     esac
 done

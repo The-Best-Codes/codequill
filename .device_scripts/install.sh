@@ -29,34 +29,34 @@ select_package_manager() {
     echo "2) yarn"
     echo "3) bun"
     read -p "Enter your choice [1-3]: " pm_choice
-
+    
     case $pm_choice in
         1)
             PM="npm"
             PM_INSTALL="npm install --legacy-peer-deps"
-            ;;
+        ;;
         2)
             PM="yarn"
             which yarn >/dev/null || (npm install -g yarn && check_status)
             PM_INSTALL="yarn install"
-            ;;
+        ;;
         3)
             PM="bun"
             which bun >/dev/null || (curl -fsSL https://bun.sh/install | bash && check_status)
             PM_INSTALL="bun install"
-            ;;
+        ;;
         *)
             print_color "31" "Invalid choice. Using npm as default."
             PM="npm"
             PM_INSTALL="npm install --legacy-peer-deps"
-            ;;
+        ;;
     esac
 }
 
 # Start installation
 print_color "35" "
 ==================================
- CodeQuill Installation Script 
+ CodeQuill Installation Script
 ==================================
 "
 
@@ -84,7 +84,7 @@ if [ -d "codequill" ]; then
     else
         print_color "33" " No database file found to backup."
     fi
-
+    
     print_step "Removing existing CodeQuill folder..."
     rm -rf codequill
     check_status || exit 1
@@ -148,7 +148,7 @@ print_color "32" " Build completed successfully."
 
 print_color "35" "
 ====================================
- Installation completed successfully! 
+ Installation completed successfully!
 
 To start the server, run: ./start.sh
 "
