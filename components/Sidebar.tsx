@@ -287,7 +287,7 @@ const Sidebar = ({
         </Button>
       </div>
       <ScrollAreaWithShadows
-        className="flex-grow rounded-lg h-full max-w-full"
+        className="grow rounded-lg h-full max-w-full"
         shadowSize={100}
       >
         {!isLoading ? (
@@ -429,8 +429,8 @@ const Sidebar = ({
                       <SelectValue placeholder={t("select-theme")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="light">{t("light")}</SelectItem>
-                      <SelectItem value="dark">{t("dark")}</SelectItem>
+                      <SelectItem value="light">{t("light-theme")}</SelectItem>
+                      <SelectItem value="dark">{t("dark-theme")}</SelectItem>
                       <SelectItem value="system">{t("system")}</SelectItem>
                     </SelectContent>
                   </Select>
@@ -457,7 +457,7 @@ const Sidebar = ({
             <div className="h-4" />
             <div className="flex flex-col space-y-4">
               <div className="flex flex-col space-y-2">
-                <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center -mb-2">
+                <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center">
                   <Code2 className="w-4 h-4 mr-2" /> Default Editor{" "}
                   {t("language")}
                 </Label>
