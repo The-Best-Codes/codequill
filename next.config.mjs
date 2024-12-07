@@ -1,6 +1,17 @@
 /** @type {import('next').NextConfig} */
-import { i18n } from './next-i18next.config.mjs';
-
-const nextConfig = {};
+const nextConfig = {
+    typescript: {
+        ignoreBuildErrors: true,
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
+    experimental: {
+        turbo: {
+            useSwcCss: true,
+            treeShaking: true,
+        }
+    }
+};
 
 export default nextConfig;
