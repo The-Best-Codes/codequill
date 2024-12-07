@@ -27,5 +27,7 @@
   "on": "Activat",
   "off": "Inactivat",
   "dark-theme": "Tema Fosc",
-  "light-theme": "Tema Clar"
+  "light-theme": "Tema Clar",
+  "theme": "Theme",
+  "system": "System"
 }
