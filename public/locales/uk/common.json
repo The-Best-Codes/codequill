@@ -27,5 +27,7 @@
   "on": "Увімкнено",
   "off": "Вимкнено",
   "dark-theme": "Темна тема",
-  "light-theme": "Світла тема"
+  "light-theme": "Світла тема",
+  "theme": "Theme",
+  "system": "System"
 }
