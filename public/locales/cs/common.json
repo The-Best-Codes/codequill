@@ -27,5 +27,7 @@
   "on": "Zapnuto",
   "off": "Vypnuto",
   "dark-theme": "Temné téma",
-  "light-theme": "Světlé téma"
+  "light-theme": "Světlé téma",
+  "theme": "Theme",
+  "system": "System"
 }
