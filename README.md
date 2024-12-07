@@ -18,7 +18,7 @@ Installing CodeQuill on Linux (Ubuntu is preferred) is straightforward.
 Open your terminal (you can usually press CTRL + ALT + T to do this) and paste the following command:
 
 ```bash
-cd ~ && curl -O https://github.com/The-Best-Codes/codequill/blob/main/codequill_app.sh && bash codequill_app.sh
+cd ~ && curl -O https://raw.githubusercontent.com/The-Best-Codes/codequill/refs/heads/main/codequill_app.sh && bash codequill_app.sh
 ```
 
 The install should happen automatically.
