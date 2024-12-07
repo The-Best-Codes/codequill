@@ -27,5 +27,7 @@
   "on": "פועל",
   "off": "כבוי",
   "dark-theme": "ערק כהה",
-  "light-theme": "ערק בהיר"
+  "light-theme": "ערק בהיר",
+  "theme": "Theme",
+  "system": "System"
 }
