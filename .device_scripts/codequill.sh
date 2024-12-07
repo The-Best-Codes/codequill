@@ -6,13 +6,28 @@ REQUIRED_SCRIPTS=("install.sh" "uninstall.sh" "start.sh" "desktop.sh" "remove_de
 # Base URL for downloading scripts
 BASE_URL="https://raw.githubusercontent.com/The-Best-Codes/codequill/main/.device_scripts"
 
-# Function to check and download missing scripts
+# Function to check and download scripts
 check_and_download_scripts() {
     for script in "${REQUIRED_SCRIPTS[@]}"; do
-        echo "Downloading $script..."
+        if [ ! -f "$script" ]; then
+            echo "Downloading $script..."
+            curl -O "$BASE_URL/$script"
+            if [ $? -ne 0 ]; then
+                echo "Failed to download $script. Please check your internet connection and try again."
+                exit 1
+            fi
+        fi
+    done
+}
+
+# Function to update scripts
+update_scripts() {
+    echo "Updating scripts..."
+    for script in "${REQUIRED_SCRIPTS[@]}"; do
+        echo "Updating $script..."
         curl -O "$BASE_URL/$script"
         if [ $? -ne 0 ]; then
-            echo "Failed to download $script. Please check your internet connection and try again."
+            echo "Failed to update $script. Please check your internet connection and try again."
             exit 1
         fi
     done
@@ -30,12 +45,13 @@ show_header() {
 # Function to display the menu
 show_menu() {
     echo "Please select an option:"
-    echo "1) Install / Update"
-    echo "2) Uninstall"
-    echo "3) Open CodeQuill"
-    echo "4) Cancel or Exit"
+    echo "1) Install"
+    echo "2) Update"
+    echo "3) Uninstall"
+    echo "4) Open CodeQuill"
+    echo "5) Cancel or Exit"
     echo
-    echo -n "Enter your choice [1-4]: "
+    echo -n "Enter your choice [1-5]: "
 }
 
 # Function to make scripts executable
@@ -50,37 +66,30 @@ make_executable
 while true; do
     show_header
     show_menu
-
     read choice
 
     case $choice in
-    1)
-        echo "Installing / Updating CodeQuill..."
-        ./install.sh
-        echo "Setting up desktop integration..."
-        ./desktop.sh
-        echo "CodeQuill has been installed/updated successfully!"
-        read -p "Press Enter to continue..."
-        ;;
-    2)
-        echo "Uninstalling CodeQuill..."
-        ./remove_desktop.sh
-        ./uninstall.sh
-        echo "CodeQuill has been uninstalled successfully!"
-        read -p "Press Enter to continue..."
-        ;;
-    3)
-        echo "Opening CodeQuill..."
-        ./start.sh
-        exit 0
-        ;;
-    4)
-        echo "Exiting CodeQuill Manager. Goodbye!"
-        exit 0
-        ;;
-    *)
-        echo "Invalid option. Please try again."
-        read -p "Press Enter to continue..."
-        ;;
+        1)
+            ./install.sh
+            ;;
+        2)
+            update_scripts
+            make_executable
+            ./install.sh
+            ;;
+        3)
+            ./uninstall.sh
+            ;;
+        4)
+            ./start.sh
+            ;;
+        5)
+            echo "Exiting..."
+            exit 0
+            ;;
+        *)
+            echo "Invalid option. Please try again."
+            sleep 2
+            ;;
     esac
 done
