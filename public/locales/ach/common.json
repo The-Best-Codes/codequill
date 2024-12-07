@@ -27,5 +27,7 @@
   "on": "Ki",
   "off": "Twan",
   "dark-theme": "Dharti tema",
-  "light-theme": "Tut tema"
+  "light-theme": "Tut tema",
+  "theme": "Theme",
+  "system": "System"
 }
