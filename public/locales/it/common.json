@@ -27,5 +27,7 @@
   "on": "Acceso",
   "off": "Spento",
   "dark-theme": "Tema Scuro",
-  "light-theme": "Tema Chiaro"
+  "light-theme": "Tema Chiaro",
+  "theme": "Theme",
+  "system": "System"
 }
