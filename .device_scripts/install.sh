@@ -9,54 +9,23 @@ print_color() {
 
 # Function to print step
 print_step() {
-    print_color "36" "\n $1"
+    print_color "36" "\n📌 $1"
 }
 
 # Function to check command status
 check_status() {
     if [ $? -eq 0 ]; then
-        print_color "32" " Success"
+        print_color "32" "✅ Success"
     else
-        print_color "31" " Failed"
+        print_color "31" "❌ Failed"
         return 1
     fi
-}
-
-# Function to select package manager
-select_package_manager() {
-    print_step "Select your preferred package manager:"
-    echo "1) npm (with --legacy-peer-deps)"
-    echo "2) yarn"
-    echo "3) bun"
-    read -p "Enter your choice [1-3]: " pm_choice
-    
-    case $pm_choice in
-        1)
-            PM="npm"
-            PM_INSTALL="npm install --legacy-peer-deps"
-        ;;
-        2)
-            PM="yarn"
-            which yarn >/dev/null || (npm install -g yarn && check_status)
-            PM_INSTALL="yarn install"
-        ;;
-        3)
-            PM="bun"
-            which bun >/dev/null || (curl -fsSL https://bun.sh/install | bash && check_status)
-            PM_INSTALL="bun install"
-        ;;
-        *)
-            print_color "31" "Invalid choice. Using npm as default."
-            PM="npm"
-            PM_INSTALL="npm install --legacy-peer-deps"
-        ;;
-    esac
 }
 
 # Start installation
 print_color "35" "
 ==================================
- CodeQuill Installation Script
+🚀 CodeQuill Installation Script 🚀
 ==================================
 "
 
@@ -67,7 +36,7 @@ check_status || exit 1
 
 # Install dependencies
 print_step "Installing dependencies..."
-sudo apt install -y git nodejs
+sudo apt install -y git nodejs npm
 check_status || exit 1
 
 # Create codequill folder if it doesn't exist
@@ -82,9 +51,9 @@ if [ -d "codequill" ]; then
         cp codequill/database.sqlite ./database.sqlite.backup
         check_status || exit 1
     else
-        print_color "33" " No database file found to backup."
+        print_color "33" "⚠️ No database file found to backup."
     fi
-    
+
     print_step "Removing existing CodeQuill folder..."
     rm -rf codequill
     check_status || exit 1
@@ -95,60 +64,53 @@ PID_FILE="/tmp/codequill_server.pid"
 if [ -f "$PID_FILE" ]; then
     print_step "Stopping existing CodeQuill server..."
     if kill $(cat "$PID_FILE") 2>/dev/null; then
-        print_color "32" " Existing server stopped"
+        print_color "32" "✅ Existing server stopped"
     else
-        print_color "33" " Failed to stop existing server, it may not be running"
+        print_color "33" "⚠️ Failed to stop existing server, it may not be running"
     fi
     rm -f "$PID_FILE"
 fi
 
-# Create codequill folder if it doesn't exist
-print_step "Creating codequill folder..."
-mkdir -p codequill
-check_status || exit 1
-
-# Check if it's a git repository
-cd codequill
-if [ -d ".git" ]; then
-    print_step "Updating existing installation..."
-    git pull origin main
-    check_status || exit 1
-else
-    print_step "Cloning CodeQuill repository..."
-    git clone https://github.com/The-Best-Codes/codequill.git .
-    check_status || exit 1
-fi
-
-# Select and install with package manager
-select_package_manager
-print_step "Installing dependencies using $PM..."
-$PM_INSTALL
+# Clone the repository
+print_step "Cloning the CodeQuill repository..."
+git clone https://github.com/The-Best-Codes/codequill.git
 check_status || exit 1
 
 # Restore database if backup exists
-if [ -f "../database.sqlite.backup" ]; then
+if [ -f "./database.sqlite.backup" ]; then
     print_step "Restoring database..."
-    mv ../database.sqlite.backup database.sqlite
+    mv ./database.sqlite.backup codequill/database.sqlite
     check_status || exit 1
 fi
 
+# Change directory
+print_step "Changing to the CodeQuill directory..."
+cd codequill
+check_status || exit 1
+
+# Install Node.js dependencies
+print_step "Installing Node.js dependencies..."
+npm install --legacy-peer-deps
+check_status || exit 1
+
 # Install Electron dependencies
 print_step "Installing Electron dependencies..."
-$PM install --save-dev electron electron-builder
+npm install --legacy-peer-deps --save-dev electron electron-builder
 check_status || exit 1
 
 # Build the Next.js app
 print_step "Building the Next.js app..."
-$PM run build
+npm run build
 if [ $? -ne 0 ]; then
-    print_color "31" " Build failed. Please check for errors and try again."
+    print_color "31" "❌ Build failed. Please check for errors and try again."
     exit 1
 fi
-print_color "32" " Build completed successfully."
+print_color "32" "✅ Build completed successfully."
 
 print_color "35" "
 ====================================
- Installation completed successfully!
+🎉 Installation completed successfully! 🎉
+====================================
 
 To start the server, run: ./start.sh
 "
