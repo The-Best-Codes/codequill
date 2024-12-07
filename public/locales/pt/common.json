@@ -27,5 +27,7 @@
   "on": "Ligado",
   "off": "Desligado",
   "dark-theme": "Tema Escuro",
-  "light-theme": "Tema Claro"
+  "light-theme": "Tema Claro",
+  "theme": "Theme",
+  "system": "System"
 }
