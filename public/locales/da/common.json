@@ -27,5 +27,7 @@
   "on": "På",
   "off": "Fra",
   "dark-theme": "Mørkt tema",
-  "light-theme": "Lyst tema"
+  "light-theme": "Lyst tema",
+  "theme": "Theme",
+  "system": "System"
 }
