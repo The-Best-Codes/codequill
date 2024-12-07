@@ -27,5 +27,7 @@
   "on": "Bật",
   "off": "Tắt",
   "dark-theme": "Chủ đề Tối",
-  "light-theme": "Chủ đề Sáng"
+  "light-theme": "Chủ đề Sáng",
+  "theme": "Theme",
+  "system": "System"
 }

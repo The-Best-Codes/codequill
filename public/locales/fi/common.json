@@ -27,5 +27,7 @@
   "on": "Päällä",
   "off": "Pois päältä",
   "dark-theme": "Tumma teema",
-  "light-theme": "Vaalea teema"
+  "light-theme": "Vaalea teema",
+  "theme": "Theme",
+  "system": "System"
 }

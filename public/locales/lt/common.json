@@ -27,5 +27,7 @@
   "on": "Įjungta",
   "off": "Išjungta",
   "dark-theme": "Tamsusis tema",
-  "light-theme": "Šviesus tema"
+  "light-theme": "Šviesus tema",
+  "theme": "Theme",
+  "system": "System"
 }

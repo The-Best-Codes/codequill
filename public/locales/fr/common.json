@@ -27,5 +27,7 @@
   "on": "Activé",
   "off": "Désactivé",
   "dark-theme": "Thème Sombre",
-  "light-theme": "Thème Clair"
+  "light-theme": "Thème Clair",
+  "theme": "Theme",
+  "system": "System"
 }

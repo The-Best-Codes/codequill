@@ -27,5 +27,7 @@
   "on": "Açık",
   "off": "Kapalı",
   "dark-theme": "Koyu Tema",
-  "light-theme": "Açık Tema"
+  "light-theme": "Açık Tema",
+  "theme": "Theme",
+  "system": "System"
 }

@@ -27,5 +27,7 @@
   "on": "Ενεργοποιημένο",
   "off": "Απενεργοποιημένο",
   "dark-theme": "Σκούρο Θέμα",
-  "light-theme": "Φωτεινό Θέμα"
+  "light-theme": "Φωτεινό Θέμα",
+  "theme": "Theme",
+  "system": "System"
 }

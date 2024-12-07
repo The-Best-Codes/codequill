@@ -27,5 +27,7 @@
   "on": "Sisse",
   "off": "Väljas",
   "dark-theme": "Tume teema",
-  "light-theme": "Hele teema"
+  "light-theme": "Hele teema",
+  "theme": "Theme",
+  "system": "System"
 }

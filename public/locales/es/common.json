@@ -27,5 +27,7 @@
   "on": "Encendido",
   "off": "Apagado",
   "dark-theme": "Tema oscuro",
-  "light-theme": "Tema claro"
+  "light-theme": "Tema claro",
+  "theme": "Theme",
+  "system": "System"
 }

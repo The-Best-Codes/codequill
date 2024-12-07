@@ -27,5 +27,7 @@
   "on": "Activat",
   "off": "Dezactivat",
   "dark-theme": "Tema întunecată",
-  "light-theme": "Tema luminoasă"
+  "light-theme": "Tema luminoasă",
+  "theme": "Theme",
+  "system": "System"
 }

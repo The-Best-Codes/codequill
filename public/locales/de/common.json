@@ -27,5 +27,7 @@
   "on": "An",
   "off": "Aus",
   "dark-theme": "Dunkles Thema",
-  "light-theme": "Helles Thema"
+  "light-theme": "Helles Thema",
+  "theme": "Theme",
+  "system": "System"
 }

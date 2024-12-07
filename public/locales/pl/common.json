@@ -27,5 +27,7 @@
   "on": "Włączone",
   "off": "Wyłączone",
   "dark-theme": "Ciemny motyw",
-  "light-theme": "Jasny motyw"
+  "light-theme": "Jasny motyw",
+  "theme": "Theme",
+  "system": "System"
 }

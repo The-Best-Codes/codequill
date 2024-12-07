@@ -27,5 +27,7 @@
   "on": "開",
   "off": "關",
   "dark-theme": "暗黑主題",
-  "light-theme": "亮主題"
+  "light-theme": "亮主題",
+  "theme": "Theme",
+  "system": "System"
 }

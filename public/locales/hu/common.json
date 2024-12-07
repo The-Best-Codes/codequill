@@ -27,5 +27,7 @@
   "on": "Be",
   "off": "Ki",
   "dark-theme": "Sötét téma",
-  "light-theme": "Világos téma"
+  "light-theme": "Világos téma",
+  "theme": "Theme",
+  "system": "System"
 }

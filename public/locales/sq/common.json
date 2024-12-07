@@ -27,5 +27,7 @@
   "on": "Në",
   "off": "Joaktiv",
   "dark-theme": "Tema e Errët",
-  "light-theme": "Tema e Ndritshme"
+  "light-theme": "Tema e Ndritshme",
+  "theme": "Theme",
+  "system": "System"
 }

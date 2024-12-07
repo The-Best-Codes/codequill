@@ -27,5 +27,7 @@
   "on": "Hidup",
   "off": "Matikan",
   "dark-theme": "Tema Gelap",
-  "light-theme": "Tema Terang"
+  "light-theme": "Tema Terang",
+  "theme": "Theme",
+  "system": "System"
 }

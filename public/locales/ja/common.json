@@ -27,5 +27,7 @@
   "on": "オン",
   "off": "オフ",
   "dark-theme": "ダークテーマ",
-  "light-theme": "ライトテーマ"
+  "light-theme": "ライトテーマ",
+  "theme": "Theme",
+  "system": "System"
 }

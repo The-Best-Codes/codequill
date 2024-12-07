@@ -27,5 +27,7 @@
   "on": "Aan",
   "off": "Uit",
   "dark-theme": "Donker thema",
-  "light-theme": "Licht thema"
+  "light-theme": "Licht thema",
+  "theme": "Theme",
+  "system": "System"
 }
