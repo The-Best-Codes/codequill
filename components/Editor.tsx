@@ -295,7 +295,6 @@ const CodeEditor = ({
               language={codeLanguage}
               value={code}
               onChange={(value) => setCode(value || "")}
-              className="**:transition-all **:ease-in-out **:duration-100"
               theme={
                 theme === "system"
                   ? systemTheme === "dark"
