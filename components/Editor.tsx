@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { useState, useEffect, useRef } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
@@ -10,20 +12,11 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import {
-  Check,
-  Info,
-  Loader2,
-  Save,
-  Eye,
-  EyeOff,
-  Wand2,
-  Languages,
-} from "lucide-react";
+import { Check, Info, Loader2, Save, Eye, EyeOff, Wand2 } from "lucide-react";
 import { useTranslation } from "next-i18next";
+import { useTheme } from "next-themes";
 import JavaScriptConsole from "@/components/JSConsole";
 import { generateAIName } from "@/utils/aiName";
-import { translateCodeAI } from "@/utils/aiTranslate";
 import codeLangOptions from "@/utils/codeLangs";
 
 const DEFAULT_LANGUAGE = "html";
@@ -34,18 +27,15 @@ const getStoredDefaultLanguage = () => {
   return localStorage.getItem("defaultLanguage") || "javascript";
 };
 
-const setStoredDefaultLanguage = (language: string) => {
-  if (typeof window === "undefined") return;
-  localStorage.setItem("defaultLanguage", language);
-};
-
 const CodeEditor = ({
   selectedProject,
   setSelectedProject,
   refreshProjects,
 }: any) => {
   const { t } = useTranslation("common");
+  const { theme, systemTheme } = useTheme();
   const [code, setCode] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [defaultLanguage, setDefaultLanguage] = useState(
     getStoredDefaultLanguage()
   );
@@ -55,16 +45,8 @@ const CodeEditor = ({
   const [saveSuccess, setSaveSuccess] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
-  const [editorWidth, setEditorWidth] = useState("100%");
   const [isGeneratingName, setIsGeneratingName] = useState(false);
   const nameGeneratorRef = useRef(new AbortController());
-  const containerRef = useRef(null);
-
-  const updateDefaultLanguage = (newLanguage: string) => {
-    setDefaultLanguage(newLanguage);
-    setStoredDefaultLanguage(newLanguage);
-  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -86,37 +68,6 @@ const CodeEditor = ({
       setName(`${t("untitled")}`);
     }
   }, [selectedProject, defaultLanguage, t]);
-
-  useEffect(() => {
-    // Set dark mode based on system preference
-    if (typeof window === "undefined") return;
-    let prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    if (typeof localStorage !== "undefined") {
-      if (localStorage.getItem("darkMode") === null) {
-        prefersDarkMode = false;
-        return;
-      }
-      prefersDarkMode = localStorage.getItem("darkMode") === "true";
-    }
-    setDarkMode(prefersDarkMode);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (containerRef.current) {
-        setEditorWidth(`${(containerRef.current as any).offsetWidth}px`);
-      }
-    };
-
-    handleResize(); // Call once to set initial size
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     if (nameGeneratorRef.current) {
@@ -150,6 +101,7 @@ const CodeEditor = ({
         setSaveSuccess("");
         setIsSaving(false);
       }, 1000);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setSaveSuccess("Error");
       setTimeout(() => {
@@ -182,17 +134,6 @@ const CodeEditor = ({
     return () => {
       nameGeneratorRef.current.abort(); // Cancel the request if needed
     };
-  };
-
-  const translateProject = async () => {
-    if (code) {
-      try {
-        const translatedCode = await translateCodeAI(code, "Spanish");
-        setCode(translatedCode);
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
 
   const openAboutAINameGenerator = () => {
@@ -303,7 +244,8 @@ const CodeEditor = ({
             <Button
               onClick={() => setShowPreview(!showPreview)}
               disabled={
-                (codeLanguage !== "html" && codeLanguage !== "javascript") || isLoading
+                (codeLanguage !== "html" && codeLanguage !== "javascript") ||
+                isLoading
               }
               className="w-10 p-2 sm:w-fit sm:p-4"
             >
@@ -349,13 +291,20 @@ const CodeEditor = ({
                   ? "50%"
                   : "100%"
               }
-              className="dark:invert"
               width="100%"
               language={codeLanguage}
               value={code}
               onChange={(value) => setCode(value || "")}
-              //theme={(darkMode ? "vs-dark" : "vs-light") as any}
-              theme="vs-light"
+              className="**:transition-all **:ease-in-out **:duration-100"
+              theme={
+                theme === "system"
+                  ? systemTheme === "dark"
+                    ? "vs-dark"
+                    : "vs-light"
+                  : theme === "dark"
+                  ? "vs-dark"
+                  : "vs-light"
+              }
             />
             {showPreview && codeLanguage === "html" && (
               <iframe

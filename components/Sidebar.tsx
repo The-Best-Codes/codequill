@@ -1,4 +1,6 @@
-import { useState, useEffect, use } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { useState, useEffect } from "react";
 import {
   Plus,
   Edit,
@@ -6,12 +8,10 @@ import {
   Copy,
   Check,
   Info,
-  Loader2,
   SortAsc,
   SortDesc,
   Search,
   Settings,
-  List,
   Sun,
   Moon,
   Languages,
@@ -22,20 +22,16 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -49,10 +45,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useTranslation } from "next-i18next";
 import ScrollAreaWithShadows from "@/components/bc_ui/scroll-area";
 import codeLangOptions from "@/utils/codeLangs";
+import { useTheme } from "next-themes";
 
 interface Project {
   id: number;
@@ -67,7 +63,9 @@ const Sidebar = ({
   refreshProjects,
 }: any) => {
   const { t, i18n } = useTranslation("common");
+  const { theme, setTheme } = useTheme();
   const [humanLanguage, setHumanLanguage] = useState<any>("en");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [humanLanguageOptions, setHumanLanguageOptions] = useState<any>([]);
   const [formattedHumanLanguageOptions, setFormattedHumanLanguageOptions] =
     useState<any>([]);
@@ -83,7 +81,6 @@ const Sidebar = ({
   const [sortType, setSortType] = useState("date_modified");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
-  const [darkMode, setDarkMode] = useState(true);
   const [defaultCodeLanguage, setDefaultCodeLanguage] = useState("html");
 
   useEffect(() => {
@@ -151,29 +148,8 @@ const Sidebar = ({
     });
   }, [refreshProjects, sortType, sortAsc]);
 
-  useEffect(() => {
-    // Set dark mode based on system preference
-    if (typeof window === "undefined") return;
-    let prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    if (typeof localStorage !== "undefined") {
-      prefersDarkMode = localStorage.getItem("darkMode") === "true";
-    }
-    setDarkMode(prefersDarkMode);
-  }, []);
-
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark", darkMode);
-    }
-  }, [darkMode]);
-
   const updateDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (typeof localStorage !== "undefined") {
-      localStorage.setItem("darkMode", !darkMode ? "true" : "false");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const handleSearch = () => {
@@ -387,7 +363,7 @@ const Sidebar = ({
           <Settings className="w-5 h-5" />
         </Button>
         <Button variant="ghost" size="icon" onClick={updateDarkMode}>
-          {darkMode ? (
+          {theme === "dark" ? (
             <Sun className="w-5 h-5" />
           ) : (
             <Moon className="w-5 h-5" />
@@ -435,11 +411,29 @@ const Sidebar = ({
             <div className="flex flex-col space-y-4">
               <div className="flex flex-col space-y-2">
                 <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center">
-                  <Moon className="w-4 h-4 mr-2" /> {t("dark-theme")}
+                  {theme === "dark" ? (
+                    <Moon className="w-4 h-4 mr-2" />
+                  ) : (
+                    <Sun className="w-4 h-4 mr-2" />
+                  )}{" "}
+                  {t("theme")}
                 </Label>
                 <div className="flex items-center space-x-2">
-                  <Switch checked={darkMode} onCheckedChange={updateDarkMode} />
-                  <span>{darkMode ? t("on") : t("off")}</span>
+                  <Select
+                    value={theme}
+                    onValueChange={(value) => {
+                      setTheme(value);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("select-theme")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="light">{t("light")}</SelectItem>
+                      <SelectItem value="dark">{t("dark")}</SelectItem>
+                      <SelectItem value="system">{t("system")}</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -516,6 +510,7 @@ const Sidebar = ({
                     setTimeout(() => {
                       setShareSuccess("default");
                     }, 1000);
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   } catch (error) {
                     setShareSuccess("false");
                     setTimeout(() => {

@@ -25,6 +25,7 @@ export default async function handler(
   });
   if (req.method === "POST") {
     let { name, code } = req.body;
+    // eslint-disable-next-line prefer-const
     let { language, overrideURI } = req.body;
 
     if (!name) {
@@ -37,6 +38,7 @@ export default async function handler(
 
     try {
       code = decodeURIComponent(code);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (overrideURI !== "true") {
         res.status(200).write(`
@@ -92,7 +94,7 @@ export default async function handler(
     ];
 
     if (!language) {
-      let detectedLanguage = detectLanguage(code);
+      const detectedLanguage = detectLanguage(code);
       language = detectedLanguage ? detectedLanguage : "auto";
     }
 

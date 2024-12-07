@@ -19,7 +19,7 @@ export default async function handler(
     const project = await db.get("SELECT * FROM projects WHERE id = ?", [id]);
     res.json(project);
   } else if (req.method === "PUT") {
-    const { name, code, language, metadataSet } = req.body;
+    const { name, code, language } = req.body;
 
     // Get the project from the database
     const project = await db.get("SELECT * FROM projects WHERE id = ?", [id]);

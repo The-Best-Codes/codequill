@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy, Info, Check, Loader2, Play, Square, Trash2 } from "lucide-react";
@@ -147,6 +148,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
     }
     try {
       return JSON.stringify(arg, null, 2);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return String(arg);
     }

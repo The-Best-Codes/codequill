@@ -9,7 +9,7 @@ import axios from "axios";
 import { useTranslation } from "next-i18next";
 
 const HomePage = () => {
-  const { t, i18n } = useTranslation("common");
+  const { i18n } = useTranslation("common");
   const [selectedProject, setSelectedProject] = useState(null);
   const [refreshProjects, setRefreshProjects] = useState(false);
 

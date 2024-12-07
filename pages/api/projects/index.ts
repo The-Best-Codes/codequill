@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from "next";
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
