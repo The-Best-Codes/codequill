@@ -5,19 +5,14 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Input } from "@/components/ui/input"; // Import Input
+import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet"; // Import Sheet components
+import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useIsMobile } from "@/hooks/use-mobile"; // Import useIsMobile
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
-import { Copy, Menu, Plus, Search, Trash2 } from "lucide-react"; // Import icons
+import { Copy, Menu, Plus, Search, Trash2 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 interface SnippetSidebarProps extends UseSnippetsReturn {
@@ -28,7 +23,6 @@ interface SnippetSidebarProps extends UseSnippetsReturn {
 const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   showSidebar,
   toggleSidebar,
-  snippets,
   loading,
   error,
   searchQuery,
@@ -41,10 +35,10 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   setSelectedSnippetId,
   createNewSnippet,
 }) => {
-  const isMobile = useIsMobile(); // Use the custom hook
-  const [sheetOpen, setSheetOpen] = useState(false); // Control Sheet's open state
+  const isMobile = useIsMobile();
+  const [sheetOpen, setSheetOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [searchExpanded, setSearchExpanded] = useState(false); // State for search icon expansion
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   // Focus the search input when the sidebar is opened and the search button is clicked.
   useEffect(() => {
@@ -78,23 +72,26 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
       {isMobile ? (
         // Mobile View: Collapsed bar and Sheet
         <>
+          {/* Mobile Collapsed Bar (like desktop) */}
           <div className="fixed top-0 left-0 z-40 flex h-12 w-full items-center justify-between bg-secondary px-2">
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  setSheetOpen(true);
-                }}
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <Button variant="ghost" size="icon" onClick={handleNewSnippetClick}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                setSheetOpen(true);
+              }}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="default"
+              size="icon"
+              onClick={handleNewSnippetClick}
+            >
               <Plus className="h-5 w-5" />
             </Button>
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
               onClick={() => {
                 handleSearchIconClick();
@@ -103,6 +100,8 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             >
               <Search className="h-5 w-5" />
             </Button>
+
+            {/* Expanded Search (Mobile Specific) */}
             {searchExpanded && (
               <Input
                 placeholder="Search snippets..."
@@ -137,6 +136,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                     setSearchQuery(e.target.value);
                   }}
                   ref={searchInputRef}
+                  className="mb-2"
                 />
               </div>
               <ScrollArea className="h-[calc(100vh - 200px)]">
@@ -194,8 +194,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
           </Sheet>
         </>
       ) : (
-        // Desktop View: Original Sidebar
-        <div className="md:flex md:flex-col">
+        <div className="md:flex md:flex-col border-r">
           <div
             className={` ${showSidebar ? "w-64" : "w-12"} overflow-hidden flex flex-col`}
           >
