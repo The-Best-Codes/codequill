@@ -20,13 +20,13 @@ function Home() {
   };
 
   return (
-    <div className="h-screen w-full flex flex-col md:flex-row">
+    <div className="h-screen w-full flex flex-row">
       <SnippetSidebar
         showSidebar={showSidebar}
         toggleSidebar={toggleSidebar}
         {...snippetHelpers}
       />
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
+      <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         <Header
           toggleSidebar={toggleSidebar}
           showSidebar={showSidebar}
