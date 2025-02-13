@@ -37,7 +37,7 @@ import {
   saveSnippet,
   Snippet,
 } from "@/utils/database";
-import { Copy, Plus, Save, Trash2 } from "lucide-react";
+import { Copy, List, Plus, Save, Search, Trash2 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import MonacoEditor, { EditorDidMount } from "react-monaco-editor";
 import { v4 as uuidv4 } from "uuid";
@@ -56,6 +56,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 
@@ -74,6 +75,9 @@ function Home() {
   const [code, setCode] = useState<string>("");
   const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [saving, setSaving] = useState<boolean>(false);
+  const [searching, setSearching] = useState<boolean>(false);
+  const [deleting, setDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedSnippetId, setSelectedSnippetId] = useState<string | null>(
@@ -82,8 +86,8 @@ function Home() {
   const editorRef = useRef<any>(null);
   const { toast } = useToast();
   const [isDeleteOpen, setDeleteOpen] = useState(false);
-
   const [value, setValue] = React.useState(language?.id || "");
+  const [showSidebar, setShowSidebar] = useState(true);
 
   const filteredSnippets = snippets.filter(
     (snippet) =>
@@ -153,7 +157,6 @@ function Home() {
       const loadedSnippets = getAllSnippets();
       setSnippets(loadedSnippets);
 
-      // Load the first snippet if there are any
       if (loadedSnippets.length > 0) {
         loadSnippetInEditor(loadedSnippets[0].id);
       }
@@ -179,6 +182,7 @@ function Home() {
     setLanguage(supportedLanguages[0] as Language);
     setCode("");
     setSelectedSnippetId(null);
+    setShowSidebar(true);
   };
 
   const loadSnippetInEditor = (id: string) => {
@@ -195,6 +199,7 @@ function Home() {
 
   const saveCurrentSnippet = async () => {
     try {
+      setSaving(true);
       if (!language) {
         toast({
           title: "Error",
@@ -211,7 +216,7 @@ function Home() {
       };
 
       saveSnippet(snippetToSave);
-      await loadSnippets(); // Refresh Snippets
+      await loadSnippets();
       setSelectedSnippetId(snippetToSave.id);
       toast({
         title: "Success",
@@ -222,6 +227,8 @@ function Home() {
         title: "Error",
         description: e.message || "Failed to save snippet.",
       });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -245,14 +252,14 @@ function Home() {
 
   const deleteCurrentSnippet = async () => {
     try {
+      setDeleting(true);
       if (selectedSnippetId) {
         deleteSnippet(selectedSnippetId);
         setDeleteOpen(false);
-        await loadSnippets(); // Refresh Snippets
+        await loadSnippets();
         if (snippets.length === 1) {
           createNewSnippet();
         } else {
-          // Load another snippet if there are any
           if (snippets.length > 1) {
             loadSnippetInEditor(snippets[0].id);
           } else {
@@ -269,109 +276,194 @@ function Home() {
         title: "Error",
         description: e.message || "Failed to delete snippet.",
       });
+    } finally {
+      setDeleting(false);
     }
+  };
+
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
+  const handleSearchFocus = () => {
+    setShowSidebar(true);
   };
 
   return (
     <div className="h-screen w-full flex flex-col md:flex-row">
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex justify-between items-center">
-            <h1 className="text-lg font-semibold">CodeQuill</h1>
-            <SidebarTrigger />
-          </div>
-          <SidebarInput
-            placeholder="Search snippets..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </SidebarHeader>
-        <SidebarContent>
-          <ScrollArea className="h-full">
-            <SidebarMenu>
-              <SidebarMenuItem>
+      {showSidebar ? (
+        <Sidebar>
+          <SidebarHeader>
+            <div className="flex items-center justify-between p-2">
+              <h1 className="text-lg font-semibold">CodeQuill</h1>
+              <div className="flex gap-2">
                 <Button
-                  variant="default"
+                  variant="ghost"
+                  size="sm"
                   onClick={createNewSnippet}
-                  className="w-full justify-start"
+                  className="h-8 w-8 p-0"
                 >
                   <Plus className="h-4 w-4" />
-                  New Snippet
                 </Button>
-              </SidebarMenuItem>
-              {loading && <div>Loading snippets...</div>}
-              {error && <div>Error: {error}</div>}
-              {filteredSnippets.map((snippet) => (
-                <SidebarMenuItem key={snippet.id}>
-                  <ContextMenu>
-                    <ContextMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className={`w-full justify-start ${selectedSnippetId === snippet.id ? "font-semibold" : ""}`}
-                        onClick={() => loadSnippetInEditor(snippet.id)}
-                      >
-                        {snippet.filename}
-                      </Button>
-                    </ContextMenuTrigger>
-                    <ContextMenuContent>
-                      <ContextMenuItem onClick={() => copySnippet(snippet.id)}>
-                        <Copy className="mr-2 h-4 w-4" />
-                        Copy
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        onClick={() => {
-                          setSelectedSnippetId(snippet.id);
-                          setDeleteOpen(true);
-                        }}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </ContextMenuItem>
-                    </ContextMenuContent>
-                  </ContextMenu>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </ScrollArea>
-        </SidebarContent>
-        <SidebarFooter>
-          <p className="text-xs text-muted-foreground">
-            {snippets.length} Snippets
-          </p>
-        </SidebarFooter>
-      </Sidebar>
+                <SidebarTrigger onClick={toggleSidebar} />
+              </div>
+            </div>
+            <div className="px-2">
+              <SidebarInput
+                placeholder="Search snippets..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearching(true);
+                  setSearchQuery(e.target.value);
+                  setTimeout(() => setSearching(false), 300);
+                }}
+                onFocus={handleSearchFocus}
+              />
+            </div>
+          </SidebarHeader>
+          <SidebarContent>
+            <ScrollArea className="h-full">
+              <SidebarMenu>
+                {loading && (
+                  <>
+                    <SidebarMenuItem>
+                      <Skeleton className="h-8 w-full" />
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <Skeleton className="h-8 w-full" />
+                    </SidebarMenuItem>
+                  </>
+                )}
+                {error && (
+                  <div className="p-4 text-sm text-red-500">{error}</div>
+                )}
+                {!loading &&
+                  !error &&
+                  (searching ? (
+                    <div className="p-4">
+                      <Skeleton className="h-8 w-full" />
+                    </div>
+                  ) : (
+                    filteredSnippets.map((snippet) => (
+                      <SidebarMenuItem key={snippet.id}>
+                        <ContextMenu>
+                          <ContextMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className={cn(
+                                "w-full justify-start",
+                                selectedSnippetId === snippet.id &&
+                                  "bg-accent text-accent-foreground",
+                              )}
+                              onClick={() => loadSnippetInEditor(snippet.id)}
+                            >
+                              {snippet.filename}
+                            </Button>
+                          </ContextMenuTrigger>
+                          <ContextMenuContent>
+                            <ContextMenuItem
+                              onClick={() => copySnippet(snippet.id)}
+                            >
+                              <Copy className="mr-2 h-4 w-4" />
+                              Copy
+                            </ContextMenuItem>
+                            <ContextMenuItem
+                              onClick={() => {
+                                setSelectedSnippetId(snippet.id);
+                                setDeleteOpen(true);
+                              }}
+                            >
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Delete
+                            </ContextMenuItem>
+                          </ContextMenuContent>
+                        </ContextMenu>
+                      </SidebarMenuItem>
+                    ))
+                  ))}
+              </SidebarMenu>
+            </ScrollArea>
+          </SidebarContent>
+          <SidebarFooter>
+            <p className="text-xs text-muted-foreground p-2">
+              {snippets.length} Snippets
+            </p>
+          </SidebarFooter>
+        </Sidebar>
+      ) : (
+        <div className="border-r p-2 flex flex-col gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={createNewSnippet}
+            className="h-8 w-8 p-0"
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setShowSidebar(true);
+              setTimeout(() => {
+                const searchInput = document.querySelector(
+                  '[data-sidebar="input"]',
+                ) as HTMLInputElement;
+                if (searchInput) searchInput.focus();
+              }, 100);
+            }}
+            className="h-8 w-8 p-0"
+          >
+            <Search className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowSidebar(true)}
+            className="h-8 w-8 p-0"
+          >
+            <List className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
 
-      <div className="flex-1 p-4">
-        <div className="flex flex-col md:flex-row gap-4 mb-4 items-center">
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
+        <div className="flex gap-4 p-4 items-center border-b">
           <Input
             type="text"
             placeholder="Filename"
-            className="flex-grow"
+            className="flex-grow max-w-md"
             value={filename}
             onChange={(e) => setFilename(e.target.value)}
           />
 
           <LanguageCombobox />
 
-          <Button onClick={saveCurrentSnippet}>
-            <Save className="h-4 w-4" />
-            Save
+          <Button onClick={saveCurrentSnippet} disabled={saving}>
+            <Save className={cn("h-4 w-4", saving && "animate-spin")} />
+            {saving ? "Saving..." : "Save"}
           </Button>
         </div>
 
-        <MonacoEditor
-          width="100%"
-          height="calc(100vh - 150px)" // Adjust as needed
-          language={language?.id || "plaintext"}
-          theme="vs-dark" // Or another theme
-          value={code}
-          onChange={handleCodeChange}
-          editorDidMount={handleEditorDidMount}
-          options={{
-            selectOnLineNumbers: true,
-            automaticLayout: true,
-          }}
-        />
+        <div className="flex-1 relative">
+          <MonacoEditor
+            width="100%"
+            height="100%"
+            language={language?.id || "plaintext"}
+            theme="vs-dark"
+            value={code}
+            onChange={handleCodeChange}
+            editorDidMount={handleEditorDidMount}
+            options={{
+              selectOnLineNumbers: true,
+              automaticLayout: true,
+              minimap: { enabled: false },
+              scrollBeyondLastLine: false,
+              fontSize: 14,
+              fontFamily: "JetBrains Mono, monospace",
+            }}
+          />
+        </div>
       </div>
 
       <AlertDialog open={isDeleteOpen} onOpenChange={setDeleteOpen}>
@@ -387,8 +479,12 @@ function Home() {
             <AlertDialogCancel onClick={() => setDeleteOpen(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={deleteCurrentSnippet}>
-              Delete
+            <AlertDialogAction
+              onClick={deleteCurrentSnippet}
+              className="bg-red-500 hover:bg-red-600"
+              disabled={deleting}
+            >
+              {deleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
