@@ -60,7 +60,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
       {/* Collapsed Sidebar (same for mobile and desktop) */}
       <div
         className={cn(
-          "fixed md:relative h-full border-r z-40 bg-background",
+          "relative h-full w-12 border-r z-40 bg-background",
           showSidebar ? "hidden" : "block",
         )}
       >
