@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
@@ -8,7 +9,8 @@ import SnippetSidebar from "./SnippetSidebar";
 import { useSnippets } from "./useSnippets";
 
 function Home() {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const isMobile = useIsMobile();
+  const [showSidebar, setShowSidebar] = useState(!isMobile); // Start with sidebar visible on desktop
   const snippetHelpers = useSnippets();
   const { isDeleteOpen, setDeleteOpen, deleting, deleteCurrentSnippet } =
     snippetHelpers;

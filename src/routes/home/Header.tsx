@@ -27,8 +27,6 @@ const Header: React.FC<HeaderProps> = ({
   setLanguage,
   saving,
   saveCurrentSnippet,
-  toggleSidebar,
-  showSidebar,
 }) => {
   return (
     <div className="flex w-full gap-4 p-4 items-center justify-between border-b">
