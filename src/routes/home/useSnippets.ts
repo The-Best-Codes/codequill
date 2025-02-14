@@ -7,7 +7,7 @@ import {
   saveSnippet,
   Snippet,
 } from "@/utils/database";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react"; // Import useRef
 import { v4 as uuidv4 } from "uuid";
 import { Language, UseSnippetsReturn } from "./types";
 
@@ -29,6 +29,9 @@ export const useSnippets = (): UseSnippetsReturn => {
   const { toast } = useToast();
   const [isDeleteOpen, setDeleteOpen] = useState(false);
 
+  // Use a ref to store the currently loaded snippet.
+  const currentSnippet = useRef<Snippet | null>(null);
+
   const filteredSnippets = snippets.filter(
     (snippet) =>
       snippet.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -47,7 +50,23 @@ export const useSnippets = (): UseSnippetsReturn => {
       setSnippets(loadedSnippets);
 
       if (loadedSnippets.length > 0) {
-        loadSnippetInEditor(loadedSnippets[0].id);
+        // Load the first snippet only if no snippet is currently selected.
+        if (!selectedSnippetId) {
+          loadSnippetInEditor(loadedSnippets[0].id);
+        } else {
+          // Ensure the editor is updated with the selected snippet if it exists after loading
+          const selectedSnippet = loadedSnippets.find(
+            (s) => s.id === selectedSnippetId,
+          );
+          if (selectedSnippet) {
+            loadSnippetInEditor(selectedSnippet.id);
+          } else {
+            // If the selected snippet no longer exists, load the first snippet
+            loadSnippetInEditor(loadedSnippets[0].id);
+          }
+        }
+      } else {
+        createNewSnippet();
       }
     } catch (e: any) {
       setError(e.message || "Failed to load snippets.");
@@ -61,6 +80,7 @@ export const useSnippets = (): UseSnippetsReturn => {
     setLanguage(supportedLanguages[0] as Language);
     setCode("");
     setSelectedSnippetId(null);
+    currentSnippet.current = null; // Clear the current snippet
   };
 
   const loadSnippetInEditor = (id: string) => {
@@ -72,6 +92,7 @@ export const useSnippets = (): UseSnippetsReturn => {
       );
       setCode(snippet.code);
       setSelectedSnippetId(snippet.id);
+      currentSnippet.current = snippet; // Set the current snippet
     }
   };
 
@@ -86,16 +107,30 @@ export const useSnippets = (): UseSnippetsReturn => {
         return;
       }
 
-      const snippetToSave: Snippet = {
-        id: selectedSnippetId || uuidv4(),
-        filename,
-        language: language.id,
-        code,
-      };
+      let snippetToSave: Snippet;
+
+      if (selectedSnippetId) {
+        // If a snippet is selected, update it
+        snippetToSave = {
+          id: selectedSnippetId,
+          filename,
+          language: language.id,
+          code,
+        };
+      } else {
+        // If no snippet is selected, create a new one
+        snippetToSave = {
+          id: uuidv4(),
+          filename,
+          language: language.id,
+          code,
+        };
+        setSelectedSnippetId(snippetToSave.id); // Update selected id
+      }
 
       saveSnippet(snippetToSave);
-      await loadSnippets(); // Use the local loadSnippets
-      setSelectedSnippetId(snippetToSave.id);
+      currentSnippet.current = snippetToSave; // Update current snippet reference.
+      await loadSnippets(); // Use the local loadSnippets. This will also ensure that after saving a new snippet or updating an existing one, the UI reflects the latest changes and maintains the selected snippet.
       toast({
         title: "Success",
         description: "Snippet saved",
@@ -138,8 +173,10 @@ export const useSnippets = (): UseSnippetsReturn => {
         if (snippets.length === 1) {
           createNewSnippet();
         } else {
-          if (snippets.length > 1) {
-            loadSnippetInEditor(snippets[0].id);
+          const newSnippets = getAllSnippets();
+          if (newSnippets.length > 0) {
+            //Load the first snippet available
+            loadSnippetInEditor(newSnippets[0].id);
           } else {
             createNewSnippet();
           }
