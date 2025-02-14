@@ -34,6 +34,7 @@ function Home() {
         showSidebar={showSidebar}
         toggleSidebar={toggleSidebar}
         {...snippetHelpers}
+        setIsSearchDialogOpen={setIsSearchDialogOpen}
       />
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         <Header {...snippetHelpers} />

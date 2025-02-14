@@ -18,11 +18,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { Copy, Menu, Plus, Search, Settings, Trash2 } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 
 interface SnippetSidebarProps extends UseSnippetsReturn {
   showSidebar: boolean;
   toggleSidebar: () => void;
+  setIsSearchDialogOpen: (open: boolean) => void;
 }
 
 const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
@@ -39,16 +40,10 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   setDeleteOpen,
   setSelectedSnippetId,
   createNewSnippet,
+  setIsSearchDialogOpen,
 }) => {
   const isMobile = useIsMobile();
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [searchExpanded, setSearchExpanded] = useState(false);
-
-  useEffect(() => {
-    if (searchExpanded && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, [searchExpanded]);
 
   const handleNewSnippetClick = () => {
     createNewSnippet();
@@ -56,8 +51,13 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   };
 
   const handleSearchIconClick = () => {
-    setSearchExpanded(!searchExpanded);
-    toggleSidebar();
+    if (!showSidebar) {
+      // If sidebar is collapsed, open the search dialog
+      setIsSearchDialogOpen(true);
+    } else {
+      // If sidebar is expanded, close it
+      toggleSidebar();
+    }
   };
 
   const handleSettingsClick = () => {
