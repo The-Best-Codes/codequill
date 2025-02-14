@@ -7,7 +7,7 @@ import {
   saveSnippet,
   Snippet,
 } from "@/utils/database";
-import { useEffect, useRef, useState } from "react"; // Import useRef
+import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Language, UseSnippetsReturn } from "./types";
 
@@ -130,7 +130,13 @@ export const useSnippets = (): UseSnippetsReturn => {
 
       saveSnippet(snippetToSave);
       currentSnippet.current = snippetToSave; // Update current snippet reference.
-      await loadSnippets(); // Use the local loadSnippets. This will also ensure that after saving a new snippet or updating an existing one, the UI reflects the latest changes and maintains the selected snippet.
+
+      // After saving the snippet, load it in the editor.
+      loadSnippetInEditor(snippetToSave.id);
+
+      // await loadSnippets();  //REMOVE THIS.  Loading all the snippets then immediately reloading the saved one is inefficient and unnecessary.
+      setSnippets(getAllSnippets()); // Keep the snippets state in sync. A better approach would be to update the local snippets state by either adding a new snippet or updating the existing one.
+
       toast({
         title: "Success",
         description: "Snippet saved",
