@@ -113,7 +113,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                   New Snippet
                 </Button>
                 <Input
-                  placeholder="Search snippets..."
+                  placeholder="Filter snippets..."
                   className="mb-0"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -198,7 +198,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 New Snippet
               </Button>
               <Input
-                placeholder="Search snippets..."
+                placeholder="Filter snippets..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 ref={searchInputRef}

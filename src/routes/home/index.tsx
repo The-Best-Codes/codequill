@@ -1,7 +1,7 @@
 "use client";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
 import Header from "./Header";
@@ -28,21 +28,6 @@ function Home() {
     setShowSidebar(!showSidebar);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault();
-        setIsSearchDialogOpen(true);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   return (
     <div className="h-screen w-full flex flex-row">
       <SnippetSidebar
@@ -52,7 +37,10 @@ function Home() {
       />
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         <Header {...snippetHelpers} />
-        <Editor {...snippetHelpers} />
+        <Editor
+          {...snippetHelpers}
+          setIsSearchDialogOpen={setIsSearchDialogOpen}
+        />
       </div>
 
       <DeleteDialog
