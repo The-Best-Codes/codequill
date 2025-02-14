@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
-import { Save } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import React from "react";
 import LanguageSelector from "./LanguageSelector";
 
@@ -39,9 +39,19 @@ const Header: React.FC<HeaderProps> = ({
         <LanguageSelector language={language} setLanguage={setLanguage} />
       </div>
 
-      <Button onClick={saveCurrentSnippet} disabled={saving}>
-        <Save className={cn("h-4 w-4", saving && "animate-spin")} />
-        {saving ? "Saving..." : "Save"}
+      <Button
+        onClick={saveCurrentSnippet}
+        disabled={saving}
+        className="flex items-center w-fit"
+      >
+        {saving ? (
+          <Loader2 className={cn("h-5 w-5 animate-spin")} />
+        ) : (
+          <Save className="h-5 w-5" />
+        )}
+        <span className="sr-only sm:not-sr-only">
+          {saving ? "Saving..." : "Save"}
+        </span>
       </Button>
     </div>
   );
