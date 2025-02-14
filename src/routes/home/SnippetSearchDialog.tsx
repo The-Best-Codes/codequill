@@ -4,6 +4,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import {
   Dialog,
@@ -12,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { useState } from "react";
 
@@ -35,8 +35,8 @@ const SnippetSearchDialog: React.FC<SnippetSearchDialogProps> = ({
       <DialogContent className="max-h-96 flex flex-col h-full">
         <DialogHeader>
           <DialogTitle>Search Snippets</DialogTitle>
-          <DialogDescription>
-            Search through your snippets to quickly open them.
+          <DialogDescription className="sr-only">
+            Quickly search and open snippets.
           </DialogDescription>
         </DialogHeader>
         <Command>
@@ -45,7 +45,7 @@ const SnippetSearchDialog: React.FC<SnippetSearchDialogProps> = ({
             value={value}
             onValueChange={setValue}
           />
-          <ScrollArea className="h-full">
+          <CommandList>
             <CommandEmpty>No snippets found.</CommandEmpty>
             <CommandGroup>
               {filteredSnippets.map((snippet) => (
@@ -61,7 +61,7 @@ const SnippetSearchDialog: React.FC<SnippetSearchDialogProps> = ({
                 </CommandItem>
               ))}
             </CommandGroup>
-          </ScrollArea>
+          </CommandList>
         </Command>
       </DialogContent>
     </Dialog>
