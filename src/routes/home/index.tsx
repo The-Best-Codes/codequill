@@ -3,7 +3,7 @@
 import previewLanguages from "@/assets/previewLanguages.json";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Loader2 } from "lucide-react";
-import React, { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
 import Header from "./Header";
@@ -41,11 +41,11 @@ function Home() {
     const filePath = `./previews/${previewLanguage.id}.tsx`;
 
     // Dynamically import the module
-    const ComponentModule = React.lazy(() => import(filePath));
+    const ComponentModule = lazy(() => import(filePath));
 
     // Render the component
     return (
-      <React.Suspense
+      <Suspense
         fallback={
           <div className="w-full h-full flex flex-col justify-center items-center">
             <Loader2 className="w-16 h-16 text-black animate-spin" />
@@ -53,7 +53,7 @@ function Home() {
         }
       >
         <ComponentModule code={snippetHelpers.code} />
-      </React.Suspense>
+      </Suspense>
     );
   };
 

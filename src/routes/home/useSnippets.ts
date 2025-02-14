@@ -49,6 +49,11 @@ export const useSnippets = (): UseSnippetsReturn => {
     setIsPreviewable(
       !!language && previewLanguages.some((l) => l.id === language.id),
     );
+
+    // Hide preview if language is not previewable
+    if (!language || !previewLanguages.some((l) => l.id === language.id)) {
+      setIsPreviewing(false);
+    }
   }, [language]);
 
   const loadSnippets = async () => {
@@ -106,7 +111,6 @@ export const useSnippets = (): UseSnippetsReturn => {
       setCode(snippet.code);
       setSelectedSnippetId(snippet.id);
       currentSnippet.current = snippet; // Set the current snippet
-      setIsPreviewing(false); // Reset previewing state on load
       setIsPreviewable(
         !!language && previewLanguages.some((l) => l.id === snippet.language),
       );
@@ -156,10 +160,25 @@ export const useSnippets = (): UseSnippetsReturn => {
       currentSnippet.current = snippetToSave; // Update current snippet reference.
 
       // After saving the snippet, load it in the editor.
+      // Preserve the current previewing state
+
       loadSnippetInEditor(snippetToSave.id);
 
       // await loadSnippets();  //REMOVE THIS.  Loading all the snippets then immediately reloading the saved one is inefficient and unnecessary.
-      setSnippets(getAllSnippets()); // Keep the snippets state in sync. A better approach would be to update the local snippets state by either adding a new snippet or updating the existing one.
+      setSnippets((prevSnippets) => {
+        const existingIndex = prevSnippets.findIndex(
+          (s) => s.id === snippetToSave.id,
+        );
+        if (existingIndex > -1) {
+          // Update existing snippet
+          const newSnippets = [...prevSnippets];
+          newSnippets[existingIndex] = snippetToSave;
+          return newSnippets;
+        } else {
+          // Add new snippet
+          return [...prevSnippets, snippetToSave];
+        }
+      }); // Keep the snippets state in sync. A better approach would be to update the local snippets state by either adding a new snippet or updating the existing one.
 
       toast.success("Snippet saved");
     } catch (e: any) {
@@ -187,18 +206,29 @@ export const useSnippets = (): UseSnippetsReturn => {
       if (selectedSnippetId) {
         deleteSnippet(selectedSnippetId);
         setDeleteOpen(false);
-        await loadSnippets(); // Use the local loadSnippets
-        if (snippets.length === 1) {
-          createNewSnippet();
+
+        // Update snippets state after deletion
+        setSnippets((prevSnippets) =>
+          prevSnippets.filter((s) => s.id !== selectedSnippetId),
+        );
+
+        // Clear the selected snippet id.
+        const deletedSnippetId = selectedSnippetId;
+        setSelectedSnippetId(null);
+
+        // Now load either the next snippet or create a new one.
+        const newSnippets = getAllSnippets();
+
+        if (newSnippets.length > 0) {
+          //Load the first snippet available that isn't the deleted one
+          const nextSnippet =
+            newSnippets.find((s) => s.id !== deletedSnippetId) ||
+            newSnippets[0];
+          loadSnippetInEditor(nextSnippet.id);
         } else {
-          const newSnippets = getAllSnippets();
-          if (newSnippets.length > 0) {
-            //Load the first snippet available
-            loadSnippetInEditor(newSnippets[0].id);
-          } else {
-            createNewSnippet();
-          }
+          createNewSnippet();
         }
+
         toast.success("Snippet deleted");
       }
     } catch (e: any) {
