@@ -1,5 +1,4 @@
 import supportedLanguages from "@/assets/supportedLanguages.json";
-import { useToast } from "@/hooks/use-toast";
 import {
   deleteSnippet,
   getAllSnippets,
@@ -8,6 +7,7 @@ import {
   Snippet,
 } from "@/utils/database";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { Language, UseSnippetsReturn } from "./types";
 
@@ -26,7 +26,6 @@ export const useSnippets = (): UseSnippetsReturn => {
   const [selectedSnippetId, setSelectedSnippetId] = useState<string | null>(
     null,
   );
-  const { toast } = useToast();
   const [isDeleteOpen, setDeleteOpen] = useState(false);
 
   // Use a ref to store the currently loaded snippet.
@@ -100,10 +99,7 @@ export const useSnippets = (): UseSnippetsReturn => {
     try {
       setSaving(true);
       if (!language) {
-        toast({
-          title: "Error",
-          description: "Please select a language",
-        });
+        toast.error("Please select a language");
         return;
       }
 
@@ -137,15 +133,9 @@ export const useSnippets = (): UseSnippetsReturn => {
       // await loadSnippets();  //REMOVE THIS.  Loading all the snippets then immediately reloading the saved one is inefficient and unnecessary.
       setSnippets(getAllSnippets()); // Keep the snippets state in sync. A better approach would be to update the local snippets state by either adding a new snippet or updating the existing one.
 
-      toast({
-        title: "Success",
-        description: "Snippet saved",
-      });
+      toast.success("Snippet saved");
     } catch (e: any) {
-      toast({
-        title: "Error",
-        description: e.message || "Failed to save snippet.",
-      });
+      toast.error("Failed to save snippet.");
     } finally {
       setSaving(false);
     }
@@ -156,15 +146,9 @@ export const useSnippets = (): UseSnippetsReturn => {
     if (snippet) {
       try {
         await navigator.clipboard.writeText(snippet.code);
-        toast({
-          title: "Success",
-          description: "Snippet copied to clipboard",
-        });
+        toast.success("Snippet copied to clipboard");
       } catch (e: any) {
-        toast({
-          title: "Error",
-          description: e.message || "Failed to copy snippet.",
-        });
+        toast.error("Failed to copy snippet.");
       }
     }
   };
@@ -187,16 +171,10 @@ export const useSnippets = (): UseSnippetsReturn => {
             createNewSnippet();
           }
         }
-        toast({
-          title: "Success",
-          description: "Snippet deleted",
-        });
+        toast.success("Snippet deleted");
       }
     } catch (e: any) {
-      toast({
-        title: "Error",
-        description: e.message || "Failed to delete snippet.",
-      });
+      toast.error("Failed to delete snippet.");
     } finally {
       setDeleting(false);
     }
