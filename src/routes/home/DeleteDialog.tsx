@@ -1,13 +1,12 @@
+import { Button } from "@/components/ui/button";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import React from "react";
 
 interface DeleteDialogProps {
@@ -24,29 +23,34 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
   onDelete,
 }) => {
   return (
-    <AlertDialog open={isOpen} onOpenChange={setOpen}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete this snippet?</DialogTitle>
+          <DialogDescription>
             This action cannot be undone. This will permanently delete the
             snippet.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpen(false)}>
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setOpen(false)}
+          >
             Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
+          </Button>
+          <Button
+            type="button"
+            variant="destructive"
             onClick={onDelete}
-            className="bg-red-500 hover:bg-red-600"
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete"}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 
