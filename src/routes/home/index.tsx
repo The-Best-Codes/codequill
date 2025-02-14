@@ -1,7 +1,9 @@
 "use client";
 
+import previewLanguages from "@/assets/previewLanguages.json";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import React, { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
 import Header from "./Header";
@@ -20,12 +22,39 @@ function Home() {
     deleteCurrentSnippet,
     filteredSnippets,
     loadSnippetInEditor,
+    isPreviewing,
+    language,
   } = snippetHelpers;
 
   const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
+  };
+
+  const PreviewComponent = () => {
+    if (!language) return null;
+    const previewLanguage = previewLanguages.find((l) => l.id === language.id);
+
+    if (!previewLanguage) return null;
+
+    const filePath = `./previews/${previewLanguage.id}.tsx`;
+
+    // Dynamically import the module
+    const ComponentModule = React.lazy(() => import(filePath));
+
+    // Render the component
+    return (
+      <React.Suspense
+        fallback={
+          <div className="w-full h-full flex flex-col justify-center items-center">
+            <Loader2 className="w-16 h-16 text-black animate-spin" />
+          </div>
+        }
+      >
+        <ComponentModule code={snippetHelpers.code} />
+      </React.Suspense>
+    );
   };
 
   return (
@@ -41,7 +70,13 @@ function Home() {
         <Editor
           {...snippetHelpers}
           setIsSearchDialogOpen={setIsSearchDialogOpen}
+          isPreviewing={isPreviewing}
         />
+        {isPreviewing && (
+          <div className="h-1/2 w-full">
+            <PreviewComponent />
+          </div>
+        )}
       </div>
 
       <DeleteDialog

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "html",
+    "file": "previews/html.tsx",
+    "export": {
+      "component": "CodePreviewBox",
+      "default": true
+    }
+  }
+]

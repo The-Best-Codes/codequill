@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
-import { Loader2, Save } from "lucide-react";
+import { Eye, EyeOff, Loader2, Save } from "lucide-react";
 import React from "react";
 import LanguageSelector from "./LanguageSelector";
 
@@ -15,6 +15,9 @@ interface HeaderProps
     | "setLanguage"
     | "saving"
     | "saveCurrentSnippet"
+    | "isPreviewable"
+    | "isPreviewing"
+    | "togglePreview"
   > {}
 
 const Header: React.FC<HeaderProps> = ({
@@ -24,6 +27,9 @@ const Header: React.FC<HeaderProps> = ({
   setLanguage,
   saving,
   saveCurrentSnippet,
+  isPreviewable,
+  isPreviewing,
+  togglePreview,
 }) => {
   return (
     <div className="flex w-full gap-4 p-4 items-center justify-between border-b">
@@ -39,20 +45,42 @@ const Header: React.FC<HeaderProps> = ({
         <LanguageSelector language={language} setLanguage={setLanguage} />
       </div>
 
-      <Button
-        onClick={saveCurrentSnippet}
-        disabled={saving}
-        className="flex items-center w-fit"
-      >
-        {saving ? (
-          <Loader2 className={cn("h-5 w-5 animate-spin")} />
-        ) : (
-          <Save className="h-5 w-5" />
-        )}
-        <span className="sr-only sm:not-sr-only">
-          {saving ? "Saving..." : "Save"}
-        </span>
-      </Button>
+      <div className="flex gap-2">
+        <Button
+          onClick={saveCurrentSnippet}
+          disabled={saving}
+          className="flex items-center w-fit"
+        >
+          {saving ? (
+            <Loader2 className={cn("h-5 w-5 animate-spin")} />
+          ) : (
+            <Save className="h-5 w-5" />
+          )}
+          <span className="sr-only sm:not-sr-only">
+            {saving ? "Saving..." : "Save"}
+          </span>
+        </Button>
+
+        <Button
+          onClick={togglePreview}
+          disabled={!isPreviewable}
+          variant={isPreviewing ? "default" : "outline"}
+          className="flex items-center w-fit"
+        >
+          {isPreviewing ? (
+            <EyeOff className="h-5 w-5" />
+          ) : (
+            <Eye className="h-5 w-5" />
+          )}
+          <span className="sr-only sm:not-sr-only">
+            {isPreviewable
+              ? isPreviewing
+                ? "Hide Preview"
+                : "Show Preview"
+              : "No Preview"}
+          </span>
+        </Button>
+      </div>
     </div>
   );
 };

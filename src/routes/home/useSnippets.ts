@@ -1,3 +1,4 @@
+import previewLanguages from "@/assets/previewLanguages.json";
 import supportedLanguages from "@/assets/supportedLanguages.json";
 import {
   deleteSnippet,
@@ -27,6 +28,8 @@ export const useSnippets = (): UseSnippetsReturn => {
     null,
   );
   const [isDeleteOpen, setDeleteOpen] = useState(false);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const [isPreviewable, setIsPreviewable] = useState(false);
 
   // Use a ref to store the currently loaded snippet.
   const currentSnippet = useRef<Snippet | null>(null);
@@ -40,6 +43,13 @@ export const useSnippets = (): UseSnippetsReturn => {
   useEffect(() => {
     loadSnippets();
   }, []);
+
+  useEffect(() => {
+    // Update isPreviewable when the language changes
+    setIsPreviewable(
+      !!language && previewLanguages.some((l) => l.id === language.id),
+    );
+  }, [language]);
 
   const loadSnippets = async () => {
     try {
@@ -80,6 +90,10 @@ export const useSnippets = (): UseSnippetsReturn => {
     setCode("");
     setSelectedSnippetId(null);
     currentSnippet.current = null; // Clear the current snippet
+    setIsPreviewing(false);
+    setIsPreviewable(
+      !!language && previewLanguages.some((l) => l.id === language.id),
+    );
   };
 
   const loadSnippetInEditor = (id: string) => {
@@ -92,6 +106,10 @@ export const useSnippets = (): UseSnippetsReturn => {
       setCode(snippet.code);
       setSelectedSnippetId(snippet.id);
       currentSnippet.current = snippet; // Set the current snippet
+      setIsPreviewing(false); // Reset previewing state on load
+      setIsPreviewable(
+        !!language && previewLanguages.some((l) => l.id === snippet.language),
+      );
     }
   };
 
@@ -190,6 +208,10 @@ export const useSnippets = (): UseSnippetsReturn => {
     }
   };
 
+  const togglePreview = () => {
+    setIsPreviewing((prev) => !prev);
+  };
+
   return {
     filename,
     setFilename,
@@ -214,5 +236,8 @@ export const useSnippets = (): UseSnippetsReturn => {
     deleteCurrentSnippet,
     isDeleteOpen,
     setDeleteOpen,
+    isPreviewable,
+    isPreviewing,
+    togglePreview,
   };
 };

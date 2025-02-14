@@ -31,4 +31,7 @@ export interface UseSnippetsReturn {
   deleteCurrentSnippet: () => Promise<void>;
   isDeleteOpen: boolean;
   setDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isPreviewable: boolean;
+  isPreviewing: boolean;
+  togglePreview: () => void;
 }

@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 interface EditorProps
   extends Pick<
     UseSnippetsReturn,
-    "language" | "code" | "setCode" | "saveCurrentSnippet"
+    "language" | "code" | "setCode" | "saveCurrentSnippet" | "isPreviewing"
   > {
   setIsSearchDialogOpen: (open: boolean) => void;
 }
@@ -16,6 +16,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   setCode,
   saveCurrentSnippet,
   setIsSearchDialogOpen,
+  isPreviewing,
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
@@ -60,7 +61,10 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   }, [saveCurrentSnippet, setIsSearchDialogOpen]);
 
   return (
-    <div className="flex-1 relative">
+    <div
+      className="flex-1 relative"
+      style={{ height: isPreviewing ? "50%" : "100%" }}
+    >
       <Editor
         width="100%"
         height="100%"
