@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Language } from "./types";
 
 interface LanguageSelectorProps {
@@ -28,7 +28,12 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   setLanguage,
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = React.useState(language?.id || "");
+  const [value, setValue] = useState<string>(""); // Initialize to empty string
+
+  // Update the internal 'value' state whenever the 'language' prop changes.
+  useEffect(() => {
+    setValue(language?.id || "");
+  }, [language]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
