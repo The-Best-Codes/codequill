@@ -84,76 +84,86 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
 
       {/* Expanded Content */}
       {isMobile ? (
-        <Sheet open={showSidebar} onOpenChange={toggleSidebar}>
-          <SheetContent
-            aria-describedby="sidebar-header"
-            side="left"
-            className="pt-3 w-72 h-full flex flex-col pb-2"
-          >
-            <SheetHeader id="sidebar-header" className="mb-2">
-              <SheetTitle>CodeQuill</SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col w-full gap-2">
-              <Button variant="default" onClick={handleNewSnippetClick}>
-                <Plus className="h-4 w-4" />
-                New Snippet
-              </Button>
-              <Input
-                placeholder="Search snippets..."
-                className="mb-0"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                ref={searchInputRef}
-              />
-            </div>
-            <ScrollArea className="h-full mb-2">
-              {loading && (
-                <>
-                  <Skeleton className="h-8 w-full m-2" />
-                  <Skeleton className="h-8 w-full m-2" />
-                </>
-              )}
-              {error && <div className="p-4 text-sm text-red-500">{error}</div>}
-              {!loading &&
-                !error &&
-                filteredSnippets.map((snippet) => (
-                  <ContextMenu key={snippet.id}>
-                    <ContextMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className={cn(
-                          "w-full justify-start",
-                          selectedSnippetId === snippet.id &&
-                            "bg-accent text-accent-foreground",
-                        )}
-                        onClick={() => {
-                          loadSnippetInEditor(snippet.id);
-                          toggleSidebar();
-                        }}
-                      >
-                        {snippet.filename}
-                      </Button>
-                    </ContextMenuTrigger>
-                    <ContextMenuContent>
-                      <ContextMenuItem onClick={() => copySnippet(snippet.id)}>
-                        <Copy className="mr-2 h-4 w-4" />
-                        Copy
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        onClick={() => {
-                          setSelectedSnippetId(snippet.id);
-                          setDeleteOpen(true);
-                        }}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </ContextMenuItem>
-                    </ContextMenuContent>
-                  </ContextMenu>
-                ))}
-            </ScrollArea>
-          </SheetContent>
-        </Sheet>
+        <>
+          <div
+            hidden={!showSidebar}
+            className="flex flex-col items-center justify-start p-2 gap-2 w-12"
+          ></div>
+          <Sheet open={showSidebar} onOpenChange={toggleSidebar}>
+            <SheetContent
+              aria-describedby="sidebar-header"
+              side="left"
+              className="pt-3 w-72 h-full flex flex-col pb-2"
+            >
+              <SheetHeader id="sidebar-header" className="mb-2">
+                <SheetTitle>CodeQuill</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col w-full gap-2">
+                <Button variant="default" onClick={handleNewSnippetClick}>
+                  <Plus className="h-4 w-4" />
+                  New Snippet
+                </Button>
+                <Input
+                  placeholder="Search snippets..."
+                  className="mb-0"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  ref={searchInputRef}
+                />
+              </div>
+              <ScrollArea className="h-full mb-2">
+                {loading && (
+                  <>
+                    <Skeleton className="h-8 w-full m-2" />
+                    <Skeleton className="h-8 w-full m-2" />
+                  </>
+                )}
+                {error && (
+                  <div className="p-4 text-sm text-red-500">{error}</div>
+                )}
+                {!loading &&
+                  !error &&
+                  filteredSnippets.map((snippet) => (
+                    <ContextMenu key={snippet.id}>
+                      <ContextMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className={cn(
+                            "w-full justify-start",
+                            selectedSnippetId === snippet.id &&
+                              "bg-accent text-accent-foreground",
+                          )}
+                          onClick={() => {
+                            loadSnippetInEditor(snippet.id);
+                            toggleSidebar();
+                          }}
+                        >
+                          {snippet.filename}
+                        </Button>
+                      </ContextMenuTrigger>
+                      <ContextMenuContent>
+                        <ContextMenuItem
+                          onClick={() => copySnippet(snippet.id)}
+                        >
+                          <Copy className="mr-2 h-4 w-4" />
+                          Copy
+                        </ContextMenuItem>
+                        <ContextMenuItem
+                          onClick={() => {
+                            setSelectedSnippetId(snippet.id);
+                            setDeleteOpen(true);
+                          }}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </ContextMenuItem>
+                      </ContextMenuContent>
+                    </ContextMenu>
+                  ))}
+              </ScrollArea>
+            </SheetContent>
+          </Sheet>
+        </>
       ) : (
         showSidebar && (
           <div className="w-64 border-r bg-background flex flex-col">
