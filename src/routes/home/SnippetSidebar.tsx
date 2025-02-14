@@ -140,7 +140,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                           className={cn(
                             "w-full justify-start",
                             selectedSnippetId === snippet.id &&
-                              "bg-accent text-accent-foreground",
+                              "bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-accent-foreground",
                           )}
                           onClick={() => {
                             loadSnippetInEditor(snippet.id);
@@ -199,13 +199,12 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               </Button>
               <Input
                 placeholder="Search snippets..."
-                className="mb-2"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 ref={searchInputRef}
               />
             </div>
-            <ScrollArea className="h-full mb-2">
+            <ScrollArea className="h-full mb-2 p-2">
               {loading && (
                 <>
                   <Skeleton className="h-8 w-full m-2" />
@@ -223,7 +222,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                         className={cn(
                           "w-full justify-start",
                           selectedSnippetId === snippet.id &&
-                            "bg-accent text-accent-foreground",
+                            "bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-accent-foreground",
                         )}
                         onClick={() => loadSnippetInEditor(snippet.id)}
                       >
