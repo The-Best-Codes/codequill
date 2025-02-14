@@ -15,10 +15,7 @@ interface HeaderProps
     | "setLanguage"
     | "saving"
     | "saveCurrentSnippet"
-  > {
-  toggleSidebar: () => void;
-  showSidebar: boolean;
-}
+  > {}
 
 const Header: React.FC<HeaderProps> = ({
   filename,

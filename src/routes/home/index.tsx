@@ -10,7 +10,7 @@ import { useSnippets } from "./useSnippets";
 
 function Home() {
   const isMobile = useIsMobile();
-  const [showSidebar, setShowSidebar] = useState(!isMobile); // Start with sidebar visible on desktop
+  const [showSidebar, setShowSidebar] = useState<boolean>(!isMobile);
   const snippetHelpers = useSnippets();
   const { isDeleteOpen, setDeleteOpen, deleting, deleteCurrentSnippet } =
     snippetHelpers;
@@ -27,11 +27,7 @@ function Home() {
         {...snippetHelpers}
       />
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
-        <Header
-          toggleSidebar={toggleSidebar}
-          showSidebar={showSidebar}
-          {...snippetHelpers}
-        />
+        <Header {...snippetHelpers} />
         <Editor {...snippetHelpers} />
       </div>
 
