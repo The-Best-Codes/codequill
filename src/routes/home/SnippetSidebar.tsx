@@ -17,7 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
-import { Copy, Menu, Plus, Search, Trash2 } from "lucide-react";
+import { Copy, Menu, Plus, Search, Settings, Trash2 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 interface SnippetSidebarProps extends UseSnippetsReturn {
@@ -60,13 +60,17 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
     toggleSidebar();
   };
 
+  const handleSettingsClick = () => {
+    // Implementing this later
+  };
+
   return (
     <>
       {/* Collapsed Sidebar (same for mobile and desktop) */}
       <div
         className={cn(
           "relative h-full w-12 border-r z-40 bg-background",
-          showSidebar ? "hidden" : "block",
+          showSidebar ? "hidden" : "flex flex-col",
         )}
       >
         <div className="flex flex-col items-center justify-start p-2 gap-2 w-12">
@@ -78,6 +82,11 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
           </Button>
           <Button variant="outline" size="icon" onClick={handleSearchIconClick}>
             <Search className="h-5 w-5" />
+          </Button>
+        </div>
+        <div className="mt-auto flex items-center justify-center pb-2 w-12">
+          <Button variant="outline" size="icon" onClick={handleSettingsClick}>
+            <Settings className="h-5 w-5" />
           </Button>
         </div>
       </div>
@@ -161,6 +170,16 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                     </ContextMenu>
                   ))}
               </ScrollArea>
+              <div className="mt-auto">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={handleSettingsClick}
+                >
+                  <Settings className="h-5 w-5" />
+                  Settings
+                </Button>
+              </div>
             </SheetContent>
           </Sheet>
         </>
@@ -229,6 +248,16 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                   </ContextMenu>
                 ))}
             </ScrollArea>
+            <div className="mt-auto p-2">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={handleSettingsClick}
+              >
+                <Settings className="h-5 w-5" />
+                Settings
+              </Button>
+            </div>
           </div>
         )
       )}
