@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^4.0.0",
+    "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-aspect-ratio": "^1.1.2",
@@ -55,7 +56,6 @@
     "react-day-picker": "^9.5.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
-    "react-monaco-editor": "^0.58.0",
     "react-resizable-panels": "^2.1.7",
     "react-router-dom": "^7.1.5",
     "recharts": "^2.15.1",
