@@ -52,7 +52,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
 
   const handleSearchIconClick = () => {
     setSearchExpanded(!searchExpanded);
-    if (isMobile) toggleSidebar();
+    toggleSidebar();
   };
 
   return (
@@ -80,17 +80,22 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
       {/* Expanded Content */}
       {isMobile ? (
         <Sheet open={showSidebar} onOpenChange={toggleSidebar}>
-          <SheetContent side="left" className="pt-12 w-[280px]">
-            <SheetHeader>
+          <SheetContent
+            aria-describedby="sidebar-header"
+            side="left"
+            className="pt-3 w-72"
+          >
+            <SheetHeader id="sidebar-header" className="mb-2">
               <h1 className="text-lg font-semibold">CodeQuill</h1>
             </SheetHeader>
-            <div className="px-2 flex flex-col w-full gap-2">
+            <div className="flex flex-col w-full gap-2">
               <Button variant="default" onClick={handleNewSnippetClick}>
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="h-4 w-4" />
                 New Snippet
               </Button>
               <Input
                 placeholder="Search snippets..."
+                className="mb-2"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 ref={searchInputRef}
@@ -160,6 +165,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               </Button>
               <Input
                 placeholder="Search snippets..."
+                className="mb-2"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 ref={searchInputRef}
