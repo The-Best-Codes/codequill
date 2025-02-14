@@ -99,7 +99,17 @@ export const useSnippets = (): UseSnippetsReturn => {
     try {
       setSaving(true);
       if (!language) {
-        toast.error("Please select a language");
+        toast.error("Please select a language.");
+        return;
+      }
+
+      if (!filename || filename.trim() === "") {
+        toast.error("Filename cannot be empty.");
+        return;
+      }
+
+      if (filename.length > 1024) {
+        toast.error("Filename cannot be longer than 1024 characters.");
         return;
       }
 
