@@ -7,7 +7,12 @@ import {
 } from "@/components/ui/context-menu";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -86,7 +91,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             className="pt-3 w-72"
           >
             <SheetHeader id="sidebar-header" className="mb-2">
-              <h1 className="text-lg font-semibold">CodeQuill</h1>
+              <SheetTitle>CodeQuill</SheetTitle>
             </SheetHeader>
             <div className="flex flex-col w-full gap-2">
               <Button variant="default" onClick={handleNewSnippetClick}>
