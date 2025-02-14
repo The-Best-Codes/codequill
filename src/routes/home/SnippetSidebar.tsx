@@ -88,7 +88,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
           <SheetContent
             aria-describedby="sidebar-header"
             side="left"
-            className="pt-3 w-72"
+            className="pt-3 w-72 h-full flex flex-col pb-2"
           >
             <SheetHeader id="sidebar-header" className="mb-2">
               <SheetTitle>CodeQuill</SheetTitle>
@@ -100,13 +100,13 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               </Button>
               <Input
                 placeholder="Search snippets..."
-                className="mb-2"
+                className="mb-0"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 ref={searchInputRef}
               />
             </div>
-            <ScrollArea className="h-[calc(100vh-180px)]">
+            <ScrollArea className="h-full mb-2">
               {loading && (
                 <>
                   <Skeleton className="h-8 w-full m-2" />
@@ -176,7 +176,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 ref={searchInputRef}
               />
             </div>
-            <ScrollArea className="h-[calc(100vh-200px)]">
+            <ScrollArea className="h-full mb-2">
               {loading && (
                 <>
                   <Skeleton className="h-8 w-full m-2" />
