@@ -34,4 +34,6 @@ export interface UseSnippetsReturn {
   isPreviewable: boolean;
   isPreviewing: boolean;
   togglePreview: () => void;
+  deletingSnippetId: string | null;
+  setDeletingSnippetId: React.Dispatch<React.SetStateAction<string | null>>;
 }

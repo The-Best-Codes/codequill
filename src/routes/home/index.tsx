@@ -24,6 +24,7 @@ function Home() {
     loadSnippetInEditor,
     isPreviewing,
     language,
+    setDeletingSnippetId,
   } = snippetHelpers;
 
   const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
@@ -64,6 +65,7 @@ function Home() {
         toggleSidebar={toggleSidebar}
         {...snippetHelpers}
         setIsSearchDialogOpen={setIsSearchDialogOpen}
+        setDeletingSnippetId={setDeletingSnippetId}
       />
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         <Header {...snippetHelpers} />

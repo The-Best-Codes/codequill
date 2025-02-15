@@ -38,9 +38,9 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   loadSnippetInEditor,
   copySnippet,
   setDeleteOpen,
-  setSelectedSnippetId,
   createNewSnippet,
   setIsSearchDialogOpen,
+  setDeletingSnippetId,
 }) => {
   const isMobile = useIsMobile();
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -159,7 +159,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                         </ContextMenuItem>
                         <ContextMenuItem
                           onClick={() => {
-                            setSelectedSnippetId(snippet.id);
+                            setDeletingSnippetId(snippet.id);
                             setDeleteOpen(true);
                           }}
                         >
@@ -236,7 +236,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                       </ContextMenuItem>
                       <ContextMenuItem
                         onClick={() => {
-                          setSelectedSnippetId(snippet.id);
+                          setDeletingSnippetId(snippet.id);
                           setDeleteOpen(true);
                         }}
                       >

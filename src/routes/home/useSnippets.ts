@@ -30,6 +30,9 @@ export const useSnippets = (): UseSnippetsReturn => {
   const [isDeleteOpen, setDeleteOpen] = useState(false);
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [isPreviewable, setIsPreviewable] = useState(false);
+  const [deletingSnippetId, setDeletingSnippetId] = useState<string | null>(
+    null,
+  );
 
   // Use a ref to store the currently loaded snippet.
   const currentSnippet = useRef<Snippet | null>(null);
@@ -203,18 +206,18 @@ export const useSnippets = (): UseSnippetsReturn => {
   const deleteCurrentSnippet = async () => {
     try {
       setDeleting(true);
-      if (selectedSnippetId) {
-        deleteSnippet(selectedSnippetId);
+      if (deletingSnippetId) {
+        deleteSnippet(deletingSnippetId);
         setDeleteOpen(false);
 
         // Update snippets state after deletion
         setSnippets((prevSnippets) =>
-          prevSnippets.filter((s) => s.id !== selectedSnippetId),
+          prevSnippets.filter((s) => s.id !== deletingSnippetId),
         );
 
-        // Clear the selected snippet id.
-        const deletedSnippetId = selectedSnippetId;
-        setSelectedSnippetId(null);
+        // Clear the deleting snippet id.
+        const justDeletedSnippetId = deletingSnippetId;
+        setDeletingSnippetId(null); // Clear the deleting snippet id
 
         // Now load either the next snippet or create a new one.
         const newSnippets = getAllSnippets();
@@ -222,7 +225,7 @@ export const useSnippets = (): UseSnippetsReturn => {
         if (newSnippets.length > 0) {
           //Load the first snippet available that isn't the deleted one
           const nextSnippet =
-            newSnippets.find((s) => s.id !== deletedSnippetId) ||
+            newSnippets.find((s) => s.id !== justDeletedSnippetId) ||
             newSnippets[0];
           loadSnippetInEditor(nextSnippet.id);
         } else {
@@ -269,5 +272,7 @@ export const useSnippets = (): UseSnippetsReturn => {
     isPreviewable,
     isPreviewing,
     togglePreview,
+    deletingSnippetId,
+    setDeletingSnippetId,
   };
 };
