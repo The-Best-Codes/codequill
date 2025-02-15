@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { Copy, Menu, Plus, Search, Settings, Trash2 } from "lucide-react";
 import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SnippetSidebarProps extends UseSnippetsReturn {
   showSidebar: boolean;
@@ -50,6 +51,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   setDeletingSnippetId,
 }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleNewSnippetClick = () => {
@@ -68,7 +70,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   };
 
   const handleSettingsClick = () => {
-    // Implementing this later
+    navigate("/settings");
   };
 
   return (
