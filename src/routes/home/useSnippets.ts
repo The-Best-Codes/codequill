@@ -219,17 +219,17 @@ export const useSnippets = (): UseSnippetsReturn => {
         const justDeletedSnippetId = deletingSnippetId;
         setDeletingSnippetId(null); // Clear the deleting snippet id
 
-        // Now load either the next snippet or create a new one.
-        const newSnippets = getAllSnippets();
+        const newSnippets = snippets.filter(
+          (s) => s.id !== justDeletedSnippetId,
+        );
 
-        if (newSnippets.length > 0) {
-          //Load the first snippet available that isn't the deleted one
-          const nextSnippet =
-            newSnippets.find((s) => s.id !== justDeletedSnippetId) ||
-            newSnippets[0];
-          loadSnippetInEditor(nextSnippet.id);
-        } else {
-          createNewSnippet();
+        if (selectedSnippetId === justDeletedSnippetId) {
+          // If the deleted snippet was currently selected, load another snippet
+          if (newSnippets.length > 0) {
+            loadSnippetInEditor(newSnippets[0].id);
+          } else {
+            createNewSnippet();
+          }
         }
 
         toast.success("Snippet deleted");
