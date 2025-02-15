@@ -30,10 +30,10 @@ function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6 md:p-8">
-      <Card className="mx-auto max-w-3xl">
+    <div className="min-h-screen bg-background p-6 md:p-8 flex items-center justify-center">
+      <Card className="w-full max-w-3xl">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <CardTitle className="text-2xl font-bold">Settings</CardTitle>
               <CardDescription className="mt-1.5">
@@ -61,18 +61,18 @@ function Settings() {
             <RadioGroup
               defaultValue={theme || "system"}
               onValueChange={setTheme}
-              className="grid grid-cols-3 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
             >
               {["light", "dark", "system"].map((value) => (
-                <div
+                <Label
                   key={value}
-                  className="flex items-center space-x-2 rounded-lg border p-4 hover:bg-secondary"
+                  className="cursor-pointer [&:has([data-state=checked])]:border-primary"
                 >
-                  <RadioGroupItem value={value} id={value} />
-                  <Label htmlFor={value} className="capitalize cursor-pointer">
-                    {value}
-                  </Label>
-                </div>
+                  <div className="flex items-center space-x-2 rounded-lg border p-4 hover:bg-secondary transition-colors">
+                    <RadioGroupItem value={value} id={value} />
+                    <span className="capitalize">{value}</span>
+                  </div>
+                </Label>
               ))}
             </RadioGroup>
           </div>
@@ -88,7 +88,7 @@ function Settings() {
               </p>
             </div>
             <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="w-[240px]">
+              <SelectTrigger className="w-full sm:w-[240px]">
                 <SelectValue placeholder="Select a language" />
               </SelectTrigger>
               <SelectContent>
