@@ -1,5 +1,12 @@
+import Kbd from "@/components/cq/kbd";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { Eye, EyeOff, Loader2, Save } from "lucide-react";
@@ -46,20 +53,29 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex gap-2">
-        <Button
-          onClick={saveCurrentSnippet}
-          disabled={saving}
-          className="flex items-center w-fit"
-        >
-          {saving ? (
-            <Loader2 className={cn("h-5 w-5 animate-spin")} />
-          ) : (
-            <Save className="h-5 w-5" />
-          )}
-          <span className="sr-only sm:not-sr-only">
-            {saving ? "Saving..." : "Save"}
-          </span>
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={saveCurrentSnippet}
+                disabled={saving}
+                className="flex items-center w-fit"
+              >
+                {saving ? (
+                  <Loader2 className={cn("h-5 w-5 animate-spin")} />
+                ) : (
+                  <Save className="h-5 w-5" />
+                )}
+                <span className="sr-only sm:not-sr-only">
+                  {saving ? "Saving..." : "Save"}
+                </span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Kbd keys={["S"]} />
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <Button
           onClick={togglePreview}

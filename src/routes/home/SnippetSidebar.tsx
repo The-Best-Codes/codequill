@@ -1,3 +1,4 @@
+import Kbd from "@/components/cq/kbd";
 import { Button } from "@/components/ui/button";
 import {
   ContextMenu,
@@ -14,6 +15,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
@@ -80,14 +87,40 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
           <Button variant="default" size="icon" onClick={handleNewSnippetClick}>
             <Plus className="h-5 w-5" />
           </Button>
-          <Button variant="outline" size="icon" onClick={handleSearchIconClick}>
-            <Search className="h-5 w-5" />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleSearchIconClick}
+                >
+                  <Search className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <Kbd keys={["K"]} />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div className="mt-auto flex items-center justify-center pb-2 w-12">
-          <Button variant="outline" size="icon" onClick={handleSettingsClick}>
-            <Settings className="h-5 w-5" />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleSettingsClick}
+                >
+                  <Settings className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <Kbd keys={[","]} />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 
