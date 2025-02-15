@@ -1,3 +1,4 @@
+import supportedLanguages from "@/assets/supportedLanguages.json";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,16 +7,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +32,8 @@ import { useNavigate } from "react-router-dom";
 function Settings() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
-  const [language, setLanguage] = useState("javascript");
+  const [language, setLanguage] = useState("plaintext");
+  const [open, setOpen] = useState(false);
 
   const handleBack = () => {
     navigate("/");
@@ -87,19 +97,51 @@ function Settings() {
                 Choose your preferred programming language
               </p>
             </div>
-            <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="w-full sm:w-[240px]">
-                <SelectValue placeholder="Select a language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="javascript">JavaScript</SelectItem>
-                <SelectItem value="python">Python</SelectItem>
-                <SelectItem value="typescript">TypeScript</SelectItem>
-                <SelectItem value="java">Java</SelectItem>
-                <SelectItem value="go">Go</SelectItem>
-                <SelectItem value="rust">Rust</SelectItem>
-              </SelectContent>
-            </Select>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-64 justify-between"
+                >
+                  {supportedLanguages.find((l) => l.id === language)?.name ||
+                    "Select language..."}
+                  <ChevronsUpDown className="opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-full p-0">
+                <Command>
+                  <CommandInput
+                    placeholder="Search language..."
+                    className="h-9"
+                  />
+                  <CommandList>
+                    <CommandEmpty>No language found.</CommandEmpty>
+                    <CommandGroup>
+                      {supportedLanguages.map((l) => (
+                        <CommandItem
+                          key={l.id}
+                          value={l.id}
+                          onSelect={(currentValue) => {
+                            setLanguage(currentValue);
+                            setOpen(false);
+                          }}
+                        >
+                          {l.name}
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              language === l.id ? "opacity-100" : "opacity-0",
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
 
           <Separator />
@@ -114,10 +156,13 @@ function Settings() {
             </div>
             <div className="grid gap-4">
               {[
-                { label: "Save", shortcut: "Ctrl + S" },
-                { label: "Format Code", shortcut: "Shift + Alt + F" },
-                { label: "New File", shortcut: "Ctrl + N" },
-                { label: "Open File", shortcut: "Ctrl + O" },
+                { label: "Save Snippet", shortcut: "Ctrl + S" },
+                { label: "Undo", shortcut: "Ctrl + Z" },
+                { label: "Redo", shortcut: "Ctrl + Y" },
+                { label: "Toggle Sidebar", shortcut: "Ctrl + B" },
+                { label: "Format Code", shortcut: "Ctrl + Shift + I" },
+                { label: "Search Snippets", shortcut: "Ctrl + K" },
+                { label: "Preview Code", shortcut: "Ctrl + P" },
               ].map(({ label, shortcut }) => (
                 <div
                   key={label}
