@@ -15,104 +15,124 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme(); // Use next-themes hook
-  // @ts-ignore
-  const [language, setLanguage] = useState("en");
+  const { theme, setTheme } = useTheme();
+  const [language, setLanguage] = useState("javascript");
 
   const handleBack = () => {
     navigate("/");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full bg-gray-100 py-12">
-      <div className="container p-4">
-        <Card className="w-full max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Settings</CardTitle>
-            <CardDescription>
-              Manage your preferences to customize your experience.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
+    <div className="min-h-screen bg-background p-6 md:p-8">
+      <Card className="mx-auto max-w-3xl">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-2xl font-bold">Settings</CardTitle>
+              <CardDescription className="mt-1.5">
+                Customize your CodeQuill experience
+              </CardDescription>
+            </div>
             <Button
-              variant="ghost"
+              variant="outline"
               onClick={handleBack}
-              className="absolute top-4 right-4"
+              className="hover:bg-secondary"
             >
               Back to Home
             </Button>
-
-            <div className="grid gap-4">
-              <Label htmlFor="theme">Theme</Label>
-              <RadioGroup
-                defaultValue={theme || "system"}
-                onValueChange={setTheme}
-                className="flex flex-row space-x-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="light" id="light" />
-                  <Label htmlFor="light">Light</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="dark" id="dark" />
-                  <Label htmlFor="dark">Dark</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="system" id="system" />
-                  <Label htmlFor="system">System</Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <div className="grid gap-4">
-              <Label htmlFor="language">Default Language</Label>
-              <Select onValueChange={setLanguage}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a language" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="es">Spanish</SelectItem>
-                  <SelectItem value="fr">French</SelectItem>
-                  {/* Add more languages as needed */}
-                </SelectContent>
-              </Select>
-              <p className="text-sm text-muted-foreground">
-                Choose your preferred language.
-              </p>
-            </div>
-
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-8">
+          {/* Theme Section */}
+          <div className="space-y-4">
             <div>
-              <h2 className="text-lg font-medium">Account</h2>
+              <h3 className="text-lg font-semibold">Theme</h3>
               <p className="text-sm text-muted-foreground">
-                Manage your account settings.
+                Choose your preferred appearance
               </p>
-              <Button variant="outline" disabled className="mt-2">
-                Change Email
-              </Button>
-              <Button variant="outline" disabled className="mt-2">
-                Change Password
-              </Button>
             </div>
+            <RadioGroup
+              defaultValue={theme || "system"}
+              onValueChange={setTheme}
+              className="grid grid-cols-3 gap-4"
+            >
+              {["light", "dark", "system"].map((value) => (
+                <div
+                  key={value}
+                  className="flex items-center space-x-2 rounded-lg border p-4 hover:bg-secondary"
+                >
+                  <RadioGroupItem value={value} id={value} />
+                  <Label htmlFor={value} className="capitalize cursor-pointer">
+                    {value}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
 
+          <Separator />
+
+          {/* Language Section */}
+          <div className="space-y-4">
             <div>
-              <h2 className="text-lg font-medium">Notifications</h2>
+              <h3 className="text-lg font-semibold">Default Language</h3>
               <p className="text-sm text-muted-foreground">
-                Manage your notification settings.
+                Choose your preferred programming language
               </p>
-              <Button variant="outline" disabled className="mt-2">
-                Enable Notifications (Coming Soon)
-              </Button>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-[240px]">
+                <SelectValue placeholder="Select a language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="javascript">JavaScript</SelectItem>
+                <SelectItem value="python">Python</SelectItem>
+                <SelectItem value="typescript">TypeScript</SelectItem>
+                <SelectItem value="java">Java</SelectItem>
+                <SelectItem value="go">Go</SelectItem>
+                <SelectItem value="rust">Rust</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Separator />
+
+          {/* Keyboard Shortcuts Section */}
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-semibold">Keyboard Shortcuts</h3>
+              <p className="text-sm text-muted-foreground">
+                View common keyboard shortcuts
+              </p>
+            </div>
+            <div className="grid gap-4">
+              {[
+                { label: "Save", shortcut: "Ctrl + S" },
+                { label: "Format Code", shortcut: "Shift + Alt + F" },
+                { label: "New File", shortcut: "Ctrl + N" },
+                { label: "Open File", shortcut: "Ctrl + O" },
+              ].map(({ label, shortcut }) => (
+                <div
+                  key={label}
+                  className="flex items-center justify-between rounded-lg border p-4"
+                >
+                  <Label className="font-medium">{label}</Label>
+                  <code className="rounded bg-secondary px-2 py-1 text-sm">
+                    {shortcut}
+                  </code>
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
