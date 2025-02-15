@@ -64,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({
         <Button
           onClick={togglePreview}
           disabled={!isPreviewable}
-          variant={isPreviewing ? "default" : "outline"}
+          variant="default"
           className="flex items-center w-fit"
         >
           {isPreviewing ? (
