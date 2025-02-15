@@ -88,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({
           ) : (
             <Eye className="h-5 w-5" />
           )}
-          <span className="sr-only sm:not-sr-only">
+          <span className="sr-only sm:not-sr-only flex-shrink-0">
             {isPreviewable
               ? isPreviewing
                 ? "Hide Preview"
