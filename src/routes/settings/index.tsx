@@ -24,15 +24,19 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { getConfig, updateConfig } from "@/utils/config";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Language } from "../home/types";
 
 function Settings() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
-  const [language, setLanguage] = useState("plaintext");
+  const [language, setLanguage] = useState<Language>(
+    getConfig().defaultLanguage,
+  );
   const [open, setOpen] = useState(false);
 
   const handleBack = () => {
@@ -52,6 +56,11 @@ function Settings() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [navigate]);
+
+  useEffect(() => {
+    // Update the config whenever the language changes
+    updateConfig({ defaultLanguage: language });
+  }, [language]);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 flex items-center justify-center">
@@ -79,7 +88,7 @@ function Settings() {
             <div>
               <h3 className="text-lg font-semibold">Theme</h3>
               <p className="text-sm text-muted-foreground">
-                Choose your preferred appearance
+                Choose your preferred app appearance
               </p>
             </div>
             <RadioGroup
@@ -108,7 +117,7 @@ function Settings() {
             <div>
               <h3 className="text-lg font-semibold">Default Language</h3>
               <p className="text-sm text-muted-foreground">
-                Choose your preferred programming language
+                Default programming language for new snippets
               </p>
             </div>
             <Popover open={open} onOpenChange={setOpen}>
@@ -119,7 +128,7 @@ function Settings() {
                   aria-expanded={open}
                   className="w-64 justify-between"
                 >
-                  {supportedLanguages.find((l) => l.id === language)?.name ||
+                  {supportedLanguages.find((l) => l.id === language.id)?.name ||
                     "Select language..."}
                   <ChevronsUpDown className="opacity-50" />
                 </Button>
@@ -138,7 +147,10 @@ function Settings() {
                           key={l.id}
                           value={l.id}
                           onSelect={(currentValue) => {
-                            setLanguage(currentValue);
+                            const selectedLanguage = supportedLanguages.find(
+                              (l) => l.id === currentValue,
+                            ) as Language;
+                            setLanguage(selectedLanguage);
                             setOpen(false);
                           }}
                         >
@@ -146,7 +158,9 @@ function Settings() {
                           <Check
                             className={cn(
                               "ml-auto",
-                              language === l.id ? "opacity-100" : "opacity-0",
+                              language.id === l.id
+                                ? "opacity-100"
+                                : "opacity-0",
                             )}
                           />
                         </CommandItem>

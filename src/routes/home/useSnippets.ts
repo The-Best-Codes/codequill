@@ -1,5 +1,6 @@
 import previewLanguages from "@/assets/previewLanguages.json";
 import supportedLanguages from "@/assets/supportedLanguages.json";
+import { getDefaultLanguage } from "@/utils/config";
 import {
   deleteSnippet,
   getAllSnippets,
@@ -18,7 +19,7 @@ const getPreviewStateKey = (snippetId: string) =>
 export const useSnippets = (): UseSnippetsReturn => {
   const [filename, setFilename] = useState<string>("Untitled");
   const [language, setLanguage] = useState<Language | null>(
-    supportedLanguages[0] as Language,
+    getDefaultLanguage(),
   );
   const [code, setCode] = useState<string>("");
   const [snippets, setSnippets] = useState<Snippet[]>([]);
@@ -124,7 +125,7 @@ export const useSnippets = (): UseSnippetsReturn => {
 
   const createNewSnippet = () => {
     setFilename("Untitled");
-    setLanguage(supportedLanguages[0] as Language);
+    setLanguage(getDefaultLanguage());
     setCode("");
     setSelectedSnippetId(null);
     currentSnippet.current = null; // Clear the current snippet
