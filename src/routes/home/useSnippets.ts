@@ -20,7 +20,9 @@ export const useSnippets = (): UseSnippetsReturn => {
   const [code, setCode] = useState<string>("");
   const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  // @ts-ignore
   const [saving, setSaving] = useState<boolean>(false);
+  // @ts-ignore
   const [deleting, setDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -121,53 +123,48 @@ export const useSnippets = (): UseSnippetsReturn => {
   };
 
   const saveCurrentSnippet = async () => {
-    try {
-      setSaving(true);
-      if (!language) {
-        toast.error("Please select a language.");
-        return;
-      }
+    if (!language) {
+      toast.error("Please select a language.");
+      return;
+    }
 
-      if (!filename || filename.trim() === "") {
-        toast.error("Filename cannot be empty.");
-        return;
-      }
+    if (!filename || filename.trim() === "") {
+      toast.error("Filename cannot be empty.");
+      return;
+    }
 
-      if (filename.length > 1024) {
-        toast.error("Filename cannot be longer than 1024 characters.");
-        return;
-      }
+    if (filename.length > 1024) {
+      toast.error("Filename cannot be longer than 1024 characters.");
+      return;
+    }
 
-      let snippetToSave: Snippet;
+    let snippetToSave: Snippet;
 
-      if (selectedSnippetId) {
-        // If a snippet is selected, update it
-        snippetToSave = {
-          id: selectedSnippetId,
-          filename,
-          language: language.id,
-          code,
-        };
-      } else {
-        // If no snippet is selected, create a new one
-        snippetToSave = {
-          id: uuidv4(),
-          filename,
-          language: language.id,
-          code,
-        };
-        setSelectedSnippetId(snippetToSave.id); // Update selected id
-      }
+    if (selectedSnippetId) {
+      // If a snippet is selected, update it
+      snippetToSave = {
+        id: selectedSnippetId,
+        filename,
+        language: language.id,
+        code,
+      };
+    } else {
+      // If no snippet is selected, create a new one
+      snippetToSave = {
+        id: uuidv4(),
+        filename,
+        language: language.id,
+        code,
+      };
+      setSelectedSnippetId(snippetToSave.id); // Update selected id
+    }
 
+    const savePromise = async () => {
       await saveSnippet(snippetToSave);
       currentSnippet.current = snippetToSave; // Update current snippet reference.
 
-      // After saving the snippet, load it in the editor.
-      // Preserve the current previewing state
-
       loadSnippetInEditor(snippetToSave.id);
 
-      // await loadSnippets();  //REMOVE THIS.  Loading all the snippets then immediately reloading the saved one is inefficient and unnecessary.
       setSnippets((prevSnippets) => {
         const existingIndex = prevSnippets.findIndex(
           (s) => s.id === snippetToSave.id,
@@ -181,14 +178,15 @@ export const useSnippets = (): UseSnippetsReturn => {
           // Add new snippet
           return [...prevSnippets, snippetToSave];
         }
-      }); // Keep the snippets state in sync. A better approach would be to update the local snippets state by either adding a new snippet or updating the existing one.
+      });
+      return "Snippet saved successfully!";
+    };
 
-      toast.success("Snippet saved");
-    } catch (e: any) {
-      toast.error("Failed to save snippet.");
-    } finally {
-      setSaving(false);
-    }
+    toast.promise(savePromise(), {
+      loading: "Saving snippet...",
+      success: (message) => message,
+      error: "Failed to save snippet.",
+    });
   };
 
   const copySnippet = async (snippetId: string) => {
@@ -204,41 +202,36 @@ export const useSnippets = (): UseSnippetsReturn => {
   };
 
   const deleteCurrentSnippet = async () => {
-    try {
-      setDeleting(true);
-      if (deletingSnippetId) {
-        await deleteSnippet(deletingSnippetId);
-        setDeleteOpen(false);
+    if (!deletingSnippetId) return;
 
-        // Update snippets state after deletion
-        setSnippets((prevSnippets) =>
-          prevSnippets.filter((s) => s.id !== deletingSnippetId),
-        );
+    const deletePromise = async () => {
+      await deleteSnippet(deletingSnippetId);
+      setDeleteOpen(false);
 
-        // Clear the deleting snippet id.
-        const justDeletedSnippetId = deletingSnippetId;
-        setDeletingSnippetId(null); // Clear the deleting snippet id
+      setSnippets((prevSnippets) =>
+        prevSnippets.filter((s) => s.id !== deletingSnippetId),
+      );
 
-        const newSnippets = snippets.filter(
-          (s) => s.id !== justDeletedSnippetId,
-        );
+      const justDeletedSnippetId = deletingSnippetId;
+      setDeletingSnippetId(null);
 
-        if (selectedSnippetId === justDeletedSnippetId) {
-          // If the deleted snippet was currently selected, load another snippet
-          if (newSnippets.length > 0) {
-            loadSnippetInEditor(newSnippets[0].id);
-          } else {
-            createNewSnippet();
-          }
+      const newSnippets = snippets.filter((s) => s.id !== justDeletedSnippetId);
+
+      if (selectedSnippetId === justDeletedSnippetId) {
+        if (newSnippets.length > 0) {
+          loadSnippetInEditor(newSnippets[0].id);
+        } else {
+          createNewSnippet();
         }
-
-        toast.success("Snippet deleted");
       }
-    } catch (e: any) {
-      toast.error("Failed to delete snippet.");
-    } finally {
-      setDeleting(false);
-    }
+      return "Snippet deleted successfully!";
+    };
+
+    toast.promise(deletePromise(), {
+      loading: "Deleting snippet...",
+      success: (message) => message,
+      error: "Failed to delete snippet.",
+    });
   };
 
   const togglePreview = () => {
