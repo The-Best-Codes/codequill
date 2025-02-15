@@ -11,7 +11,7 @@
     "id": "markdown",
     "file": "previews/markdown.tsx",
     "export": {
-      "component": "CodePreviewBox",
+      "component": "MarkdownPreview",
       "default": true
     }
   }
