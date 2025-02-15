@@ -26,7 +26,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {
@@ -38,6 +38,20 @@ function Settings() {
   const handleBack = () => {
     navigate("/");
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        navigate("/");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 flex items-center justify-center">
@@ -55,7 +69,7 @@ function Settings() {
               onClick={handleBack}
               className="hover:bg-secondary"
             >
-              Back to Home
+              Back to Editor
             </Button>
           </div>
         </CardHeader>
