@@ -16,6 +16,7 @@ interface EditorProps
   > {
   setIsSearchDialogOpen: (open: boolean) => void;
   toggleSidebar: () => void;
+  createNewSnippet: () => void;
 }
 
 const MonacoEditorComponent: React.FC<EditorProps> = ({
@@ -28,6 +29,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   isPreviewable,
   togglePreview,
   toggleSidebar,
+  createNewSnippet,
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
@@ -75,6 +77,12 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         e.preventDefault();
         toggleSidebar();
       }
+
+      // Create new snippet with Ctrl+N / Cmd+N
+      if ((e.ctrlKey || e.metaKey) && e.key === "n") {
+        e.preventDefault();
+        createNewSnippet();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -88,6 +96,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     isPreviewable,
     togglePreview,
     toggleSidebar,
+    createNewSnippet,
   ]);
 
   // Determine the Monaco theme based on the resolved next-themes theme

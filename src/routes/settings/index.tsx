@@ -71,7 +71,7 @@ function Settings() {
             <RadioGroup
               defaultValue={theme || "system"}
               onValueChange={setTheme}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+              className="grid grid-cols-1 md:grid-cols-3 gap-4"
             >
               {["light", "dark", "system"].map((value) => (
                 <Label
@@ -157,12 +157,14 @@ function Settings() {
             <div className="grid gap-4">
               {[
                 { label: "Save Snippet", shortcut: "Ctrl + S" },
-                { label: "Undo", shortcut: "Ctrl + Z" },
-                { label: "Redo", shortcut: "Ctrl + Y" },
+                { label: "Create New Snippet", shortcut: "Ctrl + N" },
                 { label: "Toggle Sidebar", shortcut: "Ctrl + B" },
-                { label: "Format Code", shortcut: "Ctrl + Shift + I" },
                 { label: "Search Snippets", shortcut: "Ctrl + K" },
                 { label: "Preview Code", shortcut: "Ctrl + P" },
+                { label: "Open Settings", shortcut: "Ctrl + Comma" },
+                { label: "Format Code", shortcut: "Ctrl + Shift + I" },
+                { label: "Undo", shortcut: "Ctrl + Z" },
+                { label: "Redo", shortcut: "Ctrl + Y" },
               ].map(({ label, shortcut }) => (
                 <div
                   key={label}

@@ -95,9 +95,22 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <Button variant="default" size="icon" onClick={handleNewSnippetClick}>
-            <Plus className="h-5 w-5" />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="default"
+                  size="icon"
+                  onClick={handleNewSnippetClick}
+                >
+                  <Plus className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <Kbd keys={["N"]} />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -128,7 +141,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right">
-                <Kbd keys={[","]} />
+                <Kbd keys={["Comma"]} />
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

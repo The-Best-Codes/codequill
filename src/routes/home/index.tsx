@@ -47,6 +47,7 @@ function Home() {
     isPreviewing,
     language,
     setDeletingSnippetId,
+    createNewSnippet,
   } = snippetHelpers;
 
   const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
@@ -71,6 +72,7 @@ function Home() {
           setIsSearchDialogOpen={setIsSearchDialogOpen}
           isPreviewing={isPreviewing}
           toggleSidebar={toggleSidebar}
+          createNewSnippet={createNewSnippet}
         />
         {isPreviewing && (
           <div className="h-1/2 w-full border-t">
