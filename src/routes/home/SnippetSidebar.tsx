@@ -168,41 +168,43 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 {!loading &&
                   !error &&
                   filteredSnippets.map((snippet) => (
-                    <ContextMenu key={snippet.id}>
-                      <ContextMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className={cn(
-                            "w-full justify-start",
-                            selectedSnippetId === snippet.id &&
-                              "bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-accent-foreground",
-                          )}
-                          onClick={() => {
-                            loadSnippetInEditor(snippet.id);
-                            toggleSidebar();
-                          }}
-                        >
-                          {snippet.filename}
-                        </Button>
-                      </ContextMenuTrigger>
-                      <ContextMenuContent>
-                        <ContextMenuItem
-                          onClick={() => copySnippet(snippet.id)}
-                        >
-                          <Copy className="mr-2 h-4 w-4" />
-                          Copy
-                        </ContextMenuItem>
-                        <ContextMenuItem
-                          onClick={() => {
-                            setDeletingSnippetId(snippet.id);
-                            setDeleteOpen(true);
-                          }}
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
-                        </ContextMenuItem>
-                      </ContextMenuContent>
-                    </ContextMenu>
+                    <div key={snippet.id} className="mb-0.5">
+                      <ContextMenu>
+                        <ContextMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className={cn(
+                              "w-full justify-start",
+                              selectedSnippetId === snippet.id &&
+                                "bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-accent-foreground",
+                            )}
+                            onClick={() => {
+                              loadSnippetInEditor(snippet.id);
+                              toggleSidebar();
+                            }}
+                          >
+                            {snippet.filename}
+                          </Button>
+                        </ContextMenuTrigger>
+                        <ContextMenuContent>
+                          <ContextMenuItem
+                            onClick={() => copySnippet(snippet.id)}
+                          >
+                            <Copy className="mr-2 h-4 w-4" />
+                            Copy
+                          </ContextMenuItem>
+                          <ContextMenuItem
+                            onClick={() => {
+                              setDeletingSnippetId(snippet.id);
+                              setDeleteOpen(true);
+                            }}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete
+                          </ContextMenuItem>
+                        </ContextMenuContent>
+                      </ContextMenu>
+                    </div>
                   ))}
               </ScrollArea>
               <div className="mt-auto">
@@ -250,36 +252,40 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               {!loading &&
                 !error &&
                 filteredSnippets.map((snippet) => (
-                  <ContextMenu key={snippet.id}>
-                    <ContextMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className={cn(
-                          "w-full justify-start",
-                          selectedSnippetId === snippet.id &&
-                            "bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-accent-foreground",
-                        )}
-                        onClick={() => loadSnippetInEditor(snippet.id)}
-                      >
-                        {snippet.filename}
-                      </Button>
-                    </ContextMenuTrigger>
-                    <ContextMenuContent>
-                      <ContextMenuItem onClick={() => copySnippet(snippet.id)}>
-                        <Copy className="mr-2 h-4 w-4" />
-                        Copy
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        onClick={() => {
-                          setDeletingSnippetId(snippet.id);
-                          setDeleteOpen(true);
-                        }}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </ContextMenuItem>
-                    </ContextMenuContent>
-                  </ContextMenu>
+                  <div key={snippet.id} className="mb-0.5">
+                    <ContextMenu>
+                      <ContextMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className={cn(
+                            "w-full justify-start",
+                            selectedSnippetId === snippet.id &&
+                              "bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-accent-foreground",
+                          )}
+                          onClick={() => loadSnippetInEditor(snippet.id)}
+                        >
+                          {snippet.filename}
+                        </Button>
+                      </ContextMenuTrigger>
+                      <ContextMenuContent>
+                        <ContextMenuItem
+                          onClick={() => copySnippet(snippet.id)}
+                        >
+                          <Copy className="mr-2 h-4 w-4" />
+                          Copy
+                        </ContextMenuItem>
+                        <ContextMenuItem
+                          onClick={() => {
+                            setDeletingSnippetId(snippet.id);
+                            setDeleteOpen(true);
+                          }}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </ContextMenuItem>
+                      </ContextMenuContent>
+                    </ContextMenu>
+                  </div>
                 ))}
             </ScrollArea>
             <div className="mt-auto p-2">
