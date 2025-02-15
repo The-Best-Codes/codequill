@@ -11,7 +11,7 @@ const simulateLoading = (): Promise<void> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
-    }, 5000); // Simulate 5 seconds loading time
+    }, 0); // Simulate X milliseconds loading time
   });
 };
 

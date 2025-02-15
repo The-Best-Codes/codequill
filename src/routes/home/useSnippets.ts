@@ -63,7 +63,7 @@ export const useSnippets = (): UseSnippetsReturn => {
     try {
       setLoading(true);
       setError(null);
-      const loadedSnippets = getAllSnippets();
+      const loadedSnippets = await getAllSnippets();
       setSnippets(loadedSnippets);
 
       if (loadedSnippets.length > 0) {
@@ -104,8 +104,8 @@ export const useSnippets = (): UseSnippetsReturn => {
     );
   };
 
-  const loadSnippetInEditor = (id: string) => {
-    const snippet = getSnippet(id);
+  const loadSnippetInEditor = async (id: string) => {
+    const snippet = await getSnippet(id);
     if (snippet) {
       setFilename(snippet.filename);
       setLanguage(
@@ -159,7 +159,7 @@ export const useSnippets = (): UseSnippetsReturn => {
         setSelectedSnippetId(snippetToSave.id); // Update selected id
       }
 
-      saveSnippet(snippetToSave);
+      await saveSnippet(snippetToSave);
       currentSnippet.current = snippetToSave; // Update current snippet reference.
 
       // After saving the snippet, load it in the editor.
@@ -192,7 +192,7 @@ export const useSnippets = (): UseSnippetsReturn => {
   };
 
   const copySnippet = async (snippetId: string) => {
-    const snippet = getSnippet(snippetId);
+    const snippet = await getSnippet(snippetId);
     if (snippet) {
       try {
         await navigator.clipboard.writeText(snippet.code);
@@ -207,7 +207,7 @@ export const useSnippets = (): UseSnippetsReturn => {
     try {
       setDeleting(true);
       if (deletingSnippetId) {
-        deleteSnippet(deletingSnippetId);
+        await deleteSnippet(deletingSnippetId);
         setDeleteOpen(false);
 
         // Update snippets state after deletion

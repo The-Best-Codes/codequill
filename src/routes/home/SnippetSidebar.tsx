@@ -158,8 +158,8 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               <ScrollArea className="h-full mb-2">
                 {loading && (
                   <>
-                    <Skeleton className="h-8 w-full m-2" />
-                    <Skeleton className="h-8 w-full m-2" />
+                    <Skeleton className="h-8 w-full mb-2" />
+                    <Skeleton className="h-8 w-full mb-2" />
                   </>
                 )}
                 {error && (
@@ -242,8 +242,8 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             <ScrollArea className="h-full mb-2 p-2">
               {loading && (
                 <>
-                  <Skeleton className="h-8 w-full m-2" />
-                  <Skeleton className="h-8 w-full m-2" />
+                  <Skeleton className="h-8 w-full mb-2" />
+                  <Skeleton className="h-8 w-full mb-2" />
                 </>
               )}
               {error && <div className="p-4 text-sm text-red-500">{error}</div>}
