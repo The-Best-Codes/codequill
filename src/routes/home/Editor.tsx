@@ -15,6 +15,7 @@ interface EditorProps
     | "togglePreview"
   > {
   setIsSearchDialogOpen: (open: boolean) => void;
+  toggleSidebar: () => void;
 }
 
 const MonacoEditorComponent: React.FC<EditorProps> = ({
@@ -26,6 +27,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   isPreviewing,
   isPreviewable,
   togglePreview,
+  toggleSidebar,
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
@@ -67,6 +69,12 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         e.preventDefault();
         togglePreview();
       }
+
+      // Toggle sidebar with Ctrl+B / Cmd+B
+      if ((e.ctrlKey || e.metaKey) && e.key === "b") {
+        e.preventDefault();
+        toggleSidebar();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -74,7 +82,13 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [saveCurrentSnippet, setIsSearchDialogOpen, isPreviewable, togglePreview]);
+  }, [
+    saveCurrentSnippet,
+    setIsSearchDialogOpen,
+    isPreviewable,
+    togglePreview,
+    toggleSidebar,
+  ]);
 
   // Determine the Monaco theme based on the resolved next-themes theme
   const monacoTheme = resolvedTheme === "dark" ? "vs-dark" : "vs-light";

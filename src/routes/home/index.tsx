@@ -70,6 +70,7 @@ function Home() {
           {...snippetHelpers}
           setIsSearchDialogOpen={setIsSearchDialogOpen}
           isPreviewing={isPreviewing}
+          toggleSidebar={toggleSidebar}
         />
         {isPreviewing && (
           <div className="h-1/2 w-full">
