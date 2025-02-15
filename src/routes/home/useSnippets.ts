@@ -12,6 +12,9 @@ import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { Language, UseSnippetsReturn } from "./types";
 
+const getPreviewStateKey = (snippetId: string) =>
+  `codequill_preview_state_${snippetId}`;
+
 export const useSnippets = (): UseSnippetsReturn => {
   const [filename, setFilename] = useState<string>("Untitled");
   const [language, setLanguage] = useState<Language | null>(
@@ -30,7 +33,20 @@ export const useSnippets = (): UseSnippetsReturn => {
     null,
   );
   const [isDeleteOpen, setDeleteOpen] = useState(false);
-  const [isPreviewing, setIsPreviewing] = useState(false);
+
+  // Initialize from session storage
+  const [isPreviewing, setIsPreviewing] = useState<boolean>(() => {
+    if (typeof window === "undefined" || !selectedSnippetId) return false; // SSR
+    try {
+      const key = getPreviewStateKey(selectedSnippetId);
+      const storedState = sessionStorage.getItem(key);
+      return storedState ? JSON.parse(storedState) : false;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  });
+
   const [isPreviewable, setIsPreviewable] = useState(false);
   const [deletingSnippetId, setDeletingSnippetId] = useState<string | null>(
     null,
@@ -60,6 +76,18 @@ export const useSnippets = (): UseSnippetsReturn => {
       setIsPreviewing(false);
     }
   }, [language]);
+
+  // Update session storage whenever isPreviewing or selectedSnippetId changes
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined" && selectedSnippetId) {
+        const key = getPreviewStateKey(selectedSnippetId);
+        sessionStorage.setItem(key, JSON.stringify(isPreviewing));
+      }
+    } catch (error) {
+      console.error("Error updating session storage:", error);
+    }
+  }, [isPreviewing, selectedSnippetId]);
 
   const loadSnippets = async () => {
     try {
@@ -119,6 +147,19 @@ export const useSnippets = (): UseSnippetsReturn => {
       setIsPreviewable(
         !!language && previewLanguages.some((l) => l.id === snippet.language),
       );
+
+      if (typeof window !== "undefined") {
+        try {
+          const key = getPreviewStateKey(id);
+          const storedState = sessionStorage.getItem(key);
+          setIsPreviewing(storedState ? JSON.parse(storedState) : false);
+        } catch (error) {
+          console.error(
+            "Failed to load preview state from localStorage:",
+            error,
+          );
+        }
+      }
     }
   };
 
@@ -211,6 +252,16 @@ export const useSnippets = (): UseSnippetsReturn => {
       setSnippets((prevSnippets) =>
         prevSnippets.filter((s) => s.id !== deletingSnippetId),
       );
+
+      // Remove the preview from localStorage
+      if (typeof window !== "undefined") {
+        try {
+          const key = getPreviewStateKey(deletingSnippetId);
+          sessionStorage.removeItem(key);
+        } catch (error) {
+          console.error("Failed to remove preview from localStorage:", error);
+        }
+      }
 
       const justDeletedSnippetId = deletingSnippetId;
       setDeletingSnippetId(null);
