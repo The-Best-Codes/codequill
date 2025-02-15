@@ -25,7 +25,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { Copy, Menu, Plus, Search, Settings, Trash2 } from "lucide-react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface SnippetSidebarProps extends UseSnippetsReturn {
@@ -54,6 +54,9 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   const navigate = useNavigate();
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Ref to the currently selected snippet element
+  const selectedSnippetRef = useRef<HTMLDivElement>(null);
+
   const handleNewSnippetClick = () => {
     createNewSnippet();
     if (isMobile) toggleSidebar();
@@ -72,6 +75,20 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   const handleSettingsClick = () => {
     navigate("/settings");
   };
+
+  // Effect to scroll to the selected snippet
+  useEffect(() => {
+    if (selectedSnippetRef.current) {
+      try {
+        selectedSnippetRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      } catch (error) {
+        console.error("Error scrolling to selected snippet:", error);
+      }
+    }
+  }, [selectedSnippetId, showSidebar]);
 
   return (
     <>
@@ -190,7 +207,15 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 {!loading &&
                   !error &&
                   filteredSnippets.map((snippet) => (
-                    <div key={snippet.id} className="mb-0.5">
+                    <div
+                      key={snippet.id}
+                      className="mb-0.5"
+                      ref={
+                        selectedSnippetId === snippet.id
+                          ? selectedSnippetRef
+                          : null
+                      }
+                    >
                       <ContextMenu>
                         <ContextMenuTrigger asChild>
                           <Button
@@ -283,7 +308,15 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               {!loading &&
                 !error &&
                 filteredSnippets.map((snippet) => (
-                  <div key={snippet.id} className="mb-0.5">
+                  <div
+                    key={snippet.id}
+                    className="mb-0.5"
+                    ref={
+                      selectedSnippetId === snippet.id
+                        ? selectedSnippetRef
+                        : null
+                    }
+                  >
                     <ContextMenu>
                       <ContextMenuTrigger asChild>
                         <Button
