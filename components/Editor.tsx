@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Check, Info, Loader2, Save, Eye, EyeOff, Wand2 } from "lucide-react";
+import { Check, Eye, EyeOff, Info, Loader2, Save, Wand2 } from "lucide-react";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
 import JavaScriptConsole from "@/components/JSConsole";
@@ -22,8 +22,11 @@ import codeLangOptions from "@/utils/codeLangs";
 const DEFAULT_LANGUAGE = "html";
 
 const getStoredDefaultLanguage = () => {
-  if (typeof window === "undefined" || !localStorage.getItem("defaultLanguage"))
+  if (
+    typeof window === "undefined" || !localStorage.getItem("defaultLanguage")
+  ) {
     return "javascript";
+  }
   return localStorage.getItem("defaultLanguage") || "javascript";
 };
 
@@ -37,7 +40,7 @@ const CodeEditor = ({
   const [code, setCode] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [defaultLanguage, setDefaultLanguage] = useState(
-    getStoredDefaultLanguage()
+    getStoredDefaultLanguage(),
   );
   const [codeLanguage, setCodeLanguage] = useState(DEFAULT_LANGUAGE);
   const [name, setName] = useState(`${t("untitled") || "Untitled"}`);
@@ -140,7 +143,7 @@ const CodeEditor = ({
     if (typeof window !== "undefined") {
       window.open(
         "https://github.com/The-Best-Codes/codequill?tab=readme-ov-file#ai-project-name-generator",
-        "_blank"
+        "_blank",
       );
     }
   };
@@ -168,11 +171,9 @@ const CodeEditor = ({
                     isGeneratingName ? "cursor-wait" : ""
                   }`}
                 >
-                  {isGeneratingName ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Wand2 className="w-4 h-4" />
-                  )}
+                  {isGeneratingName
+                    ? <Loader2 className="w-4 h-4 animate-spin" />
+                    : <Wand2 className="w-4 h-4" />}
                 </Button>
               </ContextMenuTrigger>
               <ContextMenuContent className="dark:bg-gray-800 dark:border-gray-700">
@@ -195,13 +196,15 @@ const CodeEditor = ({
             label="Language"
           />
 
-          {/* <Button
+          {
+            /* <Button
             onClick={translateProject}
             size={"icon"}
             disabled={isSaving || isLoading}
           >
             <Languages />
-          </Button> */}
+          </Button> */
+          }
         </div>
         <div className="flex items-center justify-end flex-row gap-4 w-1/2">
           <Button
@@ -243,79 +246,78 @@ const CodeEditor = ({
           {
             <Button
               onClick={() => setShowPreview(!showPreview)}
-              disabled={
-                (codeLanguage !== "html" && codeLanguage !== "javascript") ||
-                isLoading
-              }
+              disabled={(codeLanguage !== "html" &&
+                codeLanguage !== "javascript") ||
+                isLoading}
               className="w-10 p-2 sm:w-fit sm:p-4"
             >
-              {codeLanguage === "html" || codeLanguage === "javascript" ? (
-                showPreview ? (
-                  <>
-                    <EyeOff className="inline-block" />{" "}
-                    <span className="hidden ml-2 sm:inline-block">
-                      {t("hide-preview")}
-                    </span>
-                  </>
-                ) : (
+              {codeLanguage === "html" || codeLanguage === "javascript"
+                ? (
+                  showPreview
+                    ? (
+                      <>
+                        <EyeOff className="inline-block" />{" "}
+                        <span className="hidden ml-2 sm:inline-block">
+                          {t("hide-preview")}
+                        </span>
+                      </>
+                    )
+                    : (
+                      <>
+                        <Eye className="inline-block" />{" "}
+                        <span className="hidden ml-2 sm:inline-block">
+                          {t("show-preview")}
+                        </span>
+                      </>
+                    )
+                )
+                : (
                   <>
                     <Eye className="inline-block" />{" "}
                     <span className="hidden ml-2 sm:inline-block">
                       {t("show-preview")}
                     </span>
                   </>
-                )
-              ) : (
-                <>
-                  <Eye className="inline-block" />{" "}
-                  <span className="hidden ml-2 sm:inline-block">
-                    {t("show-preview")}
-                  </span>
-                </>
-              )}
+                )}
             </Button>
           }
         </div>
       </div>
       <div className="w-full h-full flex flex-col">
-        {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader2 className="w-6 h-6 animate-spin" />
-          </div>
-        ) : (
-          <>
-            <Editor
-              height={
-                showPreview &&
-                (codeLanguage === "html" || codeLanguage === "javascript")
+        {isLoading
+          ? (
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="w-6 h-6 animate-spin" />
+            </div>
+          )
+          : (
+            <>
+              <Editor
+                height={showPreview &&
+                    (codeLanguage === "html" || codeLanguage === "javascript")
                   ? "50%"
-                  : "100%"
-              }
-              width="100%"
-              language={codeLanguage}
-              value={code}
-              onChange={(value) => setCode(value || "")}
-              theme={
-                theme === "system"
-                  ? systemTheme === "dark"
-                    ? "vs-dark"
-                    : "vs-light"
+                  : "100%"}
+                width="100%"
+                language={codeLanguage}
+                value={code}
+                onChange={(value) => setCode(value || "")}
+                theme={theme === "system"
+                  ? systemTheme === "dark" ? "vs-dark" : "vs-light"
                   : theme === "dark"
                   ? "vs-dark"
-                  : "vs-light"
-              }
-            />
-            {showPreview && codeLanguage === "html" && (
-              <iframe
-                srcDoc={code}
-                className="w-full h-1/2 border-t dark:border-gray-700"
+                  : "vs-light"}
               />
-            )}
-            {showPreview && codeLanguage === "javascript" && (
-              <JavaScriptConsole code={code} />
-            )}
-          </>
-        )}
+              {showPreview && codeLanguage === "html" && (
+                <iframe
+                  srcDoc={code}
+                  className="w-full h-1/2 border-t dark:border-gray-700"
+                />
+              )}
+              {showPreview && codeLanguage === "javascript" && (
+                <JavaScriptConsole code={code} />
+              )}
+            </>
+          )}
       </div>
     </div>
   );

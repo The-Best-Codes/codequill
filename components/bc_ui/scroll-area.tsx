@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
   useRef,
   useState,
-  useEffect,
-  useCallback,
-  forwardRef,
-  useImperativeHandle,
 } from "react";
 
 interface ScrollAreaWithShadowsProps {
@@ -30,7 +30,7 @@ const ScrollAreaWithShadows = forwardRef<
       easingThresholdFactor = 2,
       direction = "vertical",
     },
-    ref
+    ref,
   ) => {
     const containerRef = useRef<HTMLDivElement | any>(null);
     const contentRef = useRef<HTMLDivElement | any>(null);
@@ -54,14 +54,14 @@ const ScrollAreaWithShadows = forwardRef<
 
       const startOpacity = Math.max(
         0,
-        1 - scrollPosition / threshold / easingThresholdFactor
+        1 - scrollPosition / threshold / easingThresholdFactor,
       );
       const endOpacity = Math.max(
         0,
         1 -
           (contentSize - containerSize - scrollPosition) /
             threshold /
-            easingThresholdFactor
+            easingThresholdFactor,
       );
 
       const gradientDirection = isVertical ? "to bottom" : "to right";
@@ -72,7 +72,7 @@ const ScrollAreaWithShadows = forwardRef<
           rgba(0, 0, 0, 1) ${shadowSize}px, 
           rgba(0, 0, 0, 1) calc(100% - ${shadowSize}px), 
           rgba(0, 0, 0, ${endOpacity}) 100%
-        )`
+        )`,
       );
     }, [shadowSize, threshold, easingThresholdFactor, direction]);
 
@@ -85,10 +85,9 @@ const ScrollAreaWithShadows = forwardRef<
       }
     }, [handleScroll]);
 
-    const containerClass =
-      direction === "vertical"
-        ? "h-full overflow-y-auto"
-        : "w-full overflow-x-auto";
+    const containerClass = direction === "vertical"
+      ? "h-full overflow-y-auto"
+      : "w-full overflow-x-auto";
 
     useImperativeHandle(ref, () => ({
       scrollToBottom: () => {
@@ -115,7 +114,7 @@ const ScrollAreaWithShadows = forwardRef<
         </div>
       </div>
     );
-  }
+  },
 );
 
 ScrollAreaWithShadows.displayName = "ScrollAreaWithShadows";

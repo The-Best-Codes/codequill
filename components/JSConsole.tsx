@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Info, Check, Loader2, Play, Square, Trash2 } from "lucide-react";
+import { Check, Copy, Info, Loader2, Play, Square, Trash2 } from "lucide-react";
 import ScrollAreaWithShadows from "@/components/bc_ui/scroll-area";
 
 interface ConsoleProps {
@@ -47,7 +47,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
       const { type, args } = event.data;
       const timestamp = new Date().toLocaleString();
       const id = Number(
-        `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`
+        `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`,
       );
       setLogs((prevLogs) => [
         ...prevLogs,
@@ -61,7 +61,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
         },
       ]);
     },
-    [isRunning]
+    [isRunning],
   );
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
     setIsRunning(true);
     const timestamp = new Date().toLocaleString();
     const id = Number(
-      `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`
+      `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`,
     );
     setLogs((prevLogs) => [
       ...prevLogs,
@@ -129,7 +129,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
     }
     const timestamp = new Date().toLocaleString();
     const id = Number(
-      `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`
+      `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`,
     );
     setLogs((prevLogs) => [
       ...prevLogs,
@@ -156,7 +156,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
 
   const clearLogs = () => {
     const id = Number(
-      `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`
+      `${new Date().getTime()}${Math.floor(Math.random() * 1000000)}`,
     );
     setLogs([
       {
@@ -171,7 +171,7 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
   const updateCopyStatus = (id: number, status: CopyStatus["status"]) => {
     setCopyStatuses((prevCopyStatuses) => {
       const existingStatusIndex = prevCopyStatuses.findIndex(
-        (cs) => cs.id === id
+        (cs) => cs.id === id,
       );
       if (existingStatusIndex !== -1) {
         return prevCopyStatuses.map((cs) =>
@@ -228,60 +228,64 @@ const JavaScriptConsole: React.FC<ConsoleProps> = ({ code }) => {
       >
         <div>
           {logs.map((log, index) =>
-            log.type === "system" ? (
-              <fieldset
-                key={index}
-                className="border-t border-gray-300 dark:border-gray-600 my-4"
-              >
-                <legend className="mx-auto px-2 text-sm text-gray-500 dark:text-gray-400">
-                  {log.content}
-                </legend>
-              </fieldset>
-            ) : (
-              <div
-                key={index}
-                className={`mb-2 p-2 flex flex-row w-full items-center justify-between rounded ${getLogTypeClass(
-                  log.type
-                )}`}
-              >
-                <span className="text-sm flex-1">{log.content}</span>
-                <div className="flex flex-row items-center w-fit space-x-2">
-                  <span className="text-xs italic">{log.timestamp}</span>
-                  <Button
-                    variant={"ghost"}
-                    size={"icon"}
-                    onClick={() => copyToClipboard(log)}
-                    disabled={getIsCopyDisabled(log.id)}
-                  >
-                    {getCopyIcon(log.id)}
-                  </Button>
+            log.type === "system"
+              ? (
+                <fieldset
+                  key={index}
+                  className="border-t border-gray-300 dark:border-gray-600 my-4"
+                >
+                  <legend className="mx-auto px-2 text-sm text-gray-500 dark:text-gray-400">
+                    {log.content}
+                  </legend>
+                </fieldset>
+              )
+              : (
+                <div
+                  key={index}
+                  className={`mb-2 p-2 flex flex-row w-full items-center justify-between rounded ${
+                    getLogTypeClass(
+                      log.type,
+                    )
+                  }`}
+                >
+                  <span className="text-sm flex-1">{log.content}</span>
+                  <div className="flex flex-row items-center w-fit space-x-2">
+                    <span className="text-xs italic">{log.timestamp}</span>
+                    <Button
+                      variant={"ghost"}
+                      size={"icon"}
+                      onClick={() => copyToClipboard(log)}
+                      disabled={getIsCopyDisabled(log.id)}
+                    >
+                      {getCopyIcon(log.id)}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )
+              )
           )}
         </div>
       </ScrollAreaWithShadows>
       <div className="flex space-x-2 my-4 ml-4">
         <Button
           onClick={isRunning ? stopExecution : runCode}
-          className={
-            isRunning
-              ? ""
-              : "text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700 w-fit"
-          }
+          className={isRunning
+            ? ""
+            : "text-black dark:bg-gray-900 dark:text-white dark:hover:bg-gray-700 w-fit"}
           variant={isRunning ? "destructive" : "secondary"}
         >
-          {isRunning ? (
-            <>
-              <div className="flex flex-row items-center">
-                <Square className="mr-2 h-4 w-4" /> Stop
-              </div>
-            </>
-          ) : (
-            <>
-              <Play className="mr-2 h-4 w-4" /> Run
-            </>
-          )}
+          {isRunning
+            ? (
+              <>
+                <div className="flex flex-row items-center">
+                  <Square className="mr-2 h-4 w-4" /> Stop
+                </div>
+              </>
+            )
+            : (
+              <>
+                <Play className="mr-2 h-4 w-4" /> Run
+              </>
+            )}
         </Button>
         <Button
           onClick={clearLogs}

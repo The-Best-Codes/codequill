@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  Plus,
-  Edit,
-  Trash,
-  Copy,
   Check,
+  Code2,
+  Copy,
+  Edit,
   Info,
-  SortAsc,
-  SortDesc,
+  Languages,
+  Moon,
+  Plus,
+  RotateCw,
   Search,
   Settings,
+  SortAsc,
+  SortDesc,
   Sun,
-  Moon,
-  Languages,
-  Code2,
-  RotateCw,
+  Trash,
 } from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -206,8 +206,9 @@ const Sidebar = ({
     if (
       typeof window === "undefined" ||
       !localStorage.getItem("defaultLanguage")
-    )
+    ) {
       return "javascript";
+    }
     return localStorage.getItem("defaultLanguage") || "javascript";
   };
 
@@ -290,84 +291,84 @@ const Sidebar = ({
         className="grow rounded-lg h-full max-w-full"
         shadowSize={100}
       >
-        {!isLoading ? (
-          <div>
-            {filteredProjects.length > 0 &&
-              filteredProjects.map((project) => (
-                <ContextMenu key={project.id}>
-                  <ContextMenuTrigger>
-                    <div
-                      className={`p-2 rounded cursor-pointer max-w-full ${
-                        selectedProject?.id === project.id
-                          ? "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"
-                          : "hover:bg-gray-100 dark:hover:bg-gray-600"
-                      } group my-1`}
-                      onClick={() => setSelectedProject(project)}
-                    >
+        {!isLoading
+          ? (
+            <div>
+              {filteredProjects.length > 0 &&
+                filteredProjects.map((project) => (
+                  <ContextMenu key={project.id}>
+                    <ContextMenuTrigger>
                       <div
-                        title={project.name}
-                        className="flex justify-between max-h-24 max-w-full items-center relative"
+                        className={`p-2 rounded cursor-pointer max-w-full ${
+                          selectedProject?.id === project.id
+                            ? "bg-gray-300 text-black dark:bg-gray-700 dark:text-white"
+                            : "hover:bg-gray-100 dark:hover:bg-gray-600"
+                        } group my-1`}
+                        onClick={() => setSelectedProject(project)}
                       >
-                        <span className="max-w-48 group-hover:max-w-40 truncate">
-                          {project.name}
-                        </span>
-                        <div className="flex space-x-2 opacity-0 group-hover:opacity-100 absolute right-0">
-                          <Button
-                            variant={"destructive"}
-                            size={"icon"}
-                            className="z-10 w-6 h-6 shadow-xl"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(project.id);
-                            }}
-                          >
-                            <Trash className="w-4 h-4" />
-                          </Button>
+                        <div
+                          title={project.name}
+                          className="flex justify-between max-h-24 max-w-full items-center relative"
+                        >
+                          <span className="max-w-48 group-hover:max-w-40 truncate">
+                            {project.name}
+                          </span>
+                          <div className="flex space-x-2 opacity-0 group-hover:opacity-100 absolute right-0">
+                            <Button
+                              variant={"destructive"}
+                              size={"icon"}
+                              className="z-10 w-6 h-6 shadow-xl"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(project.id);
+                              }}
+                            >
+                              <Trash className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </ContextMenuTrigger>
-                  <ContextMenuContent>
-                    <ContextMenuItem
-                      onClick={() => setSelectedProject(project)}
-                    >
-                      <Edit className="w-4 h-4 mr-2" />
-                      {t("edit")}
-                    </ContextMenuItem>
-                    <ContextMenuItem onClick={() => handleDelete(project.id)}>
-                      <Trash className="w-4 h-4 mr-2" />
-                      {t("delete")}
-                    </ContextMenuItem>
-                    <ContextMenuItem onClick={() => handleFocus(project.id)}>
-                      <Info className="w-4 h-4 mr-2" />
-                      {t("focus-project")}
-                    </ContextMenuItem>
-                    <ContextMenuItem onClick={() => handleShare(project)}>
-                      <Copy className="w-4 h-4 mr-2" />
-                      {t("share")}
-                    </ContextMenuItem>
-                  </ContextMenuContent>
-                </ContextMenu>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent>
+                      <ContextMenuItem
+                        onClick={() => setSelectedProject(project)}
+                      >
+                        <Edit className="w-4 h-4 mr-2" />
+                        {t("edit")}
+                      </ContextMenuItem>
+                      <ContextMenuItem onClick={() => handleDelete(project.id)}>
+                        <Trash className="w-4 h-4 mr-2" />
+                        {t("delete")}
+                      </ContextMenuItem>
+                      <ContextMenuItem onClick={() => handleFocus(project.id)}>
+                        <Info className="w-4 h-4 mr-2" />
+                        {t("focus-project")}
+                      </ContextMenuItem>
+                      <ContextMenuItem onClick={() => handleShare(project)}>
+                        <Copy className="w-4 h-4 mr-2" />
+                        {t("share")}
+                      </ContextMenuItem>
+                    </ContextMenuContent>
+                  </ContextMenu>
+                ))}
+            </div>
+          )
+          : (
+            <div className="flex flex-col space-y-2">
+              {[...Array(10)].map((_, index) => (
+                <Skeleton key={index} className="w-full h-10" />
               ))}
-          </div>
-        ) : (
-          <div className="flex flex-col space-y-2">
-            {[...Array(10)].map((_, index) => (
-              <Skeleton key={index} className="w-full h-10" />
-            ))}
-          </div>
-        )}
+            </div>
+          )}
       </ScrollAreaWithShadows>
       <div className="mt-4 flex justify-center space-x-4">
         <Button variant="ghost" size="icon" onClick={openSettings}>
           <Settings className="w-5 h-5" />
         </Button>
         <Button variant="ghost" size="icon" onClick={updateDarkMode}>
-          {theme === "dark" ? (
-            <Sun className="w-5 h-5" />
-          ) : (
-            <Moon className="w-5 h-5" />
-          )}
+          {theme === "dark"
+            ? <Sun className="w-5 h-5" />
+            : <Moon className="w-5 h-5" />}
         </Button>
       </div>
     </div>
@@ -411,12 +412,9 @@ const Sidebar = ({
             <div className="flex flex-col space-y-4">
               <div className="flex flex-col space-y-2">
                 <Label className="text-sm font-medium text-gray-900 dark:text-white flex items-center">
-                  {theme === "dark" ? (
-                    <Moon className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Sun className="w-4 h-4 mr-2" />
-                  )}{" "}
-                  {t("theme")}
+                  {theme === "dark"
+                    ? <Moon className="w-4 h-4 mr-2" />
+                    : <Sun className="w-4 h-4 mr-2" />} {t("theme")}
                 </Label>
                 <div className="flex items-center space-x-2">
                   <Select
@@ -467,8 +465,7 @@ const Sidebar = ({
                 <Combobox
                   value={defaultCodeLanguage}
                   onValueChange={(value) =>
-                    handleDefaultCodeLanguageChange(value)
-                  }
+                    handleDefaultCodeLanguageChange(value)}
                   disabled={isLoading}
                   placeholder="Language"
                   options={codeLangOptions}
@@ -498,7 +495,8 @@ const Sidebar = ({
                 value={shareLink}
                 disabled
                 className="text-black disabled:opacity-80"
-              ></Input>
+              >
+              </Input>
               <Button
                 variant="default"
                 size={"sm"}
@@ -519,13 +517,11 @@ const Sidebar = ({
                   }
                 }}
               >
-                {shareSuccess === "true" ? (
-                  <Check className="w-4 h-4" />
-                ) : shareSuccess === "false" ? (
-                  <Info className="w-4 h-4" />
-                ) : (
-                  <Copy className="w-4 h-4" />
-                )}
+                {shareSuccess === "true"
+                  ? <Check className="w-4 h-4" />
+                  : shareSuccess === "false"
+                  ? <Info className="w-4 h-4" />
+                  : <Copy className="w-4 h-4" />}
               </Button>
             </div>
           </DialogDescription>

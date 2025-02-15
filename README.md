@@ -1,5 +1,10 @@
 # CodeQuill
 
+# ⚠️ Warning!
+**CodeQuill is about to experience a major refactor in the upgrade to CodeQuill 2.0.**
+The refactor will **break installation and update scripts for CodeQuill.**
+When you see a 2.0.0 release or encounter errors, check the README (this file) for the latest installation instructions.
+
 [![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill)
 [![Crowdin](https://badges.crowdin.net/codequill/localized.svg)](https://crowdin.com/project/codequill)
 
