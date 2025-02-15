@@ -1,15 +1,35 @@
 "use client";
 
-import previewLanguages from "@/assets/previewLanguages.json";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Loader2 } from "lucide-react";
-import { lazy, Suspense, useState } from "react";
+import { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
 import Header from "./Header";
 import SnippetSearchDialog from "./SnippetSearchDialog";
 import SnippetSidebar from "./SnippetSidebar";
 import { useSnippets } from "./useSnippets";
+
+// Static Imports for Preview Components
+import HTMLPreview from "./previews/html";
+
+// Preview component map:
+const previewComponents: { [key: string]: React.FC<{ code: string }> } = {
+  html: HTMLPreview,
+};
+
+interface PreviewComponentProps {
+  code: string;
+}
+
+const PreviewComponent: React.FC<
+  PreviewComponentProps & { languageId: string | undefined }
+> = ({ code, languageId }) => {
+  const Preview =
+    previewComponents[languageId as keyof typeof previewComponents] ||
+    (() => <div>No Preview Available</div>);
+
+  return <Preview code={code} />;
+};
 
 function Home() {
   const isMobile = useIsMobile();
@@ -33,31 +53,6 @@ function Home() {
     setShowSidebar(!showSidebar);
   };
 
-  const PreviewComponent = () => {
-    if (!language) return null;
-    const previewLanguage = previewLanguages.find((l) => l.id === language.id);
-
-    if (!previewLanguage) return null;
-
-    const filePath = `./previews/${previewLanguage.id}.tsx`;
-
-    // Dynamically import the module
-    const ComponentModule = lazy(() => import(filePath));
-
-    // Render the component
-    return (
-      <Suspense
-        fallback={
-          <div className="w-full h-full flex flex-col justify-center items-center">
-            <Loader2 className="w-16 h-16 text-black animate-spin" />
-          </div>
-        }
-      >
-        <ComponentModule code={snippetHelpers.code} />
-      </Suspense>
-    );
-  };
-
   return (
     <div className="h-screen w-full flex flex-row">
       <SnippetSidebar
@@ -76,7 +71,10 @@ function Home() {
         />
         {isPreviewing && (
           <div className="h-1/2 w-full">
-            <PreviewComponent />
+            <PreviewComponent
+              code={snippetHelpers.code}
+              languageId={language?.id}
+            />
           </div>
         )}
       </div>
