@@ -83,25 +83,34 @@ const Header: React.FC<HeaderProps> = ({
           </Tooltip>
         </TooltipProvider>
 
-        <Button
-          onClick={togglePreview}
-          disabled={!isPreviewable}
-          variant="default"
-          className="flex items-center w-fit"
-        >
-          {isPreviewing ? (
-            <EyeOff className="h-5 w-5" />
-          ) : (
-            <Eye className="h-5 w-5" />
-          )}
-          <span className="sr-only sm:not-sr-only">
-            {isPreviewable
-              ? isPreviewing
-                ? "Hide Preview"
-                : "Show Preview"
-              : "No Preview"}
-          </span>
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={togglePreview}
+                disabled={!isPreviewable}
+                variant="default"
+                className="flex items-center w-fit"
+              >
+                {isPreviewing ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+                <span className="sr-only sm:not-sr-only">
+                  {isPreviewable
+                    ? isPreviewing
+                      ? "Hide Preview"
+                      : "Show Preview"
+                    : "No Preview"}
+                </span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Kbd keys={["P"]} />
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <DropdownMenu>

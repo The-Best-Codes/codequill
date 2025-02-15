@@ -6,7 +6,13 @@ import React, { useEffect, useRef } from "react";
 interface EditorProps
   extends Pick<
     UseSnippetsReturn,
-    "language" | "code" | "setCode" | "saveCurrentSnippet" | "isPreviewing"
+    | "language"
+    | "code"
+    | "setCode"
+    | "saveCurrentSnippet"
+    | "isPreviewing"
+    | "isPreviewable"
+    | "togglePreview"
   > {
   setIsSearchDialogOpen: (open: boolean) => void;
 }
@@ -18,6 +24,8 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   saveCurrentSnippet,
   setIsSearchDialogOpen,
   isPreviewing,
+  isPreviewable,
+  togglePreview,
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
@@ -53,6 +61,12 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
           setIsSearchDialogOpen(true);
         }
       }
+
+      // Toggle preview with Ctrl+P / Cmd+P
+      if ((e.ctrlKey || e.metaKey) && e.key === "p" && isPreviewable) {
+        e.preventDefault();
+        togglePreview();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -60,7 +74,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [saveCurrentSnippet, setIsSearchDialogOpen]);
+  }, [saveCurrentSnippet, setIsSearchDialogOpen, isPreviewable, togglePreview]);
 
   // Determine the Monaco theme based on the resolved next-themes theme
   const monacoTheme = resolvedTheme === "dark" ? "vs-dark" : "vs-light";
@@ -74,7 +88,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         width="100%"
         height="100%"
         language={language?.id || "plaintext"}
-        theme={monacoTheme} // Set the theme dynamically
+        theme={monacoTheme}
         value={code}
         onChange={handleCodeChange}
         onMount={handleEditorDidMount}
