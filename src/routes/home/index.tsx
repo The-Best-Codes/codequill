@@ -73,7 +73,7 @@ function Home() {
           toggleSidebar={toggleSidebar}
         />
         {isPreviewing && (
-          <div className="h-1/2 w-full">
+          <div className="h-1/2 w-full border-t">
             <PreviewComponent
               code={snippetHelpers.code}
               languageId={language?.id}
