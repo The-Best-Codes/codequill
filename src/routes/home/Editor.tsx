@@ -1,5 +1,6 @@
 import { UseSnippetsReturn } from "@/routes/home/types";
 import Editor, { OnMount } from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
 
 interface EditorProps
@@ -20,6 +21,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
+  const { resolvedTheme } = useTheme();
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -60,6 +62,9 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     };
   }, [saveCurrentSnippet, setIsSearchDialogOpen]);
 
+  // Determine the Monaco theme based on the resolved next-themes theme
+  const monacoTheme = resolvedTheme === "dark" ? "vs-dark" : "vs-light";
+
   return (
     <div
       className="flex-1 relative"
@@ -69,7 +74,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         width="100%"
         height="100%"
         language={language?.id || "plaintext"}
-        theme="vs-dark"
+        theme={monacoTheme} // Set the theme dynamically
         value={code}
         onChange={handleCodeChange}
         onMount={handleEditorDidMount}
