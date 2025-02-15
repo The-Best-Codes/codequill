@@ -2,6 +2,7 @@ import { UseSnippetsReturn } from "@/routes/home/types";
 import Editor, { OnMount } from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface EditorProps
   extends Pick<
@@ -34,6 +35,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
   const { resolvedTheme } = useTheme();
+  const navigate = useNavigate();
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -83,6 +85,12 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         e.preventDefault();
         createNewSnippet();
       }
+
+      // Open settings with Ctrl+, / Cmd+,
+      if ((e.ctrlKey || e.metaKey) && e.key === ",") {
+        e.preventDefault();
+        navigate("/settings"); // Navigate to settings
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -97,6 +105,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     togglePreview,
     toggleSidebar,
     createNewSnippet,
+    navigate,
   ]);
 
   // Determine the Monaco theme based on the resolved next-themes theme
