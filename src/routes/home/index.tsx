@@ -11,10 +11,12 @@ import { useSnippets } from "./useSnippets";
 
 // Static Imports for Preview Components
 import HTMLPreview from "./previews/html";
+import MarkdownPreview from "./previews/markdown";
 
 // Preview component map:
 const previewComponents: { [key: string]: React.FC<{ code: string }> } = {
   html: HTMLPreview,
+  markdown: MarkdownPreview,
 };
 
 interface PreviewComponentProps {

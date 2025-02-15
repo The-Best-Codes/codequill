@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 function Settings() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme(); // Use next-themes hook
+  // @ts-ignore
   const [language, setLanguage] = useState("en");
 
   const handleBack = () => {
