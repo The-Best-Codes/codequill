@@ -52,6 +52,8 @@ parts:
     source: .
     override-build: |
       set -eu
+      export PATH="$PATH:/snap/rustup/current/cargo/bin"
+      rustup default stable
       npm install
       npm run tauri build -- --bundles deb
       dpkg -x src-tauri/target/release/bundle/deb/*.deb $SNAPCRAFT_PART_INSTALL/
