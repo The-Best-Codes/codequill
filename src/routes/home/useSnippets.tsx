@@ -32,7 +32,6 @@ const showErrorToast = (message: string, details?: string) => {
     {
       duration: Infinity,
       closeButton: true,
-      position: "top-right",
     },
   );
 };

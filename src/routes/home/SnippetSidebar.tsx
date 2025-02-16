@@ -227,12 +227,14 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                         </ContextMenuTrigger>
                         <ContextMenuContent>
                           <ContextMenuItem
+                            className="cursor-pointer"
                             onClick={() => copySnippet(snippet.id)}
                           >
                             <Copy className="mr-2 h-4 w-4" />
                             Copy
                           </ContextMenuItem>
                           <ContextMenuItem
+                            className="cursor-pointer"
                             onClick={() => {
                               setDeletingSnippetId(snippet.id);
                               setDeleteOpen(true);
@@ -318,12 +320,14 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                       </ContextMenuTrigger>
                       <ContextMenuContent>
                         <ContextMenuItem
+                          className="cursor-pointer"
                           onClick={() => copySnippet(snippet.id)}
                         >
                           <Copy className="mr-2 h-4 w-4" />
                           Copy
                         </ContextMenuItem>
                         <ContextMenuItem
+                          className="cursor-pointer"
                           onClick={() => {
                             setDeletingSnippetId(snippet.id);
                             setDeleteOpen(true);
