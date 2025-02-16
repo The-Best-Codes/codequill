@@ -1,11 +1,5 @@
 import previewLanguages from "@/assets/previewLanguages.json";
 import supportedLanguages from "@/assets/supportedLanguages.json";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { getDefaultLanguage } from "@/utils/config";
 import {
   deleteSnippet,
@@ -22,23 +16,24 @@ import { Language, UseSnippetsReturn } from "./types";
 const getPreviewStateKey = (snippetId: string) =>
   `codequill_preview_state_${snippetId}`;
 
+const SELECTED_SNIPPET_ID_KEY = "codequill_selected_snippet_id";
+const FILENAME_KEY = "codequill_filename";
+const LANGUAGE_KEY = "codequill_language";
+const CODE_KEY = "codequill_code";
+
 const showErrorToast = (message: string, details?: string) => {
   toast.error(
     <div className="w-full max-h-full overflow-auto">
       <p>{message}</p>
       {details && (
-        <Accordion type="single" defaultValue="details" collapsible>
-          <AccordionItem className="border-0" value="details">
-            <AccordionTrigger>Details</AccordionTrigger>
-            <AccordionContent>
-              <pre className="font-mono text-xs whitespace-pre-wrap">
-                {details}
-              </pre>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <pre className="font-mono text-xs whitespace-pre-wrap">{details}</pre>
       )}
     </div>,
+    {
+      duration: Infinity,
+      closeButton: true,
+      position: "top-right",
+    },
   );
 };
 
@@ -46,11 +41,28 @@ export const useSnippets = (): Omit<
   UseSnippetsReturn,
   "searchQuery" | "setSearchQuery"
 > => {
-  const [filename, setFilename] = useState<string>("Untitled");
-  const [language, setLanguage] = useState<Language | null>(
-    getDefaultLanguage(),
-  );
-  const [code, setCode] = useState<string>("");
+  const [filename, setFilename] = useState<string>(() => {
+    if (typeof window === "undefined") return "Untitled";
+    return sessionStorage.getItem(FILENAME_KEY) || "Untitled";
+  });
+  const [language, setLanguage] = useState<Language | null>(() => {
+    if (typeof window === "undefined") return getDefaultLanguage();
+
+    try {
+      const storedLanguage = sessionStorage.getItem(LANGUAGE_KEY);
+      return storedLanguage
+        ? (JSON.parse(storedLanguage) as Language)
+        : getDefaultLanguage();
+    } catch (error) {
+      console.error(error);
+      return getDefaultLanguage();
+    }
+  });
+  const [code, setCode] = useState<string>(() => {
+    if (typeof window === "undefined") return "";
+    return sessionStorage.getItem(CODE_KEY) || "";
+  });
+
   const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   // @ts-ignore
@@ -58,9 +70,14 @@ export const useSnippets = (): Omit<
   // @ts-ignore
   const [deleting, setDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
   const [selectedSnippetId, setSelectedSnippetId] = useState<string | null>(
-    null,
+    () => {
+      if (typeof window === "undefined") return null;
+      return sessionStorage.getItem(SELECTED_SNIPPET_ID_KEY) || null;
+    },
   );
+
   const [isDeleteOpen, setDeleteOpen] = useState(false);
 
   // Initialize from session storage
@@ -113,6 +130,30 @@ export const useSnippets = (): Omit<
       console.error("Error updating session storage:", error);
     }
   }, [isPreviewing, selectedSnippetId]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(FILENAME_KEY, filename);
+    }
+  }, [filename]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(LANGUAGE_KEY, JSON.stringify(language));
+    }
+  }, [language]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(CODE_KEY, code);
+    }
+  }, [code]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(SELECTED_SNIPPET_ID_KEY, selectedSnippetId || "");
+    }
+  }, [selectedSnippetId]);
 
   const loadSnippets = async () => {
     try {

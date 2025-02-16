@@ -1,7 +1,7 @@
 "use client";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
 import Header from "./Header";
@@ -33,9 +33,23 @@ const PreviewComponent: React.FC<
   return <Preview code={code} />;
 };
 
+const SIDEBAR_OPEN_KEY = "codequill_sidebar_open";
+
 function Home() {
   const isMobile = useIsMobile();
-  const [showSidebar, setShowSidebar] = useState<boolean>(!isMobile);
+
+  // Initialize showSidebar from session storage, defaulting to !isMobile
+  const [showSidebar, setShowSidebar] = useState<boolean>(() => {
+    if (typeof window === "undefined") return !isMobile;
+    try {
+      const storedState = sessionStorage.getItem(SIDEBAR_OPEN_KEY);
+      return storedState ? JSON.parse(storedState) : !isMobile;
+    } catch (error) {
+      console.error("Error parsing session storage:", error);
+      return !isMobile;
+    }
+  });
+
   const snippetHelpers = useSnippets();
   const {
     isDeleteOpen,
@@ -55,6 +69,13 @@ function Home() {
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
+
+  // Update session storage whenever showSidebar changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(SIDEBAR_OPEN_KEY, JSON.stringify(showSidebar));
+    }
+  }, [showSidebar]);
 
   return (
     <div className="h-screen w-full flex flex-row">
