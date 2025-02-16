@@ -1,5 +1,11 @@
 import previewLanguages from "@/assets/previewLanguages.json";
 import supportedLanguages from "@/assets/supportedLanguages.json";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { getDefaultLanguage } from "@/utils/config";
 import {
   deleteSnippet,
@@ -15,6 +21,26 @@ import { Language, UseSnippetsReturn } from "./types";
 
 const getPreviewStateKey = (snippetId: string) =>
   `codequill_preview_state_${snippetId}`;
+
+const showErrorToast = (message: string, details?: string) => {
+  toast.error(
+    <div className="w-full max-h-full overflow-auto">
+      <p>{message}</p>
+      {details && (
+        <Accordion type="single" defaultValue="details" collapsible>
+          <AccordionItem className="border-0" value="details">
+            <AccordionTrigger>Details</AccordionTrigger>
+            <AccordionContent>
+              <pre className="font-mono text-xs whitespace-pre-wrap">
+                {details}
+              </pre>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
+    </div>,
+  );
+};
 
 export const useSnippets = (): Omit<
   UseSnippetsReturn,
@@ -116,6 +142,7 @@ export const useSnippets = (): Omit<
       }
     } catch (e: any) {
       setError(e.message || "Failed to load snippets.");
+      showErrorToast("Failed to load snippets.", e.message);
     } finally {
       setLoading(false);
     }
@@ -156,6 +183,10 @@ export const useSnippets = (): Omit<
           console.error(
             "Failed to load preview state from localStorage:",
             error,
+          );
+          showErrorToast(
+            "Failed to load preview state from localStorage.",
+            String(error),
           );
         }
       }
@@ -241,7 +272,7 @@ export const useSnippets = (): Omit<
         await navigator.clipboard.writeText(snippet.code);
         toast.success("Snippet copied to clipboard");
       } catch (e: any) {
-        toast.error("Failed to copy snippet.");
+        showErrorToast("Failed to copy snippet.", e.message);
       }
     }
   };
@@ -264,6 +295,10 @@ export const useSnippets = (): Omit<
           sessionStorage.removeItem(key);
         } catch (error) {
           console.error("Failed to remove preview from localStorage:", error);
+          showErrorToast(
+            "Failed to remove preview from localStorage.",
+            String(error),
+          );
         }
       }
 
