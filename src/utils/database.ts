@@ -5,9 +5,10 @@ export interface Snippet {
   filename: string;
   language: string;
   code: string;
+  created_at?: string;
 }
 
-const DB_PATH = "sqlite:codequill.db"; // Define the database path
+const DB_PATH = "sqlite:codequill.db";
 
 let db: Database | null = null;
 
@@ -23,29 +24,22 @@ const initializeDatabase = async (): Promise<Database> => {
       id TEXT PRIMARY KEY,
       filename TEXT NOT NULL,
       language TEXT NOT NULL,
-      code TEXT NOT NULL
+      code TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
   return db;
 };
 
-const simulateLoading = (): Promise<void> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 0); // Simulate X milliseconds loading time
-  });
-};
-
 export const getAllSnippets = async (): Promise<Snippet[]> => {
-  await simulateLoading();
   const dbInstance = await initializeDatabase();
-  const result = await dbInstance.select<Snippet[]>("SELECT * FROM snippets");
+  const result = await dbInstance.select<Snippet[]>(
+    "SELECT * FROM snippets ORDER BY created_at DESC",
+  );
   return result;
 };
 
 export const getSnippet = async (id: string): Promise<Snippet | undefined> => {
-  await simulateLoading();
   const dbInstance = await initializeDatabase();
   const result = await dbInstance.select<Snippet[]>(
     "SELECT * FROM snippets WHERE id = ?",
@@ -55,7 +49,6 @@ export const getSnippet = async (id: string): Promise<Snippet | undefined> => {
 };
 
 export const saveSnippet = async (snippet: Snippet) => {
-  await simulateLoading();
   const dbInstance = await initializeDatabase();
 
   try {
@@ -70,7 +63,6 @@ export const saveSnippet = async (snippet: Snippet) => {
 };
 
 export const deleteSnippet = async (id: string) => {
-  await simulateLoading();
   const dbInstance = await initializeDatabase();
   try {
     await dbInstance.execute("DELETE FROM snippets WHERE id = ?", [id]);

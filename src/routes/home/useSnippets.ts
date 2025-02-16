@@ -209,14 +209,14 @@ export const useSnippets = (): Omit<
         const existingIndex = prevSnippets.findIndex(
           (s) => s.id === snippetToSave.id,
         );
+
         if (existingIndex > -1) {
           // Update existing snippet
-          const newSnippets = [...prevSnippets];
-          newSnippets[existingIndex] = snippetToSave;
-          return newSnippets;
+          prevSnippets[existingIndex] = snippetToSave;
+          return [...prevSnippets];
         } else {
-          // Add new snippet
-          return [...prevSnippets, snippetToSave];
+          // Add new snippet to the beginning of the array
+          return [snippetToSave, ...prevSnippets];
         }
       });
       return "Snippet saved successfully!";
