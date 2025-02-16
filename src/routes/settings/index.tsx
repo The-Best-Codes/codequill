@@ -29,7 +29,10 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { version } from "../../../package.json";
 import { Language } from "../home/types";
+
+const APP_VERSION = version;
 
 function Settings() {
   const navigate = useNavigate();
@@ -200,6 +203,25 @@ function Settings() {
                   </code>
                 </div>
               ))}
+            </div>
+          </div>
+
+          <Separator />
+
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-semibold">App Info</h3>
+              <p className="text-sm text-muted-foreground">
+                Information about CodeQuill
+              </p>
+            </div>
+            <div className="grid gap-4">
+              <div className="flex items-center justify-between rounded-lg border p-4">
+                <Label className="font-medium">Version</Label>
+                <code className="rounded bg-secondary px-2 py-1 text-sm">
+                  {APP_VERSION}
+                </code>
+              </div>
             </div>
           </div>
         </CardContent>
