@@ -1,7 +1,7 @@
 [package]
 name = "codequill"
 version = "2.0.0"
-description = "Organize, Edit, and Share your Code Snippets"
+description = "Organize, edit, and preview code efficiently"
 authors = ["The-Best-Codes"]
 edition = "2021"
 

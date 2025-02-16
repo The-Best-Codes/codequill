@@ -1,4 +1,10 @@
 import supportedLanguages from "@/assets/supportedLanguages.json";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -29,10 +35,10 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { version } from "../../../package.json";
+import packageJson from "../../../package.json";
 import { Language } from "../home/types";
 
-const APP_VERSION = version;
+const APP_VERSION = packageJson.version;
 
 function Settings() {
   const navigate = useNavigate();
@@ -64,6 +70,9 @@ function Settings() {
     // Update the config whenever the language changes
     updateConfig({ defaultLanguage: language });
   }, [language]);
+
+  const productionDependencies = packageJson.dependencies || {};
+  const developmentDependencies = packageJson.devDependencies || {};
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 flex items-center justify-center">
@@ -216,13 +225,174 @@ function Settings() {
               </p>
             </div>
             <div className="grid gap-4">
+              <div className="rounded-lg border p-6 space-y-4">
+                <div>
+                  <h4 className="text-xl font-semibold">{packageJson.name}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {packageJson.description}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div>
+                    <Label className="font-medium">Version</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Installed version
+                    </p>
+                  </div>
+                  <code className="rounded px-3 py-1 text-sm font-semibold">
+                    {APP_VERSION}
+                  </code>
+                </div>
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div>
+                    <Label className="font-medium">License</Label>
+                    <p className="text-sm text-muted-foreground">Open source</p>
+                  </div>
+                  <code className="rounded px-3 py-1 text-sm font-semibold">
+                    {packageJson.license}
+                  </code>
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="font-medium">Created By</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {packageJson.author.name}
+                    </p>
+                  </div>
+                  <a
+                    href={packageJson.author.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Website
+                  </a>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button variant="outline" className="w-full" asChild>
+                  <a
+                    href={packageJson.repository.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-full"
+                  >
+                    Source Code
+                  </a>
+                </Button>
+                <Button variant="outline" className="w-full" asChild>
+                  <a
+                    href="https://github.com/The-Best-Codes/codequill/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-full"
+                  >
+                    Report Issue
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+          <Separator />
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-semibold">Dependencies</h3>
+              <p className="text-sm text-muted-foreground">
+                Libraries used in CodeQuill
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center justify-between rounded-lg border p-4">
-                <Label className="font-medium">Version</Label>
-                <code className="rounded bg-secondary px-2 py-1 text-sm">
-                  {APP_VERSION}
+                <div>
+                  <Label className="font-medium">Production</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Libraries bundled in the production build
+                  </p>
+                </div>
+                <code className="rounded px-3 py-1 text-sm font-semibold">
+                  {Object.keys(productionDependencies).length}
+                </code>
+              </div>
+              <div className="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <Label className="font-medium">Development</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Libraries used in CodeQuill development
+                  </p>
+                </div>
+                <code className="rounded px-3 py-1 text-sm font-semibold">
+                  {Object.keys(developmentDependencies).length}
                 </code>
               </div>
             </div>
+
+            <Accordion type="single" collapsible>
+              <AccordionItem value="production">
+                <AccordionTrigger>Production Dependencies</AccordionTrigger>
+                <AccordionContent className="max-h-96 overflow-auto">
+                  <div className="grid gap-4">
+                    {Object.entries(productionDependencies).map(
+                      ([name, version]) => (
+                        <div
+                          key={name}
+                          className="flex items-center justify-between rounded-lg border p-4"
+                        >
+                          <Label className="font-medium">
+                            <a
+                              className="text-blue-500 hover:underline"
+                              href={`https://www.npmjs.com/package/${name}`}
+                              target="_blank"
+                            >
+                              {name}
+                            </a>
+                          </Label>
+                          <code className="rounded bg-secondary px-2 py-1 text-sm">
+                            {version}
+                          </code>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="development">
+                <AccordionTrigger>Development Dependencies</AccordionTrigger>
+                <AccordionContent className="max-h-96 overflow-auto">
+                  <div className="grid gap-4">
+                    {Object.entries(developmentDependencies).map(
+                      ([name, version]) => (
+                        <div
+                          key={name}
+                          className="flex items-center justify-between rounded-lg border p-4"
+                        >
+                          <Label className="font-medium">
+                            <a
+                              className="text-blue-500 hover:underline"
+                              href={`https://www.npmjs.com/package/${name}`}
+                              target="_blank"
+                            >
+                              {name}
+                            </a>
+                          </Label>
+                          <code className="rounded bg-secondary px-2 py-1 text-sm">
+                            {version}
+                          </code>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </CardContent>
       </Card>

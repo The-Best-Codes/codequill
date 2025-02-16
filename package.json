@@ -1,8 +1,20 @@
 {
   "name": "codequill",
+  "description": "Organize, edit, and preview code efficiently",
   "private": true,
   "version": "2.0.0",
   "type": "module",
+  "author": {
+    "name": "The-Best-Codes",
+    "email": "bestcodes.official@gmail.com",
+    "url": "https://github.com/The-Best-Codes"
+  },
+  "homepage": "https://github.com/The-Best-Codes/codequill",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-Best-Codes/codequill.git"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -75,7 +87,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tauri-apps/cli": "^2.2.7",
     "@types/node": "^22.13.4",
-    "@types/react": "^19.0.8",
+    "@types/react": "^19.0.9",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
     "postcss": "^8.5.2",
