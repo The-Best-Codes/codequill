@@ -16,7 +16,10 @@ import { Language, UseSnippetsReturn } from "./types";
 const getPreviewStateKey = (snippetId: string) =>
   `codequill_preview_state_${snippetId}`;
 
-export const useSnippets = (): UseSnippetsReturn => {
+export const useSnippets = (): Omit<
+  UseSnippetsReturn,
+  "searchQuery" | "setSearchQuery"
+> => {
   const [filename, setFilename] = useState<string>("Untitled");
   const [language, setLanguage] = useState<Language | null>(
     getDefaultLanguage(),
@@ -29,7 +32,6 @@ export const useSnippets = (): UseSnippetsReturn => {
   // @ts-ignore
   const [deleting, setDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedSnippetId, setSelectedSnippetId] = useState<string | null>(
     null,
   );
@@ -56,11 +58,7 @@ export const useSnippets = (): UseSnippetsReturn => {
   // Use a ref to store the currently loaded snippet.
   const currentSnippet = useRef<Snippet | null>(null);
 
-  const filteredSnippets = snippets.filter(
-    (snippet) =>
-      snippet.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      snippet.language.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredSnippets = snippets;
 
   useEffect(() => {
     loadSnippets();
@@ -302,8 +300,6 @@ export const useSnippets = (): UseSnippetsReturn => {
     saving,
     deleting,
     error,
-    searchQuery,
-    setSearchQuery,
     selectedSnippetId,
     setSelectedSnippetId,
     filteredSnippets,

@@ -6,7 +6,6 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
@@ -28,7 +27,8 @@ import { Copy, Menu, Plus, Search, Settings, Trash2 } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface SnippetSidebarProps extends UseSnippetsReturn {
+interface SnippetSidebarProps
+  extends Omit<UseSnippetsReturn, "searchQuery" | "setSearchQuery"> {
   showSidebar: boolean;
   toggleSidebar: () => void;
   setIsSearchDialogOpen: (open: boolean) => void;
@@ -39,8 +39,6 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   toggleSidebar,
   loading,
   error,
-  searchQuery,
-  setSearchQuery,
   filteredSnippets,
   selectedSnippetId,
   loadSnippetInEditor,
@@ -52,7 +50,6 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Ref to the currently selected snippet element
   const selectedSnippetRef = useRef<HTMLDivElement>(null);
@@ -63,13 +60,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   };
 
   const handleSearchIconClick = () => {
-    if (!showSidebar) {
-      // If sidebar is collapsed, open the search dialog
-      setIsSearchDialogOpen(true);
-    } else {
-      // If sidebar is expanded, close it
-      toggleSidebar();
-    }
+    setIsSearchDialogOpen(true);
   };
 
   const handleSettingsClick = () => {
@@ -186,13 +177,14 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                   <Plus className="h-4 w-4" />
                   New Snippet
                 </Button>
-                <Input
-                  placeholder="Filter snippets..."
-                  className="mb-0"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  ref={searchInputRef}
-                />
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => setIsSearchDialogOpen(true)}
+                >
+                  <Search className="h-5 w-5 mr-2" />
+                  Search
+                </Button>
               </div>
               <ScrollArea className="h-full mb-2">
                 {loading && (
@@ -290,12 +282,14 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 <Plus className="h-4 w-4 mr-2" />
                 New Snippet
               </Button>
-              <Input
-                placeholder="Filter snippets..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                ref={searchInputRef}
-              />
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setIsSearchDialogOpen(true)}
+              >
+                <Search className="h-5 w-5 mr-2" />
+                Search
+              </Button>
             </div>
             <ScrollArea className="h-full mb-2 p-2">
               {loading && (
