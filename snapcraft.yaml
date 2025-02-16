@@ -15,7 +15,7 @@ layout:
 apps:
   appname:
     command: usr/bin/codequill
-    desktop: usr/share/applications/codequill.desktop
+    desktop: usr/share/applications/CodeQuill.desktop
     extensions: [gnome]
     #plugs:
     #  - network
@@ -54,7 +54,8 @@ parts:
       set -eu
       export PATH="$PATH:/snap/rustup/current/cargo/bin"
       rustup default stable
+      cd src-tauri && cargo clean && cd ..
       npm install
       npm run tauri build -- --bundles deb
       dpkg -x src-tauri/target/release/bundle/deb/*.deb $SNAPCRAFT_PART_INSTALL/
-      sed -i -e "s|Icon=codequill|Icon=/usr/share/icons/hicolor/32x32/apps/codequill.png|g" $SNAPCRAFT_PART_INSTALL/usr/share/applications/codequill.desktop
+      sed -i -e "s|Icon=codequill|Icon=/usr/share/icons/hicolor/32x32/apps/codequill.png|g" $SNAPCRAFT_PART_INSTALL/usr/share/applications/CodeQuill.desktop
