@@ -61,9 +61,13 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                   key={l.id}
                   value={l.id}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    setValue(currentValue);
                     setOpen(false);
-                    setLanguage(l as Language);
+                    setLanguage(
+                      supportedLanguages.find(
+                        (l) => l.id === currentValue,
+                      ) as Language,
+                    );
                   }}
                 >
                   {l.name}
