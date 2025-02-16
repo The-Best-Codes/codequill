@@ -62,6 +62,7 @@ function Home() {
     language,
     setDeletingSnippetId,
     createNewSnippet,
+    snippets,
   } = snippetHelpers;
 
   const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
@@ -77,6 +78,8 @@ function Home() {
     }
   }, [showSidebar]);
 
+  const hasSnippets = snippets.length > 0;
+
   return (
     <div className="h-screen w-full flex flex-row">
       <SnippetSidebar
@@ -87,7 +90,7 @@ function Home() {
         setDeletingSnippetId={setDeletingSnippetId}
       />
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
-        <Header {...snippetHelpers} />
+        {hasSnippets && <Header {...snippetHelpers} />}
         <Editor
           {...snippetHelpers}
           setIsSearchDialogOpen={setIsSearchDialogOpen}

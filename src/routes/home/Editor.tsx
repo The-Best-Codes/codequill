@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import Editor, { OnMount } from "@monaco-editor/react";
+import { Plus, Sparkles } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +16,7 @@ interface EditorProps
     | "isPreviewing"
     | "isPreviewable"
     | "togglePreview"
+    | "snippets"
   > {
   setIsSearchDialogOpen: (open: boolean) => void;
   toggleSidebar: () => void;
@@ -31,6 +34,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   togglePreview,
   toggleSidebar,
   createNewSnippet,
+  snippets,
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
@@ -111,20 +115,39 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   // Determine the Monaco theme based on the resolved next-themes theme
   const monacoTheme = resolvedTheme === "dark" ? "vs-dark" : "vs-light";
 
+  const hasSnippets = snippets.length > 0;
+
   return (
     <div
       className="flex-1 relative"
       style={{ height: isPreviewing ? "50%" : "100%" }}
     >
-      <Editor
-        width="100%"
-        height="100%"
-        language={language?.id || "plaintext"}
-        theme={monacoTheme}
-        value={code}
-        onChange={handleCodeChange}
-        onMount={handleEditorDidMount}
-      />
+      {!hasSnippets ? (
+        <div className="flex flex-col items-center justify-center h-full">
+          <Sparkles className="w-12 h-12 sm:w-24 sm:h-24 text-primary" />
+          <span className="text-sm sm:text-base text-center text-muted-foreground">
+            You don't have any snippets yet. Create one now!
+          </span>
+          <Button
+            variant="outline"
+            onClick={() => createNewSnippet()}
+            className="mt-4"
+          >
+            <Plus className="w-5 h-5" />
+            Create New Snippet
+          </Button>
+        </div>
+      ) : (
+        <Editor
+          width="100%"
+          height="100%"
+          language={language?.id || "plaintext"}
+          theme={monacoTheme}
+          value={code}
+          onChange={handleCodeChange}
+          onMount={handleEditorDidMount}
+        />
+      )}
     </div>
   );
 };

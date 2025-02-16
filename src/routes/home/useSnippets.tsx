@@ -172,13 +172,17 @@ export const useSnippets = (): Omit<
           );
           if (selectedSnippet) {
             loadSnippetInEditor(selectedSnippet.id);
-          } else {
-            // If the selected snippet no longer exists, load the first snippet
-            loadSnippetInEditor(loadedSnippets[0].id);
           }
         }
       } else {
-        createNewSnippet();
+        // Do not create a new snippet if none exist.
+        setFilename("Untitled"); // Clear existing states
+        setLanguage(getDefaultLanguage());
+        setCode("");
+        setSelectedSnippetId(null);
+        currentSnippet.current = null;
+        setIsPreviewing(false);
+        setIsPreviewable(false);
       }
     } catch (e: any) {
       setError(e.message || "Failed to load snippets.");
@@ -188,16 +192,34 @@ export const useSnippets = (): Omit<
     }
   };
 
-  const createNewSnippet = () => {
-    setFilename("Untitled");
-    setLanguage(getDefaultLanguage());
-    setCode("");
-    setSelectedSnippetId(null);
-    currentSnippet.current = null; // Clear the current snippet
-    setIsPreviewing(false);
-    setIsPreviewable(
-      !!language && previewLanguages.some((l) => l.id === language.id),
-    );
+  const createNewSnippet = async () => {
+    const newSnippetId = uuidv4();
+    const defaultLanguage = getDefaultLanguage();
+    const newSnippet: Snippet = {
+      id: newSnippetId,
+      filename: "Untitled",
+      language: defaultLanguage.id,
+      code: "",
+    };
+
+    try {
+      await saveSnippet(newSnippet);
+      setSnippets([newSnippet, ...snippets]);
+      setFilename("Untitled");
+      setLanguage(defaultLanguage);
+      setCode("");
+      setSelectedSnippetId(newSnippetId);
+      currentSnippet.current = newSnippet; // Clear the current snippet
+      setIsPreviewing(false);
+      setIsPreviewable(
+        !!defaultLanguage &&
+          previewLanguages.some((l) => l.id === defaultLanguage.id),
+      );
+      toast.success("New snippet saved!");
+    } catch (e: any) {
+      setError(e.message || "Failed to create new snippet.");
+      showErrorToast("Failed to create new snippet.", e.message);
+    }
   };
 
   const loadSnippetInEditor = async (id: string) => {
@@ -351,7 +373,14 @@ export const useSnippets = (): Omit<
         if (newSnippets.length > 0) {
           loadSnippetInEditor(newSnippets[0].id);
         } else {
-          createNewSnippet();
+          // Clear all states instead of creating a new snippet.
+          setFilename("Untitled");
+          setLanguage(getDefaultLanguage());
+          setCode("");
+          setSelectedSnippetId(null);
+          currentSnippet.current = null;
+          setIsPreviewing(false);
+          setIsPreviewable(false);
         }
       }
       return "Snippet deleted successfully!";
