@@ -1,3 +1,5 @@
+import Database from "@tauri-apps/plugin-sql";
+
 export interface Snippet {
   id: string;
   filename: string;
@@ -5,7 +7,27 @@ export interface Snippet {
   code: string;
 }
 
-const SNIPPET_STORAGE_KEY = "codeQuillSnippets";
+const DB_PATH = "sqlite:codequill.db"; // Define the database path
+
+let db: Database | null = null;
+
+const initializeDatabase = async (): Promise<Database> => {
+  if (db) {
+    return db;
+  }
+  db = await Database.load(DB_PATH);
+
+  // Create the snippets table if it doesn't exist
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS snippets (
+      id TEXT PRIMARY KEY,
+      filename TEXT NOT NULL,
+      language TEXT NOT NULL,
+      code TEXT NOT NULL
+    )
+  `);
+  return db;
+};
 
 const simulateLoading = (): Promise<void> => {
   return new Promise((resolve) => {
@@ -17,33 +39,43 @@ const simulateLoading = (): Promise<void> => {
 
 export const getAllSnippets = async (): Promise<Snippet[]> => {
   await simulateLoading();
-  const snippetsString = localStorage.getItem(SNIPPET_STORAGE_KEY);
-  return snippetsString ? JSON.parse(snippetsString) : [];
+  const dbInstance = await initializeDatabase();
+  const result = await dbInstance.select<Snippet[]>("SELECT * FROM snippets");
+  return result;
 };
 
 export const getSnippet = async (id: string): Promise<Snippet | undefined> => {
   await simulateLoading();
-  const snippets = await getAllSnippets();
-  return snippets.find((snippet) => snippet.id === id);
+  const dbInstance = await initializeDatabase();
+  const result = await dbInstance.select<Snippet[]>(
+    "SELECT * FROM snippets WHERE id = ?",
+    [id],
+  );
+  return result.length > 0 ? result[0] : undefined;
 };
 
 export const saveSnippet = async (snippet: Snippet) => {
   await simulateLoading();
-  const snippets = await getAllSnippets();
-  const existingIndex = snippets.findIndex((s) => s.id === snippet.id);
+  const dbInstance = await initializeDatabase();
 
-  if (existingIndex > -1) {
-    snippets[existingIndex] = snippet; // Update existing
-  } else {
-    snippets.push(snippet); // Create new
+  try {
+    await dbInstance.execute(
+      `INSERT OR REPLACE INTO snippets (id, filename, language, code) VALUES (?, ?, ?, ?)`,
+      [snippet.id, snippet.filename, snippet.language, snippet.code],
+    );
+  } catch (error) {
+    console.error("Error saving snippet:", error);
+    throw error; // Re-throw the error to be handled by the caller
   }
-
-  localStorage.setItem(SNIPPET_STORAGE_KEY, JSON.stringify(snippets));
 };
 
 export const deleteSnippet = async (id: string) => {
   await simulateLoading();
-  let snippets = await getAllSnippets();
-  snippets = snippets.filter((s) => s.id !== id);
-  localStorage.setItem(SNIPPET_STORAGE_KEY, JSON.stringify(snippets));
+  const dbInstance = await initializeDatabase();
+  try {
+    await dbInstance.execute("DELETE FROM snippets WHERE id = ?", [id]);
+  } catch (error) {
+    console.error("Error deleting snippet:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
 };

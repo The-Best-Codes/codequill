@@ -92,7 +92,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
       >
         <div className="flex flex-col items-center justify-start p-2 gap-2 w-12">
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="icon" onClick={toggleSidebar}>
                   <Menu className="h-5 w-5" />
@@ -104,7 +104,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             </Tooltip>
           </TooltipProvider>
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button
                   variant="default"
@@ -120,7 +120,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             </Tooltip>
           </TooltipProvider>
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button
                   variant="outline"
@@ -138,7 +138,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
         </div>
         <div className="mt-auto flex items-center justify-center pb-2 w-12">
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button
                   variant="outline"
@@ -264,18 +264,9 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
           <div className="w-64 border-r bg-background flex flex-col">
             <div className="flex items-center justify-between p-2">
               <h1 className="text-lg font-semibold">CodeQuill</h1>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-                      <Menu className="h-5 w-5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">
-                    <Kbd keys={["B"]} />
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+                <Menu className="h-5 w-5" />
+              </Button>
             </div>
             <div className="px-2 flex flex-col gap-2">
               <Button variant="default" onClick={handleNewSnippetClick}>

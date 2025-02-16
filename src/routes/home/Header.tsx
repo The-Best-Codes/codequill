@@ -60,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({
 
       <div className="hidden gap-2 lg:flex">
         <TooltipProvider>
-          <Tooltip>
+          <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
               <Button
                 onClick={saveCurrentSnippet}
@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({
         </TooltipProvider>
 
         <TooltipProvider>
-          <Tooltip>
+          <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
               <Button
                 onClick={togglePreview}
