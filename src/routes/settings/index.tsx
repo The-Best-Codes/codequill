@@ -73,11 +73,7 @@ function Settings() {
                 Customize your CodeQuill experience
               </CardDescription>
             </div>
-            <Button
-              variant="default"
-              onClick={handleBack}
-              className="hover:bg-secondary"
-            >
+            <Button variant="default" onClick={handleBack}>
               Back to Editor
             </Button>
           </div>

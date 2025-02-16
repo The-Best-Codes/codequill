@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { UseSnippetsReturn } from "@/routes/home/types";
+import { Inbox } from "lucide-react";
 import { useState } from "react";
 
 interface SnippetSearchDialogProps
@@ -46,7 +47,10 @@ const SnippetSearchDialog: React.FC<SnippetSearchDialogProps> = ({
             onValueChange={setValue}
           />
           <CommandList>
-            <CommandEmpty>No snippets found.</CommandEmpty>
+            <CommandEmpty className="w-full mt-8 flex flex-col items-center justify-center">
+              <Inbox className="w-10 h-10 text-muted-foreground" />
+              <span>No snippets found.</span>
+            </CommandEmpty>
             <CommandGroup>
               {filteredSnippets.map((snippet) => (
                 <CommandItem
