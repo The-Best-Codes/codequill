@@ -74,7 +74,7 @@ function Settings() {
               </CardDescription>
             </div>
             <Button
-              variant="outline"
+              variant="default"
               onClick={handleBack}
               className="hover:bg-secondary"
             >

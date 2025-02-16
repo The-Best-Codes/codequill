@@ -14,6 +14,13 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ code }) => {
         children={code}
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
+        components={{
+          a: ({ href, children }) => (
+            <a href={href} target="_blank" rel="noopener noreferrer">
+              {children}
+            </a>
+          ),
+        }}
       />
     </div>
   );
