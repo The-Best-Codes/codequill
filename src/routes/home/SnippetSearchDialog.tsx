@@ -51,7 +51,7 @@ const SnippetSearchDialog: React.FC<SnippetSearchDialogProps> = ({
               {filteredSnippets.map((snippet) => (
                 <CommandItem
                   key={snippet.id}
-                  value={snippet.filename}
+                  value={`${snippet.filename} ${snippet.id}`}
                   onSelect={() => {
                     loadSnippetInEditor(snippet.id);
                     setOpen(false);
