@@ -211,9 +211,14 @@ export const useSnippets = (): Omit<
         );
 
         if (existingIndex > -1) {
-          // Update existing snippet
-          prevSnippets[existingIndex] = snippetToSave;
-          return [...prevSnippets];
+          // Update existing snippet AND move to top
+          const updatedSnippets = [...prevSnippets];
+          updatedSnippets[existingIndex] = snippetToSave; // Update the existing one
+
+          // Remove the updated snippet from its old position and insert at the beginning
+          updatedSnippets.splice(existingIndex, 1);
+          updatedSnippets.unshift(snippetToSave);
+          return updatedSnippets;
         } else {
           // Add new snippet to the beginning of the array
           return [snippetToSave, ...prevSnippets];
