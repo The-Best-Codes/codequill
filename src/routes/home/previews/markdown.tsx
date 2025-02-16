@@ -9,7 +9,7 @@ interface MarkdownPreviewProps {
 
 const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ code }) => {
   return (
-    <div className="prose bg-white w-full h-full max-w-none p-2">
+    <div className="prose bg-white w-full h-full max-h-full overflow-auto max-w-none p-2">
       <ReactMarkdown
         children={code}
         remarkPlugins={[remarkGfm]}
