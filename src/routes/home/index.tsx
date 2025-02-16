@@ -89,7 +89,7 @@ function Home() {
         setIsSearchDialogOpen={setIsSearchDialogOpen}
         setDeletingSnippetId={setDeletingSnippetId}
       />
-      <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
+      <div className="flex-1 flex flex-col h-full overflow-hidden relative min-w-0">
         {hasSnippets && <Header {...snippetHelpers} />}
         <Editor
           {...snippetHelpers}
@@ -99,7 +99,7 @@ function Home() {
           createNewSnippet={createNewSnippet}
         />
         {isPreviewing && (
-          <div className="h-1/2 w-full border-t">
+          <div className="h-1/2 overflow-auto w-full border-t">
             <PreviewComponent
               code={snippetHelpers.code}
               languageId={language?.id}
