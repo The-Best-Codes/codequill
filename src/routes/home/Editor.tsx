@@ -57,9 +57,11 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     }
   };
 
+  const hasSnippets = snippets.length > 0;
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s" && hasSnippets) {
         e.preventDefault();
         saveCurrentSnippet();
       }
@@ -110,12 +112,11 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     toggleSidebar,
     createNewSnippet,
     navigate,
+    hasSnippets,
   ]);
 
   // Determine the Monaco theme based on the resolved next-themes theme
   const monacoTheme = resolvedTheme === "dark" ? "vs-dark" : "vs-light";
-
-  const hasSnippets = snippets.length > 0;
 
   return (
     <div
