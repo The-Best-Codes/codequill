@@ -1,6 +1,22 @@
-## To release:
+# To release:
+
+## Automated GitHub Release
 
 - Update version numbers
 - Push changes to `release` branch
 - Edit the release draft when the assets are ready
 - Publish the release
+
+## Snapcraft (for Snap Store)
+
+- Update version numbers
+- You can be on the main branch, or the `release` branch if it's up to date
+- Run `sudo snapcraft` to build the snap package
+- Push the snap package to the Snap Store using `snapcraft push <snap-file>`
+- Perform updates on the Snap dashboard (snapcraft.io/codequill)
+
+## Flatpak (for Flathub)
+
+- Update the `org.codequill.CodeQuill.yml` manifest file
+- Run `flatpak-builder --force-clean flatpak-build/ org.codequill.CodeQuill.yml`
+- A `.flatpak-builder` directory is created and the package is built in `flatpak-build/`

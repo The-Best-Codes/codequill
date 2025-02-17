@@ -4,7 +4,7 @@ runtime: org.gnome.Platform
 runtime-version: "46"
 sdk: org.gnome.Sdk
 
-command: tauri-app
+command: codequill
 finish-args:
   - --socket=wayland # Permission needed to show the window
   - --socket=fallback-x11 # Permission needed to show the window
@@ -29,4 +29,5 @@ modules:
       - install -Dm644 usr/share/icons/hicolor/128x128/apps/codequill.png /app/share/icons/hicolor/128x128/apps/org.codequill.CodeQuill.png
       - install -Dm644 usr/share/icons/hicolor/32x32/apps/codequill.png /app/share/icons/hicolor/32x32/apps/org.codequill.CodeQuill.png
       - install -Dm644 usr/share/icons/hicolor/256x256@2/apps/codequill.png /app/share/icons/hicolor/256x256@2/apps/org.codequill.CodeQuill.png
-      - install -Dm644 org.your.id.metainfo.xml /app/share/metainfo/org.your.id.rosary.metainfo.xml
+      # Uncomment the following line if you have a metainfo file
+      #- install -Dm644 org.codequill.CodeQuill.metainfo.xml /app/share/metainfo/org.codequill.CodeQuill.rosary.metainfo.xml
