@@ -1,0 +1,18 @@
+[
+  {
+    "id": "html",
+    "file": "previews/html.tsx",
+    "export": {
+      "component": "CodePreviewBox",
+      "default": true
+    }
+  },
+  {
+    "id": "markdown",
+    "file": "previews/markdown.tsx",
+    "export": {
+      "component": "MarkdownPreview",
+      "default": true
+    }
+  }
+]

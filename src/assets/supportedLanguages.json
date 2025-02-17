@@ -1,0 +1,548 @@
+[
+  {
+    "id": "plaintext",
+    "name": "Plaintext",
+    "shortName": "Plaintext",
+    "files": []
+  },
+  {
+    "id": "abap",
+    "name": "ABAP",
+    "shortName": "ABAP",
+    "files": [".abap"]
+  },
+  {
+    "id": "apex",
+    "name": "Apex",
+    "shortName": "Apex",
+    "files": [".cls", ".trigger"]
+  },
+  {
+    "id": "azcli",
+    "name": "Azure CLI",
+    "shortName": "Azure CLI",
+    "files": []
+  },
+  {
+    "id": "bat",
+    "name": "Batch",
+    "shortName": "Batch",
+    "files": [".bat", ".cmd"]
+  },
+  {
+    "id": "bicep",
+    "name": "Bicep",
+    "shortName": "Bicep",
+    "files": [".bicep"]
+  },
+  {
+    "id": "cameligo",
+    "name": "CameLIGO",
+    "shortName": "CameLIGO",
+    "files": [".mligo"]
+  },
+  {
+    "id": "clojure",
+    "name": "Clojure",
+    "shortName": "Clojure",
+    "files": [".clj", ".cljs", ".cljc"]
+  },
+  {
+    "id": "coffeescript",
+    "name": "CoffeeScript",
+    "shortName": "CoffeeScript",
+    "files": [".coffee", ".litcoffee"]
+  },
+  {
+    "id": "c",
+    "name": "C",
+    "shortName": "C",
+    "files": [".c", ".h"]
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "shortName": "C++",
+    "files": [".cpp", ".cc", ".cxx", ".hpp", ".hh", ".hxx"]
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "shortName": "C#",
+    "files": [".cs"]
+  },
+  {
+    "id": "csp",
+    "name": "CSP",
+    "shortName": "CSP",
+    "files": []
+  },
+  {
+    "id": "css",
+    "name": "CSS",
+    "shortName": "CSS",
+    "files": [".css"]
+  },
+  {
+    "id": "cypher",
+    "name": "Cypher",
+    "shortName": "Cypher",
+    "files": [".cypher"]
+  },
+  {
+    "id": "dart",
+    "name": "Dart",
+    "shortName": "Dart",
+    "files": [".dart"]
+  },
+  {
+    "id": "dockerfile",
+    "name": "Dockerfile",
+    "shortName": "Dockerfile",
+    "files": ["Dockerfile"]
+  },
+  {
+    "id": "ecl",
+    "name": "ECL",
+    "shortName": "ECL",
+    "files": [".ecl"]
+  },
+  {
+    "id": "elixir",
+    "name": "Elixir",
+    "shortName": "Elixir",
+    "files": [".ex", ".exs"]
+  },
+  {
+    "id": "flow9",
+    "name": "Flow9",
+    "shortName": "Flow9",
+    "files": []
+  },
+  {
+    "id": "fsharp",
+    "name": "F#",
+    "shortName": "F#",
+    "files": [".fs", ".fsi", ".fsx", ".fsscript"]
+  },
+  {
+    "id": "freemarker2",
+    "name": "Freemarker2",
+    "shortName": "Freemarker2",
+    "files": [".ftl"]
+  },
+  {
+    "id": "freemarker2.tag-angle.interpolation-dollar",
+    "name": "Freemarker2 (Angle, $)",
+    "shortName": "Freemarker2 (Angle, $)",
+    "files": []
+  },
+  {
+    "id": "freemarker2.tag-bracket.interpolation-dollar",
+    "name": "Freemarker2 (Bracket, $)",
+    "shortName": "Freemarker2 (Bracket, $)",
+    "files": []
+  },
+  {
+    "id": "freemarker2.tag-angle.interpolation-bracket",
+    "name": "Freemarker2 (Angle, Bracket)",
+    "shortName": "Freemarker2 (Angle, Bracket)",
+    "files": []
+  },
+  {
+    "id": "freemarker2.tag-bracket.interpolation-bracket",
+    "name": "Freemarker2 (Bracket, Bracket)",
+    "shortName": "Freemarker2 (Bracket, Bracket)",
+    "files": []
+  },
+  {
+    "id": "freemarker2.tag-auto.interpolation-dollar",
+    "name": "Freemarker2 (Auto, $)",
+    "shortName": "Freemarker2 (Auto, $)",
+    "files": []
+  },
+  {
+    "id": "freemarker2.tag-auto.interpolation-bracket",
+    "name": "Freemarker2 (Auto, Bracket)",
+    "shortName": "Freemarker2 (Auto, Bracket)",
+    "files": []
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "shortName": "Go",
+    "files": [".go"]
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "shortName": "GraphQL",
+    "files": [".graphql", ".gql"]
+  },
+  {
+    "id": "handlebars",
+    "name": "Handlebars",
+    "shortName": "Handlebars",
+    "files": [".handlebars", ".hbs"]
+  },
+  {
+    "id": "hcl",
+    "name": "HCL",
+    "shortName": "HCL",
+    "files": [".hcl"]
+  },
+  {
+    "id": "html",
+    "name": "HTML",
+    "shortName": "HTML",
+    "files": [".html", ".htm"]
+  },
+  {
+    "id": "ini",
+    "name": "INI",
+    "shortName": "INI",
+    "files": [".ini"]
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "shortName": "Java",
+    "files": [".java"]
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "shortName": "JS",
+    "files": [".js", ".jsx", ".mjs", ".cjs"]
+  },
+  {
+    "id": "julia",
+    "name": "Julia",
+    "shortName": "Julia",
+    "files": [".jl"]
+  },
+  {
+    "id": "kotlin",
+    "name": "Kotlin",
+    "shortName": "Kotlin",
+    "files": [".kt", ".kts"]
+  },
+  {
+    "id": "less",
+    "name": "Less",
+    "shortName": "Less",
+    "files": [".less"]
+  },
+  {
+    "id": "lexon",
+    "name": "Lexon",
+    "shortName": "Lexon",
+    "files": []
+  },
+  {
+    "id": "lua",
+    "name": "Lua",
+    "shortName": "Lua",
+    "files": [".lua"]
+  },
+  {
+    "id": "liquid",
+    "name": "Liquid",
+    "shortName": "Liquid",
+    "files": [".liquid"]
+  },
+  {
+    "id": "m3",
+    "name": "M3",
+    "shortName": "M3",
+    "files": []
+  },
+  {
+    "id": "markdown",
+    "name": "Markdown",
+    "shortName": "MD",
+    "files": [".md", ".markdown"]
+  },
+  {
+    "id": "mdx",
+    "name": "MDX",
+    "shortName": "MDX",
+    "files": [".mdx"]
+  },
+  {
+    "id": "mips",
+    "name": "MIPS",
+    "shortName": "MIPS",
+    "files": []
+  },
+  {
+    "id": "msdax",
+    "name": "MSDAX",
+    "shortName": "MSDAX",
+    "files": []
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "shortName": "MySQL",
+    "files": [".sql"]
+  },
+  {
+    "id": "objective-c",
+    "name": "Objective-C",
+    "shortName": "Obj-C",
+    "files": [".m"]
+  },
+  {
+    "id": "pascal",
+    "name": "Pascal",
+    "shortName": "Pascal",
+    "files": [".pas"]
+  },
+  {
+    "id": "pascaligo",
+    "name": "Pascaligo",
+    "shortName": "Pascaligo",
+    "files": [".ligo"]
+  },
+  {
+    "id": "perl",
+    "name": "Perl",
+    "shortName": "Perl",
+    "files": [".pl", ".pm"]
+  },
+  {
+    "id": "pgsql",
+    "name": "PostgreSQL",
+    "shortName": "PostgreSQL",
+    "files": [".sql"]
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "shortName": "PHP",
+    "files": [".php"]
+  },
+  {
+    "id": "pla",
+    "name": "PLA",
+    "shortName": "PLA",
+    "files": []
+  },
+  {
+    "id": "postiats",
+    "name": "Postiats",
+    "shortName": "Postiats",
+    "files": []
+  },
+  {
+    "id": "powerquery",
+    "name": "PowerQuery",
+    "shortName": "PowerQuery",
+    "files": []
+  },
+  {
+    "id": "powershell",
+    "name": "PowerShell",
+    "shortName": "PowerShell",
+    "files": [".ps1", ".psm1", ".psd1"]
+  },
+  {
+    "id": "proto",
+    "name": "Proto",
+    "shortName": "Proto",
+    "files": [".proto"]
+  },
+  {
+    "id": "pug",
+    "name": "Pug",
+    "shortName": "Pug",
+    "files": [".pug"]
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "shortName": "Python",
+    "files": [".py", ".pyw"]
+  },
+  {
+    "id": "qsharp",
+    "name": "Q#",
+    "shortName": "Q#",
+    "files": [".qs"]
+  },
+  {
+    "id": "r",
+    "name": "R",
+    "shortName": "R",
+    "files": [".r"]
+  },
+  {
+    "id": "razor",
+    "name": "Razor",
+    "shortName": "Razor",
+    "files": [".cshtml"]
+  },
+  {
+    "id": "redis",
+    "name": "Redis",
+    "shortName": "Redis",
+    "files": [".redis"]
+  },
+  {
+    "id": "redshift",
+    "name": "Redshift",
+    "shortName": "Redshift",
+    "files": []
+  },
+  {
+    "id": "restructuredtext",
+    "name": "RestructuredText",
+    "shortName": "RST",
+    "files": [".rst"]
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "shortName": "Ruby",
+    "files": [".rb"]
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "shortName": "Rust",
+    "files": [".rs"]
+  },
+  {
+    "id": "sb",
+    "name": "SB",
+    "shortName": "SB",
+    "files": []
+  },
+  {
+    "id": "scala",
+    "name": "Scala",
+    "shortName": "Scala",
+    "files": [".scala"]
+  },
+  {
+    "id": "scheme",
+    "name": "Scheme",
+    "shortName": "Scheme",
+    "files": [".scm"]
+  },
+  {
+    "id": "scss",
+    "name": "SCSS",
+    "shortName": "SCSS",
+    "files": [".scss"]
+  },
+  {
+    "id": "shell",
+    "name": "Shell",
+    "shortName": "Shell",
+    "files": [".sh", ".bash", ".zsh"]
+  },
+  {
+    "id": "sol",
+    "name": "Solidity",
+    "shortName": "Solidity",
+    "files": [".sol"]
+  },
+  {
+    "id": "aes",
+    "name": "AES",
+    "shortName": "AES",
+    "files": []
+  },
+  {
+    "id": "sparql",
+    "name": "SPARQL",
+    "shortName": "SPARQL",
+    "files": [".sparql"]
+  },
+  {
+    "id": "sql",
+    "name": "SQL",
+    "shortName": "SQL",
+    "files": [".sql"]
+  },
+  {
+    "id": "st",
+    "name": "ST",
+    "shortName": "ST",
+    "files": []
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "shortName": "Swift",
+    "files": [".swift"]
+  },
+  {
+    "id": "systemverilog",
+    "name": "SystemVerilog",
+    "shortName": "SystemVerilog",
+    "files": [".sv", ".svh"]
+  },
+  {
+    "id": "verilog",
+    "name": "Verilog",
+    "shortName": "Verilog",
+    "files": [".v", ".vh"]
+  },
+  {
+    "id": "tcl",
+    "name": "Tcl",
+    "shortName": "Tcl",
+    "files": [".tcl"]
+  },
+  {
+    "id": "twig",
+    "name": "Twig",
+    "shortName": "Twig",
+    "files": [".twig"]
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "shortName": "TS",
+    "files": [".ts", ".tsx"]
+  },
+  {
+    "id": "typespec",
+    "name": "TypeSpec",
+    "shortName": "TypeSpec",
+    "files": [".tsp"]
+  },
+  {
+    "id": "vb",
+    "name": "Visual Basic",
+    "shortName": "VB",
+    "files": [".vb"]
+  },
+  {
+    "id": "wgsl",
+    "name": "WGSL",
+    "shortName": "WGSL",
+    "files": [".wgsl"]
+  },
+  {
+    "id": "xml",
+    "name": "XML",
+    "shortName": "XML",
+    "files": [".xml", ".xaml"]
+  },
+  {
+    "id": "yaml",
+    "name": "YAML",
+    "shortName": "YAML",
+    "files": [".yaml", ".yml"]
+  },
+  {
+    "id": "json",
+    "name": "JSON",
+    "shortName": "JSON",
+    "files": [".json", ".geojson", ".jsonl"]
+  }
+]

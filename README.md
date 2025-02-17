@@ -1,139 +1,206 @@
+<img src="./assets/images/icon.svg" alt="CodeQuill Logo" for="cover" width="80" height="80" />
+
 # CodeQuill
 
-# ⚠️ Warning!
-**CodeQuill is about to experience a major refactor in the upgrade to CodeQuill 2.0.**
-The refactor will **break installation and update scripts for CodeQuill.**
-When you see a 2.0.0 release or encounter errors, check the README (this file) for the latest installation instructions.
+_Organize, edit, and preview code efficiently._
 
-[![CodeQuill](https://img.shields.io/badge/CodeQuill-Code%20Editor%20and%20Storage-blue)](https://github.com/codingwithkid/codequill)
-[![Crowdin](https://badges.crowdin.net/codequill/localized.svg)](https://crowdin.com/project/codequill)
+![CodeQuill Main Promo](./assets/images/promo_screenshot_main.png)
 
-<!-- [![Logo](app/favicon.ico)](https://github.com/The-Best-Codes/codequill) -->
-
-<img src=".assets/codequill_main_logo.png" width="250" alt="logo" for="cover" />
-
-<img src=".assets/screenshot1.png" alt="screenshot">
-
-## How to install CodeQuill on Linux
-
-Installing CodeQuill on Linux (Ubuntu is preferred) is straightforward.
-
-### Using the installer
-
-Open your terminal (you can usually press CTRL + ALT + T to do this) and paste the following command:
-
-```bash
-cd ~ && curl -O https://raw.githubusercontent.com/The-Best-Codes/codequill/refs/heads/main/codequill_app.sh && bash codequill_app.sh
-```
-
-The install should happen automatically.
-
-### Manual installation
-
-1. Open a terminal on your device.
-
-2. Navigate to your home directory:
-
-   ```
-   cd ~
-   ```
-
-3. Download the installation script using curl:
-
-   ```
-   curl -O https://raw.githubusercontent.com/The-Best-Codes/codequill/main/.device_scripts/codequill.sh
-   ```
-
-4. Make the downloaded script executable:
-
-   ```
-   chmod +x codequill.sh
-   ```
-
-5. Run the installation script:
-
-   ```
-   ./codequill.sh
-   ```
-
-6. Wait for the installation process to complete. The script will install CodeQuill and any necessary dependencies.
-
-7. Once the installation is finished, you should be able to use CodeQuill on your device.
+Built with Tauri 2, CodeQuill offers a rich editing experience with syntax highlighting for over 90 programming languages and built-in previews for Markdown and HTML.
+Whether you're a seasoned developer or just starting out, CodeQuill helps you organize, edit, and preview your code with ease.
 
 ---
 
-CodeQuill is a web-based code editor designed to offer a free, easy, and efficient way to organize, store, edit, and share code snippets directly from your device. Whether you're working on personal projects or simply storing snippets for future reference, CodeQuill provides a seamless experience for managing your code.
+## Table of Contents
 
-## Features
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Platform-Specific Installation](#platform-specific-installation)
+    - [Linux](#linux)
+    - [Windows](#windows)
+    - [macOS](#macos)
+  - [Snap Store (Coming Soon)](#snap-store-coming-soon)
+  - [Flathub (Coming Soon)](#flathub-coming-soon)
+- [Updating](#updating)
+  - [Linux (Debian-based)](#linux-debian-based)
+- [Migrating from CodeQuill v1](#migrating-from-codequill-v1)
+- [Usage](#usage)
+  - [Key Features](#key-features)
+    - [Rich Text Editor](#rich-text-editor)
+    - [Syntax Highlighting](#syntax-Highlighting)
+    - [Built-in Previews](#built-in-previews)
+- [Contributing](#contributing)
+  - [Getting Started](#getting-started)
+  - [Development Setup](#development-setup)
+  - [Dependencies](#dependencies)
+  - [Coding Style](#coding-style)
+- [License](#license)
 
-- **Syntax Highlighting:** Enjoy coding with syntax highlighting that supports multiple languages.
-- **Code Storage:** Save your snippets in the a local database for easy access anywhere on your network.
-- **Share**: Share your code snippets with other devices on your network to easily transfer codes.
-- **Comfortable Interface:** The editor is designed to be as intuitive and familiar as possible. The experience should remind you of working in VS Code.
-- **AI Support:** CodeQuill uses AI models to help you name your projects, translate them (coming soon), generate code (coming soon), and much more.
+---
 
-### AI Project Name Generator
-
-![AI Project Name Generator](.assets/ai_name_generator.png)
-
-To generate a name for your project, simply click the wand icon in the project name input. By default, the llama-70b model is used to name your project. You can customize this and other behaviors such as the base URL, API key, and more in by creating a `.env` file in the project root.
-
-## Getting Started
+## Installation
 
 ### Prerequisites
 
-- Node.js installed on your machine
-- A modern web browser
+Before installing CodeQuill, ensure you have the necessary prerequisites installed on your system. These may include:
 
-### Installation
+- A modern operating system (Windows 8+, macOS 10.13+, or a recent Linux distribution). While CodeQuill aims for cross-platform compatibility, Windows 7 may not be fully supported.
+- Sufficient system resources (RAM and storage) to run a desktop application.
 
-1. Clone the repository to your local machine:
+### Platform-Specific Installation
 
-   ```bash
-   git clone https://github.com/The-Best-Codes/codequill.git
-   cd codequill
-   ```
+Choose the installation method that best suits your operating system.
 
-2. Install the required dependencies:
+#### Linux
 
-   ```bash
-   npm install
-   ```
+1.  Download the latest `.deb` package from the [Releases](https://github.com/The-Best-Codes/codequill/releases) page.
+2.  Open a terminal and navigate to the directory where you downloaded the package.
+3.  Install the package using `dpkg`:
 
-3. Initialize the database:
+    ```bash
+    sudo dpkg -i codequill_<version>_<architecture>.deb
+    ```
 
-   ```bash
-   node scripts/init-db.js
-   ```
+    Replace `<version>` and `<architecture>` with the actual values from the filename.
 
-4. Start the development server:
+4.  If you encounter dependency issues, run:
 
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    sudo apt-get install -f
+    ```
 
-5. Access the CodeQuill interface by opening `http://localhost:3000` in your web browser.
+#### Windows
 
-### Building for Production
+There are usually both `.msi` and `.exe` installers available for Windows. Both should be compatible with most Windows versions.
 
-To deploy CodeQuill for production use:
+1.  Download the latest `.msi` or `.exe` installer from the [Releases](https://github.com/The-Best-Codes/codequill/releases) page.
+2.  Double-click the downloaded file and follow the on-screen instructions.
 
-```bash
-npm run build && npm start
-```
+#### macOS
 
-This command builds the application for optimal performance and starts the production server.
+1.  Download the latest `.dmg` file from the [Releases](https://github.com/The-Best-Codes/codequill/releases) page.
+2.  Double-click the downloaded file and drag the CodeQuill icon to your Applications folder.
+
+### Snap Store (Coming Soon)
+
+CodeQuill will soon be available on the Snap Store. Check back later for installation instructions.
+
+### Flathub (Coming Soon)
+
+CodeQuill will soon be available on Flathub. Check back later for installation instructions.
+
+---
+
+## Updating
+
+### Linux (Debian-based)
+
+1.  Download the latest `.deb` package from the [Releases](https://github.com/The-Best-Codes/codequill/releases) page.
+2.  Open a terminal and navigate to the directory where you downloaded the package.
+3.  Upgrade the package using `dpkg`:
+
+    ```bash
+    sudo dpkg -i codequill_<version>_<architecture>.deb
+    ```
+
+    This will install the new version while preserving your settings.
+
+---
+
+## Migrating from CodeQuill v1
+
+All CodeQuill v1 releases are not compatible with CodeQuill v2.
+You should uninstall CodeQuill v1 before installing CodeQuill v2.
+You can do so by running the `codequill.sh` script (or right-clicking on the app icon, then selecting `CodeQuill Manager`), then choosing the "Uninstall" option.
+
+You may want to back up the old database or your currently saved snippets before uninstalling.
+There is currently no way except a manual migration to transfer your data to CodeQuill v2, though we may provide a migration tool in the future.
+You can likely find your data for the old application in `~/codequill/`.
+
+---
+
+## Usage
+
+Usage is quite straightforward. After launching CodeQuill, you can click the "New Snippet" button to create your first snippet.
+I'd also recommend checking out settings and search to familiarize yourself with the app.
+
+![Settings in Dark Mode](./assets/images/usage_settings_screenshot_dark.png)
+
+### Key Features
+
+CodeQuill is designed to be intuitive and powerful. Here are some of its key features:
+
+#### Rich Text Editor
+
+CodeQuill's core is a fully-featured text editor, Monaco, providing a smooth and responsive coding experience.
+
+#### Syntax Highlighting
+
+Enjoy syntax highlighting for over 90 programming languages, making your code easier to read and understand.
+
+#### Built-in Previews
+
+Quickly preview your Markdown and HTML files directly within CodeQuill. Preview panes update live for easy testing and debugging.
+
+---
 
 ## Contributing
 
-We welcome contributions to CodeQuill! Whether you're looking to fix bugs, add new features, or improve documentation, please feel free to submit a pull request.
+We welcome contributions from the community! Here's how you can get involved:
+
+### Getting Started
+
+1.  Fork the repository on [GitHub](https://github.com/The-Best-Codes/codequill).
+2.  Clone your forked repository to your local machine:
+
+    ```bash
+    git clone https://github.com/<your-username>/codequill.git
+    ```
+
+3.  Create a new branch for your feature or bug fix:
+
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+
+### Development Setup
+
+Before performing the following steps, ensure you have installed the Tauri 2 prerequisites.
+You can find out more on the [Tauri website](https://v2.tauri.app/start/prerequisites/).
+
+1.  Install Node.js and npm if you haven't already. It's recommended to use the latest LTS version of Node.js.
+2.  Navigate to the project directory in your terminal.
+3.  Install the project dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4.  Start the development server:
+
+    ```bash
+    npm run tauri dev
+    ```
+
+### Dependencies
+
+CodeQuill relies on the following major dependencies:
+
+- **Tauri 2:** The framework for building cross-platform desktop applications.
+- **React:** A JavaScript library for building user interfaces.
+- **Tailwind CSS:** A utility-first CSS framework.
+- **Shadcn UI:** A collection of accessible and reusable UI components built with Radix UI and Tailwind CSS.
+
+### Coding Style
+
+While we don't enforce strict coding style guidelines, we encourage you to follow these recommendations:
+
+- Don't format files that you haven't modified. This is low effort and can lead to a more cluttered PR review process.
+- Write clear and concise code.
+- Add comments to explain complex logic. Your comments may be removed later.
+
+---
 
 ## License
 
-CodeQuill is released under the MIT License. See the LICENSE file for more details.
-
-## Support
-
-For support or to report issues, please visit the [issues page](https://github.com/The-Best-Codes/codequill/issues).
-
-Thank you for considering CodeQuill for your coding needs!
+CodeQuill is released under the [MIT License](LICENSE).
