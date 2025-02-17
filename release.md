@@ -15,9 +15,10 @@
 - Push the snap package to the Snap Store using `snapcraft push <snap-file>`
 - Perform updates on the Snap dashboard (snapcraft.io/codequill)
 
-## Flatpak (for Flathub)
+## Flatpak
 
 - Create the latest release on GitHub, since this needs to download the assets from GitHub
 - Update the `org.codequill.CodeQuill.yml` manifest file
 - Run `flatpak-builder --force-clean flatpak-build/ org.codequill.CodeQuill.yml`
 - A `.flatpak-builder` directory is created and the package is built in `flatpak-build/`
+- Run `flatpak-builder --run flatpak-build/ org.codequill.CodeQuill.yml codequill` to test the app
