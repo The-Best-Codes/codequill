@@ -24,4 +24,9 @@ package-lock.json
 *.sln
 *.sw?
 
+# Snap file for Snapcraft & Snap Store
 *.snap
+
+# Flatpak file for Flatpak & Flathub
+flatpak-build
+.flatpak-builder
