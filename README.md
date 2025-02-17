@@ -6,6 +6,8 @@ _Organize, edit, and preview code efficiently._
 
 ![CodeQuill Main Promo](./assets/images/promo_screenshot_main.png)
 
+[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/codequill)
+
 Built with Tauri 2, CodeQuill offers a rich editing experience with syntax highlighting for over 90 programming languages and built-in previews for Markdown and HTML.
 Whether you're a seasoned developer or just starting out, CodeQuill helps you organize, edit, and preview your code with ease.
 
@@ -81,9 +83,17 @@ There are usually both `.msi` and `.exe` installers available for Windows. Both 
 1.  Download the latest `.dmg` file from the [Releases](https://github.com/The-Best-Codes/codequill/releases) page.
 2.  Double-click the downloaded file and drag the CodeQuill icon to your Applications folder.
 
-### Snap Store (Coming Soon)
+### Snap Store
 
-CodeQuill will soon be available on the Snap Store. Check back later for installation instructions.
+[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/codequill)
+
+CodeQuill is now available on the Snap Store!
+
+Search 'codequill' in the Snap Store and click 'Install', or run the following command in a terminal:
+
+```bash
+sudo snap install codequill
+```
 
 ### Flathub (Coming Soon)
 
