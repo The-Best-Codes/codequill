@@ -17,6 +17,7 @@
 
 ## Flatpak (for Flathub)
 
+- Create the latest release on GitHub, since this needs to download the assets from GitHub
 - Update the `org.codequill.CodeQuill.yml` manifest file
 - Run `flatpak-builder --force-clean flatpak-build/ org.codequill.CodeQuill.yml`
 - A `.flatpak-builder` directory is created and the package is built in `flatpak-build/`
