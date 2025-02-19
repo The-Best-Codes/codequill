@@ -9,6 +9,7 @@ import {
   Snippet,
 } from "@/utils/database";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { Language, UseSnippetsReturn } from "./types";
@@ -40,9 +41,11 @@ export const useSnippets = (): Omit<
   UseSnippetsReturn,
   "searchQuery" | "setSearchQuery"
 > => {
+  const { t } = useTranslation();
+
   const [filename, setFilename] = useState<string>(() => {
-    if (typeof window === "undefined") return "Untitled";
-    return sessionStorage.getItem(FILENAME_KEY) || "Untitled";
+    if (typeof window === "undefined") return t("untitled");
+    return sessionStorage.getItem(FILENAME_KEY) || t("untitled");
   });
   const [language, setLanguage] = useState<Language | null>(() => {
     if (typeof window === "undefined") return getDefaultLanguage();
@@ -176,7 +179,7 @@ export const useSnippets = (): Omit<
         }
       } else {
         // Do not create a new snippet if none exist.
-        setFilename("Untitled"); // Clear existing states
+        setFilename(t("untitled")); // Clear existing states
         setLanguage(getDefaultLanguage());
         setCode("");
         setSelectedSnippetId(null);
@@ -185,8 +188,8 @@ export const useSnippets = (): Omit<
         setIsPreviewable(false);
       }
     } catch (e: any) {
-      setError(e.message || "Failed to load snippets.");
-      showErrorToast("Failed to load snippets.", e.message);
+      setError(e.message || t("failedToLoadSnippets"));
+      showErrorToast(t("failedToLoadSnippets"), e.message);
     } finally {
       setLoading(false);
     }
@@ -198,7 +201,7 @@ export const useSnippets = (): Omit<
       const defaultLanguage = getDefaultLanguage();
       const newSnippet: Snippet = {
         id: newSnippetId,
-        filename: "Untitled",
+        filename: t("untitled"),
         language: defaultLanguage.id,
         code: "",
       };
@@ -206,7 +209,7 @@ export const useSnippets = (): Omit<
       try {
         await saveSnippet(newSnippet);
         setSnippets([newSnippet, ...snippets]);
-        setFilename("Untitled");
+        setFilename(t("untitled"));
         setLanguage(defaultLanguage);
         setCode("");
         setSelectedSnippetId(newSnippetId);
@@ -216,18 +219,18 @@ export const useSnippets = (): Omit<
           !!defaultLanguage &&
             previewLanguages.some((l) => l.id === defaultLanguage.id),
         );
-        return "New snippet saved!";
+        return t("newSnippetSaved");
       } catch (e: any) {
-        setError(e.message || "Failed to create new snippet.");
-        showErrorToast("Failed to create new snippet.", e.message);
-        throw new Error(e.message || "Failed to create new snippet."); // Re-throw for toast.promise
+        setError(e.message || t("failedToCreateNewSnippet"));
+        showErrorToast(t("failedToCreateNewSnippet"), e.message);
+        throw new Error(e.message || t("failedToCreateNewSnippet")); // Re-throw for toast.promise
       }
     };
 
     toast.promise(createPromise(), {
-      loading: "Creating new snippet...",
+      loading: t("creatingNewSnippet") + "...",
       success: (message) => message,
-      error: "Failed to create new snippet.",
+      error: t("failedToCreateNewSnippet"),
     });
   };
 
@@ -255,10 +258,7 @@ export const useSnippets = (): Omit<
             "Failed to load preview state from localStorage:",
             error,
           );
-          showErrorToast(
-            "Failed to load preview state from localStorage.",
-            String(error),
-          );
+          showErrorToast(t("failedToLoadPreviewState"), String(error));
         }
       }
     }
@@ -266,17 +266,17 @@ export const useSnippets = (): Omit<
 
   const saveCurrentSnippet = async () => {
     if (!language) {
-      toast.error("Please select a language.");
+      toast.error(t("pleaseSelectLanguage"));
       return;
     }
 
     if (!filename || filename.trim() === "") {
-      toast.error("Filename cannot be empty.");
+      toast.error(t("filenameCannotBeEmpty"));
       return;
     }
 
     if (filename.length > 1024) {
-      toast.error("Filename cannot be longer than 1024 characters.");
+      toast.error(t("filenameTooLong"));
       return;
     }
 
@@ -326,13 +326,13 @@ export const useSnippets = (): Omit<
           return [snippetToSave, ...prevSnippets];
         }
       });
-      return "Snippet saved successfully!";
+      return t("snippetSavedSuccessfully");
     };
 
     toast.promise(savePromise(), {
-      loading: "Saving snippet...",
+      loading: t("savingSnippet") + "...",
       success: (message) => message,
-      error: "Failed to save snippet.",
+      error: t("failedToSaveSnippet"),
     });
   };
 
@@ -341,9 +341,9 @@ export const useSnippets = (): Omit<
     if (snippet) {
       try {
         await navigator.clipboard.writeText(snippet.code);
-        toast.success("Snippet copied to clipboard");
+        toast.success(t("snippetCopiedToClipboard"));
       } catch (e: any) {
-        showErrorToast("Failed to copy snippet.", e.message);
+        showErrorToast(t("failedToCopySnippet"), e.message);
       }
     }
   };
@@ -366,10 +366,7 @@ export const useSnippets = (): Omit<
           sessionStorage.removeItem(key);
         } catch (error) {
           console.error("Failed to remove preview from localStorage:", error);
-          showErrorToast(
-            "Failed to remove preview from localStorage.",
-            String(error),
-          );
+          showErrorToast(t("failedToRemovePreview"), String(error));
         }
       }
 
@@ -383,7 +380,7 @@ export const useSnippets = (): Omit<
           loadSnippetInEditor(newSnippets[0].id);
         } else {
           // Clear all states instead of creating a new snippet.
-          setFilename("Untitled");
+          setFilename(t("untitled"));
           setLanguage(getDefaultLanguage());
           setCode("");
           setSelectedSnippetId(null);
@@ -392,13 +389,13 @@ export const useSnippets = (): Omit<
           setIsPreviewable(false);
         }
       }
-      return "Snippet deleted successfully!";
+      return t("snippetDeletedSuccessfully");
     };
 
     toast.promise(deletePromise(), {
-      loading: "Deleting snippet...",
+      loading: t("deletingSnippet") + "...",
       success: (message) => message,
-      error: "Failed to delete snippet.",
+      error: t("failedToDeleteSnippet"),
     });
   };
 

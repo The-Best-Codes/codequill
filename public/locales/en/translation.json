@@ -67,5 +67,18 @@
   "website": "Website",
   "themeLight": "Light",
   "themeDark": "Dark",
-  "themeSystem": "System"
+  "themeSystem": "System",
+  "failedToLoadSnippets": "Failed to load snippets.",
+  "failedToCreateNewSnippet": "Failed to create new snippet.",
+  "creatingNewSnippet": "Creating new snippet",
+  "failedToLoadPreviewState": "Failed to load preview state from localStorage.",
+  "pleaseSelectLanguage": "Please select a language.",
+  "filenameCannotBeEmpty": "Filename cannot be empty.",
+  "filenameTooLong": "Filename cannot be longer than 1024 characters.",
+  "savingSnippet": "Saving snippet",
+  "failedToSaveSnippet": "Failed to save snippet.",
+  "failedToCopySnippet": "Failed to copy snippet.",
+  "failedToRemovePreview": "Failed to remove preview from localStorage.",
+  "deletingSnippet": "Deleting snippet",
+  "failedToDeleteSnippet": "Failed to delete snippet."
 }

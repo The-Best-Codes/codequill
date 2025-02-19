@@ -67,5 +67,18 @@
   "website": "Sitio web",
   "themeLight": "Claro",
   "themeDark": "Oscuro",
-  "themeSystem": "Sistema"
+  "themeSystem": "Sistema",
+  "failedToLoadSnippets": "Error al cargar los fragmentos.",
+  "failedToCreateNewSnippet": "Error al crear un nuevo fragmento.",
+  "creatingNewSnippet": "Creando nuevo fragmento",
+  "failedToLoadPreviewState": "Error al cargar el estado de la vista previa desde el almacenamiento local.",
+  "pleaseSelectLanguage": "Por favor, seleccione un idioma.",
+  "filenameCannotBeEmpty": "El nombre del archivo no puede estar vacío.",
+  "filenameTooLong": "El nombre del archivo no puede tener más de 1024 caracteres.",
+  "savingSnippet": "Guardando fragmento",
+  "failedToSaveSnippet": "Error al guardar el fragmento.",
+  "failedToCopySnippet": "Error al copiar el fragmento.",
+  "failedToRemovePreview": "Error al eliminar la vista previa del almacenamiento local.",
+  "deletingSnippet": "Borrando fragmento",
+  "failedToDeleteSnippet": "Error al borrar el fragmento."
 }
