@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface DeleteDialogProps {
   isOpen: boolean;
@@ -22,15 +23,14 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
   isDeleting,
   onDelete,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete this snippet?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete the
-            snippet.
-          </DialogDescription>
+          <DialogTitle>{t("deleteThisSnippet")}</DialogTitle>
+          <DialogDescription>{t("thisActionCannotBeUndone")}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button
@@ -38,7 +38,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             variant="outline"
             onClick={() => setOpen(false)}
           >
-            Cancel
+            {t("cancel")}
           </Button>
           <Button
             type="button"
@@ -46,7 +46,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             onClick={onDelete}
             disabled={isDeleting}
           >
-            {isDeleting ? "Deleting..." : "Delete"}
+            {isDeleting ? t("deleting") : t("delete")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -63,5 +63,9 @@
   "next": "Next",
   "close": "Close",
   "searchLanguage": "Search language...",
-  "noLanguageFound": "No language found."
+  "noLanguageFound": "No language found.",
+  "website": "Website",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System"
 }

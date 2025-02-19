@@ -34,6 +34,7 @@ import { getConfig, updateConfig } from "@/utils/config";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import packageJson from "../../../package.json";
 import { Language } from "../home/types";
@@ -41,6 +42,7 @@ import { Language } from "../home/types";
 const APP_VERSION = packageJson.version;
 
 function Settings() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState<Language>(
@@ -80,13 +82,15 @@ function Settings() {
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <CardTitle className="text-2xl font-bold">Settings</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                {t("settings")}
+              </CardTitle>
               <CardDescription className="mt-1.5">
-                Customize your CodeQuill experience
+                {t("customizeYourExperience")}
               </CardDescription>
             </div>
             <Button variant="default" onClick={handleBack}>
-              Back to Editor
+              {t("backToEditor")}
             </Button>
           </div>
         </CardHeader>
@@ -94,9 +98,9 @@ function Settings() {
           {/* Theme Section */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">Theme</h3>
+              <h3 className="text-lg font-semibold">{t("theme")}</h3>
               <p className="text-sm text-muted-foreground">
-                Choose your preferred app appearance
+                {t("chooseYourPreferredAppearance")}
               </p>
             </div>
             <RadioGroup
@@ -111,7 +115,11 @@ function Settings() {
                 >
                   <div className="flex items-center space-x-2 rounded-lg border p-4 hover:bg-secondary transition-colors">
                     <RadioGroupItem value={value} id={value} />
-                    <span className="capitalize">{value}</span>
+                    <span className="capitalize">
+                      {t(
+                        `theme${value.charAt(0).toUpperCase() + value.slice(1)}`,
+                      )}
+                    </span>
                   </div>
                 </Label>
               ))}
@@ -123,9 +131,9 @@ function Settings() {
           {/* Language Section */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">Default Language</h3>
+              <h3 className="text-lg font-semibold">{t("defaultLanguage")}</h3>
               <p className="text-sm text-muted-foreground">
-                Default programming language for new snippets
+                {t("defaultProgrammingLanguage")}
               </p>
             </div>
             <Popover open={open} onOpenChange={setOpen}>
@@ -137,18 +145,18 @@ function Settings() {
                   className="w-64 justify-between"
                 >
                   {supportedLanguages.find((l) => l.id === language.id)?.name ||
-                    "Select language..."}
+                    t("selectLanguage")}
                   <ChevronsUpDown className="opacity-50" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-full p-0">
                 <Command>
                   <CommandInput
-                    placeholder="Search language..."
+                    placeholder={t("searchLanguage")}
                     className="h-9"
                   />
                   <CommandList>
-                    <CommandEmpty>No language found.</CommandEmpty>
+                    <CommandEmpty>{t("noLanguageFound")}</CommandEmpty>
                     <CommandGroup>
                       {supportedLanguages.map((l) => (
                         <CommandItem
@@ -185,22 +193,24 @@ function Settings() {
           {/* Keyboard Shortcuts Section */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">Keyboard Shortcuts</h3>
+              <h3 className="text-lg font-semibold">
+                {t("keyboardShortcuts")}
+              </h3>
               <p className="text-sm text-muted-foreground">
-                View common keyboard shortcuts
+                {t("viewCommonKeyboardShortcuts")}
               </p>
             </div>
             <div className="grid gap-4">
               {[
-                { label: "Save Snippet", shortcut: "Ctrl + S" },
-                { label: "Create New Snippet", shortcut: "Ctrl + N" },
-                { label: "Toggle Sidebar", shortcut: "Ctrl + B" },
-                { label: "Search Snippets", shortcut: "Ctrl + K" },
-                { label: "Preview Code", shortcut: "Ctrl + P" },
-                { label: "Open Settings", shortcut: "Ctrl + Comma" },
-                { label: "Format Code", shortcut: "Ctrl + Shift + I" },
-                { label: "Undo", shortcut: "Ctrl + Z" },
-                { label: "Redo", shortcut: "Ctrl + Y" },
+                { label: t("saveSnippet"), shortcut: "Ctrl + S" },
+                { label: t("createNewSnippet"), shortcut: "Ctrl + N" },
+                { label: t("toggleSidebar"), shortcut: "Ctrl + B" },
+                { label: t("searchSnippets"), shortcut: "Ctrl + K" },
+                { label: t("previewCode"), shortcut: "Ctrl + P" },
+                { label: t("openSettings"), shortcut: "Ctrl + Comma" },
+                { label: t("formatCode"), shortcut: "Ctrl + Shift + I" },
+                { label: t("undo"), shortcut: "Ctrl + Z" },
+                { label: t("redo"), shortcut: "Ctrl + Y" },
               ].map(({ label, shortcut }) => (
                 <div
                   key={label}
@@ -219,9 +229,9 @@ function Settings() {
 
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">App Info</h3>
+              <h3 className="text-lg font-semibold">{t("appInfo")}</h3>
               <p className="text-sm text-muted-foreground">
-                Information about CodeQuill
+                {t("informationAboutCodeQuill")}
               </p>
             </div>
             <div className="grid gap-4">
@@ -237,9 +247,9 @@ function Settings() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div>
-                    <Label className="font-medium">Version</Label>
+                    <Label className="font-medium">{t("version")}</Label>
                     <p className="text-sm text-muted-foreground">
-                      Installed version
+                      {t("installedVersion")}
                     </p>
                   </div>
                   <code className="rounded px-3 py-1 text-sm font-semibold">
@@ -248,8 +258,10 @@ function Settings() {
                 </div>
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div>
-                    <Label className="font-medium">License</Label>
-                    <p className="text-sm text-muted-foreground">Open source</p>
+                    <Label className="font-medium">{t("license")}</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {t("openSource")}
+                    </p>
                   </div>
                   <code className="rounded px-3 py-1 text-sm font-semibold">
                     {packageJson.license}
@@ -260,7 +272,7 @@ function Settings() {
               <div className="rounded-lg border p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label className="font-medium">Created By</Label>
+                    <Label className="font-medium">{t("createdBy")}</Label>
                     <p className="text-sm text-muted-foreground">
                       {packageJson.author.name}
                     </p>
@@ -271,7 +283,7 @@ function Settings() {
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    Website
+                    {t("website")}
                   </a>
                 </div>
               </div>
@@ -284,7 +296,7 @@ function Settings() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-full"
                   >
-                    Source Code
+                    {t("sourceCode")}
                   </a>
                 </Button>
                 <Button variant="outline" className="w-full" asChild>
@@ -294,7 +306,7 @@ function Settings() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-full"
                   >
-                    Report Issue
+                    {t("reportIssue")}
                   </a>
                 </Button>
               </div>
@@ -303,18 +315,18 @@ function Settings() {
           <Separator />
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">Dependencies</h3>
+              <h3 className="text-lg font-semibold">{t("dependencies")}</h3>
               <p className="text-sm text-muted-foreground">
-                Libraries used in CodeQuill
+                {t("librariesUsed")}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center justify-between rounded-lg border p-4">
                 <div>
-                  <Label className="font-medium">Production</Label>
+                  <Label className="font-medium">{t("production")}</Label>
                   <p className="text-sm text-muted-foreground">
-                    Libraries bundled in the production build
+                    {t("librariesBundled")}
                   </p>
                 </div>
                 <code className="rounded px-3 py-1 text-sm font-semibold">
@@ -323,9 +335,9 @@ function Settings() {
               </div>
               <div className="flex items-center justify-between rounded-lg border p-4">
                 <div>
-                  <Label className="font-medium">Development</Label>
+                  <Label className="font-medium">{t("development")}</Label>
                   <p className="text-sm text-muted-foreground">
-                    Libraries used in CodeQuill development
+                    {t("librariesUsedDevelopment")}
                   </p>
                 </div>
                 <code className="rounded px-3 py-1 text-sm font-semibold">
@@ -336,7 +348,9 @@ function Settings() {
 
             <Accordion type="single" collapsible>
               <AccordionItem value="production">
-                <AccordionTrigger>Production Dependencies</AccordionTrigger>
+                <AccordionTrigger>
+                  {t("productionDependencies")}
+                </AccordionTrigger>
                 <AccordionContent className="max-h-96 overflow-auto">
                   <div className="grid gap-4">
                     {Object.entries(productionDependencies).map(
@@ -365,7 +379,9 @@ function Settings() {
               </AccordionItem>
 
               <AccordionItem value="development">
-                <AccordionTrigger>Development Dependencies</AccordionTrigger>
+                <AccordionTrigger>
+                  {t("developmentDependencies")}
+                </AccordionTrigger>
                 <AccordionContent className="max-h-96 overflow-auto">
                   <div className="grid gap-4">
                     {Object.entries(developmentDependencies).map(
