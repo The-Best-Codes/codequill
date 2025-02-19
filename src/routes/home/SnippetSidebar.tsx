@@ -33,6 +33,7 @@ import {
   Trash2,
 } from "lucide-react";
 import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 interface SnippetSidebarProps
@@ -58,6 +59,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Ref to the currently selected snippet element
   const selectedSnippetRef = useRef<HTMLDivElement>(null);
@@ -108,7 +110,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
         <div className="flex flex-col items-center justify-center mt-8 h-full">
           <Inbox className="w-10 h-10 text-muted-foreground" />
           <span className="text-sm text-muted-foreground">
-            No snippets found.
+            {t("noSnippetsFound")}
           </span>
         </div>
       );
@@ -140,7 +142,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               onClick={() => copySnippet(snippet.id)}
             >
               <Copy className="mr-2 h-4 w-4" />
-              Copy
+              {t("copy")}
             </ContextMenuItem>
             <ContextMenuItem
               className="cursor-pointer"
@@ -150,7 +152,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               }}
             >
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete
+              {t("delete")}
             </ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>
@@ -247,12 +249,12 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               className="pt-3 w-72 h-full flex flex-col pb-2"
             >
               <SheetHeader id="sidebar-header" className="mb-2">
-                <SheetTitle>CodeQuill</SheetTitle>
+                <SheetTitle>{t("appTitle")}</SheetTitle>
               </SheetHeader>
               <div className="flex flex-col w-full gap-2">
                 <Button variant="default" onClick={handleNewSnippetClick}>
                   <Plus className="h-4 w-4" />
-                  New Snippet
+                  {t("newSnippet")}
                 </Button>
                 <Button
                   variant="outline"
@@ -260,7 +262,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                   onClick={() => setIsSearchDialogOpen(true)}
                 >
                   <Search className="h-5 w-5 mr-2" />
-                  Search
+                  {t("searchSnippets")}
                 </Button>
               </div>
               <ScrollArea className="h-full mb-2">
@@ -273,7 +275,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                   onClick={handleSettingsClick}
                 >
                   <Settings className="h-5 w-5" />
-                  Settings
+                  {t("settings")}
                 </Button>
               </div>
             </SheetContent>
@@ -283,7 +285,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
         showSidebar && (
           <div className="w-64 border-r bg-background flex flex-col">
             <div className="flex items-center justify-between p-2">
-              <h1 className="text-lg font-semibold">CodeQuill</h1>
+              <h1 className="text-lg font-semibold">{t("appTitle")}</h1>
               <Button variant="ghost" size="icon" onClick={toggleSidebar}>
                 <Menu className="h-5 w-5" />
               </Button>
@@ -291,7 +293,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             <div className="px-2 flex flex-col gap-2">
               <Button variant="default" onClick={handleNewSnippetClick}>
                 <Plus className="h-4 w-4 mr-2" />
-                New Snippet
+                {t("newSnippet")}
               </Button>
               <Button
                 variant="outline"
@@ -299,7 +301,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 onClick={() => setIsSearchDialogOpen(true)}
               >
                 <Search className="h-5 w-5 mr-2" />
-                Search
+                {t("searchSnippets")}
               </Button>
             </div>
             <ScrollArea className="h-full mb-2 p-2">
@@ -312,7 +314,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 onClick={handleSettingsClick}
               >
                 <Settings className="h-5 w-5" />
-                Settings
+                {t("settings")}
               </Button>
             </div>
           </div>
