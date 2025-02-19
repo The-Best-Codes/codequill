@@ -16,6 +16,7 @@ import {
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { Inbox } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SnippetSearchDialogProps
   extends Pick<UseSnippetsReturn, "filteredSnippets" | "loadSnippetInEditor"> {
@@ -30,26 +31,27 @@ const SnippetSearchDialog: React.FC<SnippetSearchDialogProps> = ({
   loadSnippetInEditor,
 }) => {
   const [value, setValue] = useState("");
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-h-96 flex flex-col h-full">
         <DialogHeader>
-          <DialogTitle>Search Snippets</DialogTitle>
+          <DialogTitle>{t("searchSnippets")}</DialogTitle>
           <DialogDescription className="sr-only">
-            Quickly search and open snippets.
+            {t("typeToSearch")}
           </DialogDescription>
         </DialogHeader>
         <Command>
           <CommandInput
-            placeholder="Type to search snippets..."
+            placeholder={t("typeToSearch")}
             value={value}
             onValueChange={setValue}
           />
           <CommandList>
             <CommandEmpty className="w-full mt-8 flex flex-col items-center justify-center">
               <Inbox className="w-10 h-10 text-muted-foreground" />
-              <span>No snippets found.</span>
+              <span>{t("noSnippetsFound")}</span>
             </CommandEmpty>
             <CommandGroup>
               {filteredSnippets.map((snippet) => (

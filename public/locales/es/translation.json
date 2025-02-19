@@ -61,5 +61,7 @@
   "morePages": "Más páginas",
   "previous": "Anterior",
   "next": "Siguiente",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "searchLanguage": "Buscar lenguaje...",
+  "noLanguageFound": "No se encontró ningún lenguaje."
 }

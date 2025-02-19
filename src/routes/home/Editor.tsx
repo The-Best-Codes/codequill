@@ -4,6 +4,7 @@ import Editor, { OnMount } from "@monaco-editor/react";
 import { Plus, Sparkles } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 interface EditorProps
@@ -40,6 +41,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   const editorInstance = useRef<any>(null);
   const { resolvedTheme } = useTheme();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -127,7 +129,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         <div className="flex flex-col items-center justify-center h-full">
           <Sparkles className="w-12 h-12 sm:w-24 sm:h-24 text-primary" />
           <span className="text-sm sm:text-base text-center text-muted-foreground">
-            You don't have any snippets yet. Create one now!
+            {t("youDonTHaveAnySnippets")}
           </span>
           <Button
             variant="outline"
@@ -135,7 +137,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
             className="mt-4"
           >
             <Plus className="w-5 h-5" />
-            Create New Snippet
+            {t("createNewSnippet")}
           </Button>
         </div>
       ) : (

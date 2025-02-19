@@ -26,6 +26,8 @@ interface PreviewComponentProps {
 const PreviewComponent: React.FC<
   PreviewComponentProps & { languageId: string | undefined }
 > = ({ code, languageId }) => {
+  // @TODO:TRANSLATE
+  // No Preview Available
   const Preview =
     previewComponents[languageId as keyof typeof previewComponents] ||
     (() => <div>No Preview Available</div>);

@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Language } from "./types";
 
 interface LanguageSelectorProps {
@@ -29,6 +30,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>(""); // Initialize to empty string
+  const { t } = useTranslation();
 
   // Update the internal 'value' state whenever the 'language' prop changes.
   useEffect(() => {
@@ -46,15 +48,15 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         >
           {value
             ? supportedLanguages.find((l) => l.id === value)?.name
-            : "Select language..."}
+            : t("selectLanguage")}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-60 p-0">
         <Command>
-          <CommandInput placeholder="Search language..." className="h-9" />
+          <CommandInput placeholder={t("searchLanguage")} className="h-9" />
           <CommandList>
-            <CommandEmpty>No language found.</CommandEmpty>
+            <CommandEmpty>{t("noLanguageFound")}</CommandEmpty>
             <CommandGroup>
               {supportedLanguages.map((l) => (
                 <CommandItem
