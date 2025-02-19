@@ -193,33 +193,42 @@ export const useSnippets = (): Omit<
   };
 
   const createNewSnippet = async () => {
-    const newSnippetId = uuidv4();
-    const defaultLanguage = getDefaultLanguage();
-    const newSnippet: Snippet = {
-      id: newSnippetId,
-      filename: "Untitled",
-      language: defaultLanguage.id,
-      code: "",
+    const createPromise = async () => {
+      const newSnippetId = uuidv4();
+      const defaultLanguage = getDefaultLanguage();
+      const newSnippet: Snippet = {
+        id: newSnippetId,
+        filename: "Untitled",
+        language: defaultLanguage.id,
+        code: "",
+      };
+
+      try {
+        await saveSnippet(newSnippet);
+        setSnippets([newSnippet, ...snippets]);
+        setFilename("Untitled");
+        setLanguage(defaultLanguage);
+        setCode("");
+        setSelectedSnippetId(newSnippetId);
+        currentSnippet.current = newSnippet; // Clear the current snippet
+        setIsPreviewing(false);
+        setIsPreviewable(
+          !!defaultLanguage &&
+            previewLanguages.some((l) => l.id === defaultLanguage.id),
+        );
+        return "New snippet saved!";
+      } catch (e: any) {
+        setError(e.message || "Failed to create new snippet.");
+        showErrorToast("Failed to create new snippet.", e.message);
+        throw new Error(e.message || "Failed to create new snippet."); // Re-throw for toast.promise
+      }
     };
 
-    try {
-      await saveSnippet(newSnippet);
-      setSnippets([newSnippet, ...snippets]);
-      setFilename("Untitled");
-      setLanguage(defaultLanguage);
-      setCode("");
-      setSelectedSnippetId(newSnippetId);
-      currentSnippet.current = newSnippet; // Clear the current snippet
-      setIsPreviewing(false);
-      setIsPreviewable(
-        !!defaultLanguage &&
-          previewLanguages.some((l) => l.id === defaultLanguage.id),
-      );
-      toast.success("New snippet saved!");
-    } catch (e: any) {
-      setError(e.message || "Failed to create new snippet.");
-      showErrorToast("Failed to create new snippet.", e.message);
-    }
+    toast.promise(createPromise(), {
+      loading: "Creating new snippet...",
+      success: (message) => message,
+      error: "Failed to create new snippet.",
+    });
   };
 
   const loadSnippetInEditor = async (id: string) => {

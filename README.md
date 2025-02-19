@@ -21,7 +21,7 @@ Whether you're a seasoned developer or just starting out, CodeQuill helps you or
     - [Linux](#linux)
     - [Windows](#windows)
     - [macOS](#macos)
-  - [Snap Store (Coming Soon)](#snap-store-coming-soon)
+  - [Snap Store](#snap-store)
   - [Flathub (Coming Soon)](#flathub-coming-soon)
 - [Updating](#updating)
   - [Linux (Debian-based)](#linux-debian-based)
