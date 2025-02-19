@@ -1,0 +1,24 @@
+{
+  "version": 1.3,
+  "locale": {
+    "source": "en",
+    "targets": [
+      "es",
+      "fr",
+      "de",
+      "it",
+      "pt",
+      "nl",
+      "zh",
+      "ja",
+      "ko",
+      "ru",
+      "ar"
+    ]
+  },
+  "buckets": {
+    "json": {
+      "include": ["public/locales/[locale]/translation.json"]
+    }
+  }
+}
