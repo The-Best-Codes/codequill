@@ -18,18 +18,21 @@ import { Language } from "../home/types";
 import AppInfoSection from "./AppInfoSection";
 import DependenciesSection from "./DependenciesSection";
 import KeyboardShortcutsSection from "./KeyboardShortcutsSection";
+import LanguageSection from "./LanguageSection";
 import ProgrammingLanguageSection from "./ProgrammingLanguageSection";
 import ThemeSection from "./ThemeSection";
 
 const APP_VERSION = packageJson.version;
 
 function Settings() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState<Language>(
     getConfig().defaultLanguage,
   );
+
+  const [appLanguage, setAppLanguage] = useState<string>(i18n.language || "en");
 
   const handleBack = () => {
     navigate("/");
@@ -50,9 +53,24 @@ function Settings() {
   }, [navigate]);
 
   useEffect(() => {
-    // Update the config whenever the language changes
+    // Update the config whenever the programming language changes
     updateConfig({ defaultLanguage: language });
   }, [language]);
+
+  const availableLanguages = [
+    { code: "en", name: "English" },
+    { code: "fr", name: "Français" },
+    { code: "es", name: "Español" },
+    { code: "de", name: "Deutsch" },
+    { code: "it", name: "Italiano" },
+    { code: "pt", name: "Português" },
+    { code: "nl", name: "Nederlands" },
+    { code: "zh", name: "中文" },
+    { code: "ja", name: "日本語" },
+    { code: "ko", name: "한국어" },
+    { code: "ru", name: "Русский" },
+    { code: "ar", name: "العربية" },
+  ];
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 flex items-center justify-center">
@@ -73,6 +91,15 @@ function Settings() {
           </div>
         </CardHeader>
         <CardContent className="space-y-8">
+          <LanguageSection
+            appLanguage={appLanguage}
+            setAppLanguage={setAppLanguage}
+            availableLanguages={availableLanguages}
+            i18n={i18n}
+          />
+
+          <Separator />
+
           <ThemeSection theme={theme} setTheme={setTheme} />
 
           <Separator />
