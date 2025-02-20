@@ -80,5 +80,7 @@
   "failedToCopySnippet": "Falha ao copiar o trecho.",
   "failedToRemovePreview": "Falha ao remover a pré-visualização do localStorage.",
   "deletingSnippet": "Excluindo trecho",
-  "failedToDeleteSnippet": "Falha ao excluir o trecho."
+  "failedToDeleteSnippet": "Falha ao excluir o trecho.",
+  "appLanguage": "Idioma do aplicativo",
+  "selectAppLanguage": "Escolha seu idioma falado"
 }

@@ -80,5 +80,7 @@
   "failedToCopySnippet": "Не удалось скопировать фрагмент кода.",
   "failedToRemovePreview": "Не удалось удалить предварительный просмотр из localStorage.",
   "deletingSnippet": "Удаление фрагмента кода",
-  "failedToDeleteSnippet": "Не удалось удалить фрагмент кода."
+  "failedToDeleteSnippet": "Не удалось удалить фрагмент кода.",
+  "appLanguage": "Язык приложения",
+  "selectAppLanguage": "Выберите ваш разговорный язык"
 }

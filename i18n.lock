@@ -83,3 +83,5 @@ checksums:
     failedToRemovePreview: 5d059bca32f02c5deb887d381f6d1c09
     deletingSnippet: a34a7d622f658e4bb7fa08aded15d7dd
     failedToDeleteSnippet: 954c9d9c364aa31ff41bd27913916ffc
+    appLanguage: 2b7eaaca25bc7ae218db64345ef72629
+    selectAppLanguage: 913d766cdf85b1c28be8eb8129a82a9e

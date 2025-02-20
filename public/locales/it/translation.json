@@ -80,5 +80,7 @@
   "failedToCopySnippet": "Impossibile copiare lo snippet.",
   "failedToRemovePreview": "Impossibile rimuovere l'anteprima dal localStorage.",
   "deletingSnippet": "Eliminazione dello snippet in corso",
-  "failedToDeleteSnippet": "Impossibile eliminare lo snippet."
+  "failedToDeleteSnippet": "Impossibile eliminare lo snippet.",
+  "appLanguage": "Lingua dell'app",
+  "selectAppLanguage": "Scegli la tua lingua parlata"
 }

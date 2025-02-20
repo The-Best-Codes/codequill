@@ -80,5 +80,7 @@
   "failedToCopySnippet": "Error al copiar el fragmento.",
   "failedToRemovePreview": "Error al eliminar la vista previa del almacenamiento local.",
   "deletingSnippet": "Borrando fragmento",
-  "failedToDeleteSnippet": "Error al borrar el fragmento."
+  "failedToDeleteSnippet": "Error al borrar el fragmento.",
+  "appLanguage": "Idioma de la aplicación",
+  "selectAppLanguage": "Elige tu idioma hablado"
 }

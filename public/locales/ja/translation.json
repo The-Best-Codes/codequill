@@ -80,5 +80,7 @@
   "failedToCopySnippet": "スニペットのコピーに失敗しました。",
   "failedToRemovePreview": "localStorageからプレビューの削除に失敗しました。",
   "deletingSnippet": "スニペットを削除中",
-  "failedToDeleteSnippet": "スニペットの削除に失敗しました。"
+  "failedToDeleteSnippet": "スニペットの削除に失敗しました。",
+  "appLanguage": "アプリの言語",
+  "selectAppLanguage": "使用する言語を選択してください"
 }

@@ -80,5 +80,7 @@
   "failedToCopySnippet": "فشل نسخ المقتطف.",
   "failedToRemovePreview": "فشل إزالة المعاينة من التخزين المحلي.",
   "deletingSnippet": "جارٍ حذف المقتطف",
-  "failedToDeleteSnippet": "فشل حذف المقتطف."
+  "failedToDeleteSnippet": "فشل حذف المقتطف.",
+  "appLanguage": "لغة التطبيق",
+  "selectAppLanguage": "اختر لغتك المحكية"
 }

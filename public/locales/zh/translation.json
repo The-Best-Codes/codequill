@@ -80,5 +80,7 @@
   "failedToCopySnippet": "复制代码片段失败。",
   "failedToRemovePreview": "从本地存储中删除预览失败。",
   "deletingSnippet": "正在删除代码片段",
-  "failedToDeleteSnippet": "删除代码片段失败。"
+  "failedToDeleteSnippet": "删除代码片段失败。",
+  "appLanguage": "应用语言",
+  "selectAppLanguage": "选择您的使用语言"
 }

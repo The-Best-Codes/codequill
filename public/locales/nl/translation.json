@@ -80,5 +80,7 @@
   "failedToCopySnippet": "Kon de snippet niet kopiëren.",
   "failedToRemovePreview": "Kon de preview niet verwijderen uit de localStorage.",
   "deletingSnippet": "Snippet verwijderen",
-  "failedToDeleteSnippet": "Kon de snippet niet verwijderen."
+  "failedToDeleteSnippet": "Kon de snippet niet verwijderen.",
+  "appLanguage": "App-taal",
+  "selectAppLanguage": "Kies je gesproken taal"
 }

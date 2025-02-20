@@ -80,5 +80,7 @@
   "failedToCopySnippet": "스니펫을 복사하지 못했습니다.",
   "failedToRemovePreview": "로컬 스토리지에서 미리보기를 제거하지 못했습니다.",
   "deletingSnippet": "스니펫 삭제 중",
-  "failedToDeleteSnippet": "스니펫을 삭제하지 못했습니다."
+  "failedToDeleteSnippet": "스니펫을 삭제하지 못했습니다.",
+  "appLanguage": "앱 언어",
+  "selectAppLanguage": "사용할 언어를 선택하세요"
 }
