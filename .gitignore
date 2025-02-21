@@ -30,3 +30,6 @@ package-lock.json
 # Flatpak file for Flatpak & Flathub
 flatpak-build
 .flatpak-builder
+
+# Sentry Config File
+.env.sentry-build-plugin
