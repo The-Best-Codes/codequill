@@ -146,6 +146,12 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             </ContextMenuItem>
             <ContextMenuItem
               className="cursor-pointer"
+              onClick={() => console.log(JSON.stringify(snippet))}
+            >
+              Info
+            </ContextMenuItem>
+            <ContextMenuItem
+              className="cursor-pointer"
               onClick={() => {
                 setDeletingSnippetId(snippet.id);
                 setDeleteOpen(true);
