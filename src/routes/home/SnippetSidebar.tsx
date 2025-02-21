@@ -23,18 +23,21 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
+import { Snippet } from "@/utils/database";
 import {
   Copy,
   Inbox,
+  Info,
   Menu,
   Plus,
   Search,
   Settings,
   Trash2,
 } from "lucide-react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import SnippetInfoDialog from "./SnippetInfoDialog";
 
 interface SnippetSidebarProps
   extends Omit<UseSnippetsReturn, "searchQuery" | "setSearchQuery"> {
@@ -64,6 +67,10 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
   // Ref to the currently selected snippet element
   const selectedSnippetRef = useRef<HTMLDivElement>(null);
 
+  const [isInfoDialogOpen, setIsInfoDialogOpen] = useState(false);
+  const [currentSnippetForInfo, setCurrentSnippetForInfo] =
+    useState<Snippet | null>(null);
+
   const handleNewSnippetClick = () => {
     createNewSnippet();
     if (isMobile) toggleSidebar();
@@ -75,6 +82,11 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
 
   const handleSettingsClick = () => {
     navigate("/settings");
+  };
+
+  const handleInfoClick = (snippet: Snippet) => {
+    setCurrentSnippetForInfo(snippet);
+    setIsInfoDialogOpen(true);
   };
 
   // Effect to scroll to the selected snippet
@@ -146,9 +158,10 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             </ContextMenuItem>
             <ContextMenuItem
               className="cursor-pointer"
-              onClick={() => console.log(JSON.stringify(snippet))}
+              onClick={() => handleInfoClick(snippet)}
             >
-              Info
+              <Info className="mr-2 h-4 w-4" />
+              {t("info")}
             </ContextMenuItem>
             <ContextMenuItem
               className="cursor-pointer"
@@ -326,6 +339,11 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
           </div>
         )
       )}
+      <SnippetInfoDialog
+        isOpen={isInfoDialogOpen}
+        setOpen={setIsInfoDialogOpen}
+        snippet={currentSnippetForInfo}
+      />
     </>
   );
 };
