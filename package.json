@@ -2,7 +2,7 @@
   "name": "codequill",
   "description": "Organize, edit, and preview code efficiently",
   "private": true,
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "author": {
     "name": "The-Best-Codes",
@@ -82,7 +82,7 @@
     "recharts": "^2.15.1",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
-    "sonner": "^2.0.1",
+    "sonner": "^2.0.2",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
