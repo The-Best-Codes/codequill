@@ -90,7 +90,7 @@ const SnippetInfoDialog: React.FC<SnippetInfoDialogProps> = ({
               className="text-right font-medium flex items-center"
             >
               <Calendar className="mr-2 h-4 w-4 text-gray-500" />
-              {t("createdAt")}:
+              {t("lastSaved")}:
             </Label>
             <Input
               id="createdAt"
