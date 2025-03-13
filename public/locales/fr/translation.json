@@ -82,5 +82,11 @@
   "deletingSnippet": "Suppression du snippet",
   "failedToDeleteSnippet": "Échec de la suppression du snippet.",
   "appLanguage": "Langue de l'application",
-  "selectAppLanguage": "Choisissez votre langue parlée"
+  "selectAppLanguage": "Choisissez votre langue parlée",
+  "snippetInformation": "Infos sur l'extrait",
+  "snippetDetails": "Voir les détails de cet extrait",
+  "id": "ID",
+  "language": "Langue",
+  "lastSaved": "Dernière sauvegarde",
+  "info": "Infos"
 }

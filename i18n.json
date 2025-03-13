@@ -18,7 +18,10 @@
   },
   "buckets": {
     "json": {
-      "include": ["public/locales/[locale]/translation.json"]
+      "include": [
+        "public/locales/[locale]/translation.json"
+      ]
     }
-  }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
 }

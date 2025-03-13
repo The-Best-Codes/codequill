@@ -82,5 +82,11 @@
   "deletingSnippet": "正在删除代码片段",
   "failedToDeleteSnippet": "删除代码片段失败。",
   "appLanguage": "应用语言",
-  "selectAppLanguage": "选择您的使用语言"
+  "selectAppLanguage": "选择您的使用语言",
+  "snippetInformation": "代码片段信息",
+  "snippetDetails": "查看此代码片段的详细信息",
+  "id": "ID",
+  "language": "语言",
+  "lastSaved": "最后保存",
+  "info": "信息"
 }

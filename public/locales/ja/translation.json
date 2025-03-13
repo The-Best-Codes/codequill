@@ -82,5 +82,11 @@
   "deletingSnippet": "スニペットを削除中",
   "failedToDeleteSnippet": "スニペットの削除に失敗しました。",
   "appLanguage": "アプリの言語",
-  "selectAppLanguage": "使用する言語を選択してください"
+  "selectAppLanguage": "使用する言語を選択してください",
+  "snippetInformation": "スニペット情報",
+  "snippetDetails": "このスニペットの詳細を表示",
+  "id": "ID",
+  "language": "言語",
+  "lastSaved": "最終保存日時",
+  "info": "情報"
 }

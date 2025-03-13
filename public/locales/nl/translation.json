@@ -82,5 +82,11 @@
   "deletingSnippet": "Snippet verwijderen",
   "failedToDeleteSnippet": "Kon de snippet niet verwijderen.",
   "appLanguage": "App-taal",
-  "selectAppLanguage": "Kies je gesproken taal"
+  "selectAppLanguage": "Kies je gesproken taal",
+  "snippetInformation": "Snippet-informatie",
+  "snippetDetails": "Bekijk details over deze snippet",
+  "id": "ID",
+  "language": "Taal",
+  "lastSaved": "Laatst opgeslagen",
+  "info": "Info"
 }

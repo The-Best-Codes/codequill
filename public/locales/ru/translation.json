@@ -82,5 +82,11 @@
   "deletingSnippet": "Удаление фрагмента кода",
   "failedToDeleteSnippet": "Не удалось удалить фрагмент кода.",
   "appLanguage": "Язык приложения",
-  "selectAppLanguage": "Выберите ваш разговорный язык"
+  "selectAppLanguage": "Выберите ваш разговорный язык",
+  "snippetInformation": "Информация о сниппете",
+  "snippetDetails": "Просмотр подробностей об этом сниппете",
+  "id": "ID",
+  "language": "Язык",
+  "lastSaved": "Последнее сохранение",
+  "info": "Информация"
 }

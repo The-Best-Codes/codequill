@@ -82,5 +82,11 @@
   "deletingSnippet": "스니펫 삭제 중",
   "failedToDeleteSnippet": "스니펫을 삭제하지 못했습니다.",
   "appLanguage": "앱 언어",
-  "selectAppLanguage": "사용할 언어를 선택하세요"
+  "selectAppLanguage": "사용할 언어를 선택하세요",
+  "snippetInformation": "스니펫 정보",
+  "snippetDetails": "이 스니펫에 대한 세부 정보 보기",
+  "id": "ID",
+  "language": "언어",
+  "lastSaved": "마지막 저장",
+  "info": "정보"
 }

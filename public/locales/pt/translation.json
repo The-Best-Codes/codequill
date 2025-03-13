@@ -82,5 +82,11 @@
   "deletingSnippet": "Excluindo trecho",
   "failedToDeleteSnippet": "Falha ao excluir o trecho.",
   "appLanguage": "Idioma do aplicativo",
-  "selectAppLanguage": "Escolha seu idioma falado"
+  "selectAppLanguage": "Escolha seu idioma falado",
+  "snippetInformation": "Informações do snippet",
+  "snippetDetails": "Ver detalhes sobre este snippet",
+  "id": "ID",
+  "language": "Idioma",
+  "lastSaved": "Última salvamento",
+  "info": "Informações"
 }

@@ -82,5 +82,11 @@
   "deletingSnippet": "جارٍ حذف المقتطف",
   "failedToDeleteSnippet": "فشل حذف المقتطف.",
   "appLanguage": "لغة التطبيق",
-  "selectAppLanguage": "اختر لغتك المحكية"
+  "selectAppLanguage": "اختر لغتك المحكية",
+  "snippetInformation": "معلومات المقتطف",
+  "snippetDetails": "عرض تفاصيل هذا المقتطف",
+  "id": "المعرّف",
+  "language": "اللغة",
+  "lastSaved": "آخر حفظ",
+  "info": "معلومات"
 }

@@ -82,5 +82,11 @@
   "deletingSnippet": "Borrando fragmento",
   "failedToDeleteSnippet": "Error al borrar el fragmento.",
   "appLanguage": "Idioma de la aplicación",
-  "selectAppLanguage": "Elige tu idioma hablado"
+  "selectAppLanguage": "Elige tu idioma hablado",
+  "snippetInformation": "Información del fragmento",
+  "snippetDetails": "Ver detalles de este fragmento",
+  "id": "ID",
+  "language": "Lenguaje",
+  "lastSaved": "Última guardado",
+  "info": "Información"
 }
