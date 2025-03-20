@@ -1,3 +1,5 @@
+use tauri::Manager;
+
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -12,7 +14,10 @@ pub fn run() {
             // Handle the single instance event here.
             // You can access the AppHandle, arguments, and current working directory.
             // For example, to focus the main window:
-            // let _ = _app.get_webview_window("main").expect("no main window").set_focus();
+            let _ = _app
+                .get_webview_window("main")
+                .expect("no main window")
+                .set_focus();
         }))
         .plugin(tauri_plugin_sql::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
