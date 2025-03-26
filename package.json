@@ -21,7 +21,8 @@
     "preview": "vite preview",
     "icon": "npm run tauri icon public/icon.svg",
     "tauri": "tauri",
-    "translate": "lingo.dev i18n"
+    "translate": "lingo.dev i18n",
+    "test": "bun tauri build --target x86_64-unknown-linux-gnu --no-bundle --ci"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
