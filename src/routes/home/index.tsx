@@ -83,7 +83,7 @@ function Home() {
   const hasSnippets = snippets.length > 0;
 
   return (
-    <div className="h-screen w-full flex flex-row">
+    <div className="h-screen w-full antialiased flex flex-row">
       <SnippetSidebar
         showSidebar={showSidebar}
         toggleSidebar={toggleSidebar}

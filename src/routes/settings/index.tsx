@@ -73,7 +73,7 @@ function Settings() {
   ];
 
   return (
-    <div className="min-h-screen bg-background p-6 md:p-8 flex items-center justify-center">
+    <div className="min-h-screen antialiased bg-background p-6 md:p-8 flex items-center justify-center">
       <Card className="w-full max-w-3xl">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
