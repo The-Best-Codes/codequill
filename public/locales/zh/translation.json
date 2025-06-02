@@ -89,5 +89,6 @@
   "language": "语言",
   "lastSaved": "最后保存",
   "info": "信息",
-  "noPreviewAvailable": "无法提供预览"
+  "noPreviewAvailable": "无法提供预览",
+  "notAvailable": "不可用"
 }

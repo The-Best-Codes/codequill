@@ -89,5 +89,6 @@
   "language": "言語",
   "lastSaved": "最終保存日時",
   "info": "情報",
-  "noPreviewAvailable": "プレビューはありません"
+  "noPreviewAvailable": "プレビューはありません",
+  "notAvailable": "利用不可"
 }
