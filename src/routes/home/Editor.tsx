@@ -117,11 +117,17 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     hasSnippets,
   ]);
 
+  const themeKeys = {
+    light: "vs-light",
+    dark: "vs-dark",
+    dim: "vs-dark",
+  };
+
+  type ThemeKey = keyof typeof themeKeys;
+
   // Determine the Monaco theme based on the resolved next-themes theme
   const monacoTheme =
-    resolvedTheme === "dark" || resolvedTheme === "dim"
-      ? "vs-dark"
-      : "vs-light";
+    themeKeys[(resolvedTheme || "light") as ThemeKey] || "vs-light";
 
   return (
     <div
