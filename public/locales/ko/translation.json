@@ -88,5 +88,6 @@
   "id": "ID",
   "language": "언어",
   "lastSaved": "마지막 저장",
-  "info": "정보"
+  "info": "정보",
+  "noPreviewAvailable": "미리보기를 사용할 수 없음"
 }

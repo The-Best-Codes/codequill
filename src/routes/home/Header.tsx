@@ -119,9 +119,6 @@ const Header: React.FC<HeaderProps> = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="flex lg:hidden min-w-8">
           <Button variant="outline" className="h-8 w-8 p-0">
-            {/* @TODO:TRANSLATE
-             * Provide a better screenreader translation
-             */}
             <span className="sr-only">{t("openSettings")}</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>

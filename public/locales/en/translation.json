@@ -88,5 +88,6 @@
   "id": "ID",
   "language": "Language",
   "lastSaved": "Last Saved",
-  "info": "Info"
+  "info": "Info",
+  "noPreviewAvailable": "No preview available"
 }

@@ -28,6 +28,7 @@ const PreviewComponent: React.FC<
 > = ({ code, languageId }) => {
   // @TODO:TRANSLATE
   // No Preview Available
+  // A translation key (noPreviewAvailable) exists, but is not yet implemented here
   const Preview =
     previewComponents[languageId as keyof typeof previewComponents] ||
     (() => <div>No Preview Available</div>);
