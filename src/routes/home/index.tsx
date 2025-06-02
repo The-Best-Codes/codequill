@@ -2,6 +2,7 @@
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import DeleteDialog from "./DeleteDialog";
 import Editor from "./Editor";
 import Header from "./Header";
@@ -26,12 +27,11 @@ interface PreviewComponentProps {
 const PreviewComponent: React.FC<
   PreviewComponentProps & { languageId: string | undefined }
 > = ({ code, languageId }) => {
-  // @TODO:TRANSLATE
-  // No Preview Available
-  // A translation key (noPreviewAvailable) exists, but is not yet implemented here
+  const { t } = useTranslation();
+
   const Preview =
     previewComponents[languageId as keyof typeof previewComponents] ||
-    (() => <div>No Preview Available</div>);
+    (() => <div>{t("noPreviewAvailable")}</div>);
 
   return <Preview code={code} />;
 };
@@ -101,7 +101,7 @@ function Home() {
           toggleSidebar={toggleSidebar}
           createNewSnippet={createNewSnippet}
         />
-        {isPreviewing && (
+        {isPreviewing && hasSnippets && (
           <div className="h-1/2 overflow-auto w-full border-t">
             <PreviewComponent
               code={snippetHelpers.code}

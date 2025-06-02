@@ -97,7 +97,7 @@ const SnippetInfoDialog: React.FC<SnippetInfoDialogProps> = ({
               value={
                 snippet.created_at
                   ? new Date(snippet.created_at).toLocaleString()
-                  : t("notAvailable")
+                  : t("notAvailable") //@TODO:TRANSLATE
               }
               readOnly
               className="col-span-3 cursor-not-allowed"
