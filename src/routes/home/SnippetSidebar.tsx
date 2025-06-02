@@ -141,7 +141,7 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               className={cn(
                 "w-full justify-start",
                 selectedSnippetId === snippet.id &&
-                  "bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-accent-foreground",
+                  "bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-700 dark:hover:bg-neutral-600 dim:bg-neutral-700 dim:hover:bg-neutral-600 text-accent-foreground",
               )}
               onClick={() => loadSnippetInEditor(snippet.id)}
             >

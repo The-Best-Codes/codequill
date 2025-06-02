@@ -10,6 +10,7 @@ function App() {
       attribute="class"
       defaultTheme="system"
       enableSystem={true}
+      themes={["light", "dark", "dim", "system"]}
       storageKey="vite-react-theme"
     >
       <Router>

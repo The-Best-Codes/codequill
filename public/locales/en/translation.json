@@ -67,6 +67,7 @@
   "website": "Website",
   "themeLight": "Light",
   "themeDark": "Dark",
+  "themeDim": "Dim",
   "themeSystem": "System",
   "failedToLoadSnippets": "Failed to load snippets.",
   "failedToCreateNewSnippet": "Failed to create new snippet.",

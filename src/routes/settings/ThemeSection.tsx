@@ -23,7 +23,7 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({ theme, setTheme }) => {
         onValueChange={setTheme}
         className="grid grid-cols-1 md:grid-cols-3 gap-4"
       >
-        {["light", "dark", "system"].map((value) => (
+        {["light", "dark", "dim", "system"].map((value) => (
           <Label
             key={value}
             className="cursor-pointer [&:has([data-state=checked])]:border-primary"

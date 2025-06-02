@@ -118,7 +118,10 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   ]);
 
   // Determine the Monaco theme based on the resolved next-themes theme
-  const monacoTheme = resolvedTheme === "dark" ? "vs-dark" : "vs-light";
+  const monacoTheme =
+    resolvedTheme === "dark" || resolvedTheme === "dim"
+      ? "vs-dark"
+      : "vs-light";
 
   return (
     <div
