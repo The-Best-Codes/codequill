@@ -47,6 +47,57 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
     editorRef.current = editor;
     editorInstance.current = editor; // Store the editor instance
 
+    // Define and register the vs-dark-muted theme
+    monaco.editor.defineTheme("vs-dark-muted", {
+      base: "vs-dark",
+      inherit: true,
+      rules: [
+        { token: "", foreground: "9ca3af", background: "1f2937" },
+        { token: "comment", foreground: "6b7280", fontStyle: "italic" },
+        { token: "keyword", foreground: "8b5cf6" },
+        { token: "string", foreground: "10b981" },
+        { token: "number", foreground: "f59e0b" },
+        { token: "regexp", foreground: "f59e0b" },
+        { token: "type", foreground: "3b82f6" },
+        { token: "class", foreground: "3b82f6" },
+        { token: "function", foreground: "06b6d4" },
+        { token: "variable", foreground: "e5e7eb" },
+        { token: "constant", foreground: "ef4444" },
+        { token: "attribute", foreground: "f59e0b" },
+        { token: "tag", foreground: "ef4444" },
+        { token: "operator", foreground: "d1d5db" },
+        { token: "delimiter", foreground: "d1d5db" },
+      ],
+      colors: {
+        "editor.background": "#1f2937",
+        "editor.foreground": "#9ca3af",
+        "editor.lineHighlightBackground": "#374151",
+        "editor.selectionBackground": "#4b5563",
+        "editor.inactiveSelectionBackground": "#374151",
+        "editorCursor.foreground": "#f3f4f6",
+        "editorWhitespace.foreground": "#4b5563",
+        "editorLineNumber.foreground": "#6b7280",
+        "editorLineNumber.activeForeground": "#9ca3af",
+        "editor.selectionHighlightBackground": "#4b5563",
+        "editor.wordHighlightBackground": "#374151",
+        "editor.wordHighlightStrongBackground": "#4b5563",
+        "editorBracketMatch.background": "#4b5563",
+        "editorBracketMatch.border": "#6b7280",
+        "editorGutter.background": "#1f2937",
+        "editorGutter.modifiedBackground": "#f59e0b",
+        "editorGutter.addedBackground": "#10b981",
+        "editorGutter.deletedBackground": "#ef4444",
+        "editorError.foreground": "#ef4444",
+        "editorWarning.foreground": "#f59e0b",
+        "editorInfo.foreground": "#3b82f6",
+        "editorHint.foreground": "#6b7280",
+        "scrollbar.shadow": "#00000050",
+        "scrollbarSlider.background": "#4b556380",
+        "scrollbarSlider.hoverBackground": "#6b728080",
+        "scrollbarSlider.activeBackground": "#9ca3af80",
+      },
+    });
+
     // Override Monaco's Ctrl+K command
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK, () => {
       setIsSearchDialogOpen(true);
@@ -120,7 +171,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   const themeKeys = {
     light: "vs-light",
     dark: "vs-dark",
-    dim: "vs-dark",
+    dim: "vs-dark-muted",
   };
 
   type ThemeKey = keyof typeof themeKeys;
