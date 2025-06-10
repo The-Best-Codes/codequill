@@ -30,6 +30,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@monaco-editor/react": "^4.7.0",
+    "monaco-editor": "^0.47.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -106,7 +107,8 @@
     "postcss": "^8.5.4",
     "tailwindcss": "^4.1.8",
     "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^1.0.1"
   },
   "trustedDependencies": [
     "@sentry/cli",
