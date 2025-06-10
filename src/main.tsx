@@ -1,5 +1,5 @@
+import { loader } from "@monaco-editor/react";
 import * as Sentry from "@sentry/react";
-import { loader } from '@monaco-editor/react';
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./i18n";
@@ -8,11 +8,10 @@ import "./index.css";
 
 import App from "./App";
 
-// Configure the loader to use local assets from the 'public/vs' directory
 loader.config({
   paths: {
-    vs: '/vs'
-  }
+    vs: "/vs",
+  },
 });
 
 try {
