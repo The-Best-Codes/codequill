@@ -2,9 +2,11 @@ import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig, normalizePath } from "vite";
+import { analyzer } from "vite-bundle-analyzer";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 const host = process.env.TAURI_DEV_HOST;
+const runBundleAnalyzer = process.env.BUNDLE_ANALYZER_DEBUG === "true";
 
 export default defineConfig(async () => ({
   plugins: [
@@ -28,6 +30,11 @@ export default defineConfig(async () => ({
         },
       ],
     }),
+    runBundleAnalyzer &&
+      analyzer({
+        openAnalyzer: false,
+        fileName: "bundle-report.html",
+      }),
   ],
 
   resolve: {
