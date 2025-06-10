@@ -2,7 +2,7 @@
   "name": "codequill",
   "description": "Organize, edit, and preview code efficiently",
   "private": true,
-  "version": "2.0.3",
+  "version": "2.0.4",
   "type": "module",
   "author": {
     "name": "The-Best-Codes",
@@ -102,7 +102,7 @@
     "@types/react": "^19.1.7",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
-    "lingo.dev": "^0.96.0",
+    "lingo.dev": "^0.97.1",
     "npm-check-updates": "^18.0.1",
     "postcss": "^8.5.4",
     "tailwindcss": "^4.1.8",
