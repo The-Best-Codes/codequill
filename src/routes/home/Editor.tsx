@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import Editor, { OnMount } from "@monaco-editor/react";
-import { Plus, Sparkles } from "lucide-react";
+import Plus from "lucide-react/dist/esm/icons/plus";
+import Sparkles from "lucide-react/dist/esm/icons/sparkles";
 import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";

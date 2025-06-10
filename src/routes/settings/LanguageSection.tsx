@@ -13,7 +13,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import Check from "lucide-react/dist/esm/icons/check";
+import ChevronsUpDown from "lucide-react/dist/esm/icons/chevrons-up-down";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

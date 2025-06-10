@@ -8,7 +8,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Snippet } from "@/utils/database";
-import { Calendar, File, Hash, Languages } from "lucide-react";
+import Calendar from "lucide-react/dist/esm/icons/calendar";
+import File from "lucide-react/dist/esm/icons/file";
+import Hash from "lucide-react/dist/esm/icons/hash";
+import Languages from "lucide-react/dist/esm/icons/languages";
 import { useTranslation } from "react-i18next";
 
 interface SnippetInfoDialogProps {

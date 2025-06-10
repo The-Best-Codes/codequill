@@ -24,16 +24,14 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import { Snippet } from "@/utils/database";
-import {
-  Copy,
-  Inbox,
-  Info,
-  Menu,
-  Plus,
-  Search,
-  Settings,
-  Trash2,
-} from "lucide-react";
+import Copy from "lucide-react/dist/esm/icons/copy";
+import Inbox from "lucide-react/dist/esm/icons/inbox";
+import Info from "lucide-react/dist/esm/icons/info";
+import Menu from "lucide-react/dist/esm/icons/menu";
+import Plus from "lucide-react/dist/esm/icons/plus";
+import Search from "lucide-react/dist/esm/icons/search";
+import Settings from "lucide-react/dist/esm/icons/settings";
+import Trash2 from "lucide-react/dist/esm/icons/trash-2";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";

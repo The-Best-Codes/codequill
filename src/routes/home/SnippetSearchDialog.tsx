@@ -14,7 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { UseSnippetsReturn } from "@/routes/home/types";
-import { Inbox } from "lucide-react";
+import Inbox from "lucide-react/dist/esm/icons/inbox";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

@@ -15,7 +15,11 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { UseSnippetsReturn } from "@/routes/home/types";
-import { Eye, EyeOff, Loader2, MoreHorizontal, Save } from "lucide-react";
+import Eye from "lucide-react/dist/esm/icons/eye";
+import EyeOff from "lucide-react/dist/esm/icons/eye-off";
+import Loader2 from "lucide-react/dist/esm/icons/loader-2";
+import MoreHorizontal from "lucide-react/dist/esm/icons/more-horizontal";
+import Save from "lucide-react/dist/esm/icons/save";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
