@@ -4,8 +4,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./i18n";
 
-import "./index.css";
-
 import App from "./App";
 
 // Import Monaco Editor workers using Vite's worker syntax
@@ -14,6 +12,8 @@ import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+
+import "./index.css";
 
 loader.config({
   paths: {
