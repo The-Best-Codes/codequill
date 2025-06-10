@@ -1,3 +1,4 @@
+import { loader } from "@monaco-editor/react";
 import * as Sentry from "@sentry/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -6,6 +7,12 @@ import "./i18n";
 import "./index.css";
 
 import App from "./App";
+
+loader.config({
+  paths: {
+    vs: "/vs",
+  },
+});
 
 try {
   Sentry.init({
