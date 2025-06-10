@@ -28,7 +28,7 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({ theme, setTheme }) => {
             key={value}
             className="cursor-pointer [&:has([data-state=checked])]:border-primary"
           >
-            <div className="flex items-center space-x-2 rounded-lg border p-4 hover:bg-secondary transition-colors">
+            <div className="flex items-center w-full space-x-2 rounded-lg border p-4 hover:bg-secondary transition-colors">
               <RadioGroupItem value={value} id={value} />
               <span className="capitalize">
                 {t(`theme${value.charAt(0).toUpperCase() + value.slice(1)}`)}
