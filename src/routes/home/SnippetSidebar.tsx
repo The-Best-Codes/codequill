@@ -265,9 +265,9 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
             <SheetContent
               aria-describedby="sidebar-header"
               side="left"
-              className="pt-3 w-72 h-full flex flex-col pb-2"
+              className="p-2 w-72 h-full flex flex-col"
             >
-              <SheetHeader id="sidebar-header" className="mb-2">
+              <SheetHeader id="sidebar-header" className="mb-2 p-0 pt-1.5">
                 <SheetTitle>{t("appTitle")}</SheetTitle>
               </SheetHeader>
               <div className="flex flex-col w-full gap-2">
