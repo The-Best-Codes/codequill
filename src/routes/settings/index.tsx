@@ -76,7 +76,7 @@ function Settings() {
     <div className="min-h-screen antialiased bg-background p-6 md:p-8 flex items-center justify-center">
       <Card className="w-full max-w-3xl">
         <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4">
             <div>
               <CardTitle className="text-2xl font-bold">
                 {t("settings")}
