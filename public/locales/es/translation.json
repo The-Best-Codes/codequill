@@ -67,6 +67,7 @@
   "website": "Sitio web",
   "themeLight": "Claro",
   "themeDark": "Oscuro",
+  "themeDim": "Tenue",
   "themeSystem": "Sistema",
   "failedToLoadSnippets": "Error al cargar los fragmentos.",
   "failedToCreateNewSnippet": "Error al crear un nuevo fragmento.",

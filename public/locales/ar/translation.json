@@ -67,6 +67,7 @@
   "website": "الموقع الإلكتروني",
   "themeLight": "فاتح",
   "themeDark": "داكن",
+  "themeDim": "خافت",
   "themeSystem": "النظام",
   "failedToLoadSnippets": "فشل تحميل المقتطفات.",
   "failedToCreateNewSnippet": "فشل إنشاء مقتطف جديد.",

@@ -67,6 +67,7 @@
   "website": "网站",
   "themeLight": "浅色",
   "themeDark": "深色",
+  "themeDim": "暗色",
   "themeSystem": "跟随系统",
   "failedToLoadSnippets": "加载代码片段失败。",
   "failedToCreateNewSnippet": "创建新代码片段失败。",

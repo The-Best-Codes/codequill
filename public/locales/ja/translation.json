@@ -67,6 +67,7 @@
   "website": "ウェブサイト",
   "themeLight": "ライト",
   "themeDark": "ダーク",
+  "themeDim": "薄暗く",
   "themeSystem": "システム",
   "failedToLoadSnippets": "スニペットの読み込みに失敗しました。",
   "failedToCreateNewSnippet": "新しいスニペットの作成に失敗しました。",

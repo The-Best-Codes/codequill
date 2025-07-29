@@ -67,6 +67,7 @@
   "website": "Website",
   "themeLight": "Licht",
   "themeDark": "Donker",
+  "themeDim": "Gedimd",
   "themeSystem": "Systeem",
   "failedToLoadSnippets": "Laden van snippets mislukt.",
   "failedToCreateNewSnippet": "Aanmaken van nieuw snippet mislukt.",

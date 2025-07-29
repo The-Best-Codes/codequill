@@ -67,6 +67,7 @@
   "website": "Веб-сайт",
   "themeLight": "Светлая",
   "themeDark": "Темная",
+  "themeDim": "Тусклый",
   "themeSystem": "Системная",
   "failedToLoadSnippets": "Не удалось загрузить сниппеты.",
   "failedToCreateNewSnippet": "Не удалось создать новый сниппет.",

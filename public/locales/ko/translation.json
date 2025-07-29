@@ -67,6 +67,7 @@
   "website": "웹사이트",
   "themeLight": "라이트",
   "themeDark": "다크",
+  "themeDim": "어둡게",
   "themeSystem": "시스템",
   "failedToLoadSnippets": "스니펫을 불러오지 못했습니다.",
   "failedToCreateNewSnippet": "새 스니펫을 만들지 못했습니다.",

@@ -67,6 +67,7 @@
   "website": "Website",
   "themeLight": "Hell",
   "themeDark": "Dunkel",
+  "themeDim": "Gedimmt",
   "themeSystem": "System",
   "failedToLoadSnippets": "Fehler beim Laden der Schnipsel.",
   "failedToCreateNewSnippet": "Fehler beim Erstellen eines neuen Schnipsels.",

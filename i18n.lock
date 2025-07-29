@@ -69,6 +69,7 @@ checksums:
     website: da6a6168f21a28ccf2eb29a033d16bd4
     themeLight: bb78ea2c6edd8662676c81a8a13ecb93
     themeDark: 73e6e208ba628b26e90fcf6dce15e1b2
+    themeDim: e6c6ad05d56f402330e86c4f0d31de4e
     themeSystem: 803281c327a02a2feba182f4a2b38311
     failedToLoadSnippets: 8b3ef80c456404912a61db52c5dfbebe
     failedToCreateNewSnippet: ba16ac3a48c3dd8fc05d0388cd12a0f8
