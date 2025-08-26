@@ -33,4 +33,6 @@ flatpak-build
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Lingo.dev
 i18n.cache
