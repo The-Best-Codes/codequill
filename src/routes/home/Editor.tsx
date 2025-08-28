@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { UseSnippetsReturn } from "@/routes/home/types";
 import Editor, { OnMount } from "@monaco-editor/react";
 import Plus from "lucide-react/dist/esm/icons/plus";
@@ -205,6 +206,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
         <Editor
           width="100%"
           height="100%"
+          loading={<Skeleton className="flex flex-1 w-full h-full" />}
           language={language?.id || "plaintext"}
           theme={monacoTheme}
           value={code}
