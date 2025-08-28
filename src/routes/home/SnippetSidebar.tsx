@@ -151,14 +151,14 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
               className="cursor-pointer"
               onClick={() => copySnippet(snippet.id)}
             >
-              <Copy className="mr-2 h-4 w-4" />
+              <Copy className="size-4" />
               {t("copy")}
             </ContextMenuItem>
             <ContextMenuItem
               className="cursor-pointer"
               onClick={() => handleInfoClick(snippet)}
             >
-              <Info className="mr-2 h-4 w-4" />
+              <Info className="size-4" />
               {t("info")}
             </ContextMenuItem>
             <ContextMenuItem
@@ -167,8 +167,9 @@ const SnippetSidebar: React.FC<SnippetSidebarProps> = ({
                 setDeletingSnippetId(snippet.id);
                 setDeleteOpen(true);
               }}
+              variant="destructive"
             >
-              <Trash2 className="mr-2 h-4 w-4" />
+              <Trash2 className="size-4" />
               {t("delete")}
             </ContextMenuItem>
           </ContextMenuContent>
