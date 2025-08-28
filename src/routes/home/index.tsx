@@ -100,6 +100,7 @@ function Home() {
           isPreviewing={isPreviewing}
           toggleSidebar={toggleSidebar}
           createNewSnippet={createNewSnippet}
+          loading={snippetHelpers.loading}
         />
         {isPreviewing && hasSnippets && (
           <div className="h-1/2 overflow-auto w-full border-t">

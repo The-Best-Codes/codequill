@@ -24,6 +24,7 @@ interface EditorProps
   setIsSearchDialogOpen: (open: boolean) => void;
   toggleSidebar: () => void;
   createNewSnippet: () => void;
+  loading?: boolean;
 }
 
 const MonacoEditorComponent: React.FC<EditorProps> = ({
@@ -38,6 +39,7 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
   toggleSidebar,
   createNewSnippet,
   snippets,
+  loading,
 }) => {
   const editorRef = useRef<any>(null);
   const editorInstance = useRef<any>(null);
@@ -187,7 +189,9 @@ const MonacoEditorComponent: React.FC<EditorProps> = ({
       className="flex-1 relative"
       style={{ height: isPreviewing ? "50%" : "100%" }}
     >
-      {!hasSnippets ? (
+      {loading ? (
+        <Skeleton className="flex flex-1 w-full h-full" />
+      ) : !hasSnippets ? (
         <div className="flex flex-col items-center justify-center h-full">
           <Sparkles className="w-12 h-12 sm:w-24 sm:h-24 text-primary" />
           <span className="text-sm sm:text-base text-center text-muted-foreground">
