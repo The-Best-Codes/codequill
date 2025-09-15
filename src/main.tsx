@@ -6,6 +6,15 @@ import "./i18n";
 
 import App from "./App";
 
+// Type declaration for Monaco Environment
+declare global {
+  interface Window {
+    MonacoEnvironment: {
+      getWorker: (workerId: any, label: string) => Worker;
+    };
+  }
+}
+
 // Import Monaco Editor workers using Vite's worker syntax
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
