@@ -1,12 +1,30 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, normalizePath } from "vite";
-import { analyzer } from "vite-bundle-analyzer";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 const host = process.env.TAURI_DEV_HOST;
-const runBundleAnalyzer = process.env.BUNDLE_ANALYZER_DEBUG === "true";
+
+const vendorManualChunks = {
+  react: ["react", "react-dom", "react-dom/client"],
+  reactRouter: ["react-router"],
+  radixUi: [
+    "@radix-ui/react-accordion",
+    "@radix-ui/react-context-menu",
+    "@radix-ui/react-dialog",
+    "@radix-ui/react-dropdown-menu",
+    "@radix-ui/react-label",
+    "@radix-ui/react-popover",
+    "@radix-ui/react-radio-group",
+    "@radix-ui/react-scroll-area",
+    "@radix-ui/react-separator",
+    "@radix-ui/react-slot",
+    "@radix-ui/react-tooltip",
+  ],
+  miscUi: ["vaul", "tailwind-merge"],
+};
 
 export default defineConfig(async () => ({
   plugins: [
@@ -31,11 +49,11 @@ export default defineConfig(async () => ({
         },
       ],
     }),
-    runBundleAnalyzer &&
-      analyzer({
-        openAnalyzer: false,
-        fileName: "bundle-report.html",
-      }),
+    visualizer({
+      open: false,
+      emitFile: false,
+      filename: "dist/stats.html",
+    }),
   ],
 
   resolve: {
@@ -63,5 +81,27 @@ export default defineConfig(async () => ({
 
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          // Normalize to POSIX-style paths so checks work on Windows too
+          const normalizedId = id.replace(/\\/g, "/");
+
+          if (normalizedId.includes("/node_modules/")) {
+            for (const [chunkName, packages] of Object.entries(
+              vendorManualChunks,
+            )) {
+              if (
+                packages.some((pkg) =>
+                  normalizedId.includes(`/node_modules/${pkg}/`),
+                )
+              ) {
+                return chunkName;
+              }
+            }
+          }
+        },
+      },
+    },
   },
 }));
