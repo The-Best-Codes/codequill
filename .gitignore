@@ -36,3 +36,5 @@ flatpak-build
 
 # Lingo.dev
 i18n.cache
+
+*.tsbuildinfo

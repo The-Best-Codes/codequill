@@ -24,19 +24,18 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 
-interface HeaderProps
-  extends Pick<
-    UseSnippetsReturn,
-    | "filename"
-    | "setFilename"
-    | "language"
-    | "setLanguage"
-    | "saving"
-    | "saveCurrentSnippet"
-    | "isPreviewable"
-    | "isPreviewing"
-    | "togglePreview"
-  > {}
+interface HeaderProps extends Pick<
+  UseSnippetsReturn,
+  | "filename"
+  | "setFilename"
+  | "language"
+  | "setLanguage"
+  | "saving"
+  | "saveCurrentSnippet"
+  | "isPreviewable"
+  | "isPreviewing"
+  | "togglePreview"
+> {}
 
 const Header: React.FC<HeaderProps> = ({
   filename,

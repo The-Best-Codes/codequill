@@ -37,8 +37,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import SnippetInfoDialog from "./SnippetInfoDialog";
 
-interface SnippetSidebarProps
-  extends Omit<UseSnippetsReturn, "searchQuery" | "setSearchQuery"> {
+interface SnippetSidebarProps extends Omit<
+  UseSnippetsReturn,
+  "searchQuery" | "setSearchQuery"
+> {
   showSidebar: boolean;
   toggleSidebar: () => void;
   setIsSearchDialogOpen: (open: boolean) => void;

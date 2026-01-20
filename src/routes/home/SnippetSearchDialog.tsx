@@ -18,8 +18,10 @@ import Inbox from "lucide-react/dist/esm/icons/inbox";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-interface SnippetSearchDialogProps
-  extends Pick<UseSnippetsReturn, "filteredSnippets" | "loadSnippetInEditor"> {
+interface SnippetSearchDialogProps extends Pick<
+  UseSnippetsReturn,
+  "filteredSnippets" | "loadSnippetInEditor"
+> {
   open: boolean;
   setOpen: (open: boolean) => void;
 }

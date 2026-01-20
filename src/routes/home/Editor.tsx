@@ -9,18 +9,17 @@ import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-interface EditorProps
-  extends Pick<
-    UseSnippetsReturn,
-    | "language"
-    | "code"
-    | "setCode"
-    | "saveCurrentSnippet"
-    | "isPreviewing"
-    | "isPreviewable"
-    | "togglePreview"
-    | "snippets"
-  > {
+interface EditorProps extends Pick<
+  UseSnippetsReturn,
+  | "language"
+  | "code"
+  | "setCode"
+  | "saveCurrentSnippet"
+  | "isPreviewing"
+  | "isPreviewable"
+  | "togglePreview"
+  | "snippets"
+> {
   setIsSearchDialogOpen: (open: boolean) => void;
   toggleSidebar: () => void;
   createNewSnippet: () => void;

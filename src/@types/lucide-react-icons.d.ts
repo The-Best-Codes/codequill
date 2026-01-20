@@ -6,12 +6,11 @@ declare module "lucide-react/dist/esm/icons/*" {
 
 declare module "lucide-react" {
   import React from "react";
-  export interface LucideIcon
-    extends React.ForwardRefExoticComponent<
-      React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> & {
-        title?: string;
-        size?: string | number;
-        absoluteStrokeWidth?: boolean;
-      } & React.RefAttributes<SVGSVGElement>
-    > {}
+  export interface LucideIcon extends React.ForwardRefExoticComponent<
+    React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> & {
+      title?: string;
+      size?: string | number;
+      absoluteStrokeWidth?: boolean;
+    } & React.RefAttributes<SVGSVGElement>
+  > {}
 }
