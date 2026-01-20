@@ -19,6 +19,7 @@ export default defineConfig(async () => ({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       org: "bestcodes-official",
       project: "codequill-react",
+      telemetry: false,
     }),
     viteStaticCopy({
       targets: [
