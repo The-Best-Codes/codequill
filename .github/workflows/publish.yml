@@ -14,26 +14,26 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest" # for Arm based macs (M1 and above).
+          - platform: "tenki-macos-latest-mini" # for Arm based macs (M1 and above). Can also be "macos-latest" runner.
             args: "--target aarch64-apple-darwin"
-          - platform: "macos-latest" # for Intel based macs.
+          - platform: "tenki-macos-latest-mini" # for Intel based macs. Can also be "macos-latest" runner.
             args: "--target x86_64-apple-darwin"
-          - platform: "ubuntu-22.04" # for Tauri v1 you could replace this with ubuntu-20.04.
+          - platform: "tenki-standard-autoscale" # for Tauri v1 you could replace this with ubuntu-20.04. Can also be "ubuntu-22.04" runner.
             args: ""
           - platform: "windows-latest"
             args: ""
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: lts/*
 
       - name: setup bun
-        uses: oven-sh/setup-bun@v2
+        uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
         with:
           bun-version: latest
 
@@ -41,10 +41,10 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.platform == 'tenki-macos-latest-mini' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }} # or matrix.platform == 'macos-latest'
 
       - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
+        if: matrix.platform == 'tenki-standard-autoscale' # or 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
@@ -52,7 +52,7 @@ jobs:
       - name: install frontend dependencies
         run: bun install
 
-      - uses: tauri-apps/tauri-action@v0
+      - uses: tauri-apps/tauri-action@73fb865345c54760d875b94642314f8c0c894afa # action-v0.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
